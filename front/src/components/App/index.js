@@ -9,7 +9,7 @@ import LinkBox from '../LinkBox';
 
 // == Composant
 const App = () => {
-  const [link, setLink] = useState();
+  const [links, setLinks] = useState([]);
   const [url, setUrl] = useState('');
   const errorMessage = false;
   const onChange = (evt) => {
@@ -22,7 +22,7 @@ const App = () => {
     axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${url}`)
       .then((result) => {
         if (result && result.data) {
-          setLink(result.data);
+          setLinks([...links, result.data]);
           setUrl('');
         }
       })
@@ -43,7 +43,6 @@ const App = () => {
   //       (console.log('cath tree', error));
   //     });
   // }, []);
-  console.log('link', link);
   console.log('url', url);
   return (
     <div className="app">
@@ -61,8 +60,12 @@ const App = () => {
           onChange={onChange}
         />
       </form>
-      {link && Object.keys(link).length ? (
-        <LinkBox link={link} />
+      {links && Object.keys(links).length ? (
+        <>
+          {links.map((link) => (
+            <LinkBox key={link.url} link={link} />
+          ))}
+        </>
       ) : (
         <h2 className="tree-flex-loading">Loading</h2>
       )}
