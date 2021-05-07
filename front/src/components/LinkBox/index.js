@@ -10,11 +10,11 @@ import './styles.scss';
 const LinkBox = ({ link }) => (
   <div className="linkBox-mainDiv">
     <a href={link.url} className="linkBox">
-      <img src={link.image} alt="link" />
-      <div className="linkBox-text">
-        <div className="linkBox-description">Description : {link.description}</div>
-        <div className="linkBox-title">Title : {link.title}</div>
-        <div className="linkBox-url dont-break-out">url : {link.url}</div>
+      <img src={link.image} alt="link" className="linkBox-image" />
+      <div className="linkBox-texts">
+        <div className="linkBox-description linkBox-text">Description : {link.description}</div>
+        <div className="linkBox-title linkBox-text">Title : {link.title}</div>
+        <div className="linkBox-url linkBox-text dont-break-out">url : {link.url}</div>
       </div>
     </a>
   </div>

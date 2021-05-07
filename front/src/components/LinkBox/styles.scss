@@ -7,17 +7,28 @@
     border-radius: 25px;
     padding: 1rem;
     margin: auto;
-    width: 50%;
+    width: 666px;
+    min-width: 666px;
     background-color: vars.$lightgrey-color;
     display: flex;
     flex-direction: row;
+    align-items: center;
 
-    &-text {
+    &-texts {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       margin: 1rem;
+    }
 
+    &-image {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 15px;
+    }
+
+    &-text {
+      margin: 0.5rem 0;
     }
 
     &-description {
