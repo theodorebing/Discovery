@@ -1,0 +1,56 @@
+@use 'src/styles/vars';
+
+.app {
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-title {
+    font-size: 2rem;
+    color: rgb(199, 64, 199);
+    margin: 2rem 0;
+  }
+
+  &-form {
+    width: 35%;
+  }
+
+  &-input {
+    width: 100%;
+    margin: 2rem 0;
+    height: 35px;
+    border-radius: 50px; 
+    padding: 0 1rem;
+  }
+
+
+}
+
+.app img {
+  max-width: 150px;
+  border-radius: 15px
+}
+
+
+
+.dont-break-out {
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  // word-break: break-word;
+
+  // /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+}
