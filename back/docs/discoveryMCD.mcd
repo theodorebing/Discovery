@@ -1,0 +1,7 @@
+CATEGORIE: nom
+POSSEDE, 01 LISTE, 0N CATEGORIE
+LISTE: nom, position
+
+:
+LIEN: url, position
+APPARTIENT, 11 LIEN, 0N LISTE
