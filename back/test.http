@@ -1,0 +1,82 @@
+### service indisponible
+GET http://localhost:5050/404
+
+
+############################## CATEGORIES #############################
+
+### récupération de tous les catégories
+GET http://localhost:5050/categories
+
+### création d'un catégories
+POST http://localhost:5050/categories
+Content-Type: application/x-www-form-urlencoded
+
+name= Achats
+
+### modification d'un catégories
+PATCH http://localhost:5050/categories/5
+Content-Type: application/x-www-form-urlencoded
+
+name=Achats à faire
+
+### suppression d'un catégories
+DELETE http://localhost:5050/categories/5
+
+### associer une liste à une catégorie
+POST http://localhost:5050/lists/1/categories
+Content-Type: application/x-www-form-urlencoded
+
+category_id=1
+
+### dissocié une catégorie d'une liste
+DELETE http://localhost:5050/lists/1/categories/1
+
+############################## LISTS #############################
+
+### récupération de toutes les listes
+GET http://localhost:5050/lists
+
+### récupération d'une liste
+GET http://localhost:5050/lists/1
+
+### création d'une liste
+POST http://localhost:5050/lists
+Content-Type: application/x-www-form-urlencoded
+
+name=liste test post
+&position=1
+
+### modification d'une liste
+PATCH http://localhost:5050/lists/1
+Content-Type: application/x-www-form-urlencoded
+
+name=À écouter
+&position=1
+
+### suppression d'une liste
+DELETE http://localhost:5050/lists/5
+
+############################## LINKS #############################
+
+### récupération de tous les liens d'une liste
+GET http://localhost:5050/lists/1/links
+
+### récupération d'un lien
+GET http://localhost:5050/links/3
+
+### création d'un lien
+POST http://localhost:5050/links
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/2J1zM6rZyyp22VoS9
+&list_id=1
+
+### modification d'un lien
+PATCH http://localhost:5050/links/5
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/eJVm3MQcZrDuN1GA7
+&position=1
+
+### suppression d'un lien
+DELETE http://localhost:5050/links/5
