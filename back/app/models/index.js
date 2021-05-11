@@ -12,20 +12,14 @@ Link.belongsTo(List, {
     foreignKey: 'list_id'
 });
 
-List.belongsToMany(Category, {
+List.belongsTo(Category, {
     as: 'categories',
-    through: 'category_has_lists',
-    foreignKey: 'list_id',
-    otherKey: 'category_id',
-    timestamps: false
+    foreignKey: 'category_id'
 });
 
-Category.belongsToMany(List, {
+Category.hasMany(List, {
     as: 'list',
-    through: 'category_has_lists',
-    foreignKey: 'category_id',
-    otherKey: 'list_id',
-    timestamps: false
+    foreignKey: 'category_id'
 });
 
 module.exports = { List, Link, Category };

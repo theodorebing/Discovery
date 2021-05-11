@@ -14,47 +14,51 @@ Content-Type: application/x-www-form-urlencoded
 name= Achats
 
 ### modification d'un catégories
-PATCH http://localhost:5050/categories/5
+PATCH http://localhost:5050/categories/4
 Content-Type: application/x-www-form-urlencoded
 
 name=Achats à faire
 
 ### suppression d'un catégories
-DELETE http://localhost:5050/categories/5
+DELETE http://localhost:5050/categories/4
 
+## OBSLOLÈTE
 ### associer une liste à une catégorie
-POST http://localhost:5050/lists/1/categories
-Content-Type: application/x-www-form-urlencoded
+# POST http://localhost:5050/lists/1/categories
+# Content-Type: application/x-www-form-urlencoded
 
-category_id=1
+# category_id=1
 
+## OBSLOLÈTE
 ### dissocié une catégorie d'une liste
-DELETE http://localhost:5050/lists/1/categories/1
+# DELETE http://localhost:5050/lists/1/categories/1
 
 ############################## LISTS #############################
 
-### récupération de toutes les listes
+### récupération de toutes les listes avec leurs liens
 GET http://localhost:5050/lists
 
-### récupération d'une liste
-GET http://localhost:5050/lists/1
+### récupération d'une liste avec ses liens
+GET http://localhost:5050/lists/7
 
-### création d'une liste
+### création d'une liste dans une catégorie
 POST http://localhost:5050/lists
 Content-Type: application/x-www-form-urlencoded
 
-name=liste test post
+name=Ma playlist
 &position=1
+&category_id=1
 
 ### modification d'une liste
-PATCH http://localhost:5050/lists/1
+PATCH http://localhost:5050/lists/7
 Content-Type: application/x-www-form-urlencoded
 
-name=À écouter
+name=J'aime pas
 &position=1
+&category_id=1
 
 ### suppression d'une liste
-DELETE http://localhost:5050/lists/5
+DELETE http://localhost:5050/lists/7
 
 ############################## LINKS #############################
 

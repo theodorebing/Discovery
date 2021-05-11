@@ -5,14 +5,8 @@ module.exports = {
     getAllCategories: async (request, response, next) => {
         try {
             const categories = await Category.findAll({
-                include: {
-                    association: 'list',
-                    include: 'links'
-                },
-                order: [
-                    ['name', 'ASC'],
-                    ['name', 'ASC']
-                ]
+                include: 'list',
+                order: [['name', 'ASC']]
             });
             response.json(categories);
         } catch (error) {
