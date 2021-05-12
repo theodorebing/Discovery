@@ -1,24 +1,44 @@
 // == Import npm
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 // == Import
 
 import './styles.scss';
 
 // == Composant
-const LinkBox = ({ link }) => (
-  <div className="linkBox-mainDiv">
-    <a href={link.url} className="linkBox">
-      <img src={link.image} alt="link" className="linkBox-image" />
-      <div className="linkBox-texts">
-        <div className="linkBox-description linkBox-text">Description : {link.description}</div>
-        <div className="linkBox-title linkBox-text">Title : {link.title}</div>
-        <div className="linkBox-url linkBox-text dont-break-out">url : {link.url}</div>
-      </div>
-    </a>
-  </div>
-);
+const LinkBox = ({ link }) => {
+  const [linkDatas, setLinkDatas] = useState();
+  useEffect(() => {
+    axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${link.url}`)
+      .then((result) => {
+        if (result && result.data) {
+          setLinkDatas(result.data);
+        }
+      })
+      .catch((error) => {
+        (console.log('cath tree', error));
+      });
+  }, []);
+  console.log(linkDatas);
+  return (
+    <>
+      {linkDatas && Object.keys(linkDatas).length && (
+        <div className="linkBox-mainDiv">
+          <a href={linkDatas.url} className="linkBox">
+            <img src={linkDatas.image} alt="link" className="linkBox-image" />
+            <div className="linkBox-texts">
+              <div className="linkBox-description linkBox-text">Description : {linkDatas.description}</div>
+              <div className="linkBox-title linkBox-text">Title : {linkDatas.title}</div>
+              <div className="linkBox-url linkBox-text dont-break-out">url : {linkDatas.url}</div>
+            </div>
+          </a>
+        </div>
+      )}
+    </>
+  );
+};
 
 LinkBox.propTypes = {
   link: PropTypes.object,

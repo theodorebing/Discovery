@@ -14,22 +14,25 @@ const App = () => {
   const [links, setLinks] = useState([]);
   const [url, setUrl] = useState();
   const errorMessage = false;
+  console.log('links', links);
   useEffect(() => {
     axios.get('http://localhost:5050/lists/1/links')
       .then((result) => {
         if (result && result.data) {
-          const urlsFromApi = result.data;
-          urlsFromApi.forEach((urlFromApi) => (
-            (axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${urlFromApi.url}`)
-              .then((getLinksData) => {
-                if (getLinksData && getLinksData.data) {
-                  setLinks([...links, getLinksData.data]);
-                }
-              })
-              .catch((error) => {
-                (console.error('error', error));
-              }))
-          ));
+          setLinks(result.data);
+          // const urlsFromApi = result.data;
+          // console.log('urlsFromApi', urlsFromApi);
+          // urlsFromApi.forEach((urlFromApi) => (
+          //   (axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${urlFromApi.url}`)
+          //     .then((getLinksData) => {
+          //       if (getLinksData && getLinksData.data) {
+          //         setLinks([...links, getLinksData.data]);
+          //       }
+          //     })
+          //     .catch((error) => {
+          //       (console.error('error', error));
+          //     }))
+          // ));
         }
       })
       .catch((error) => {
@@ -69,7 +72,6 @@ const App = () => {
   //       (console.log('cath tree', error));
   //     });
   // }, []);
-
   return (
     <div className="app">
       <h1 className="app-title">Discovery</h1>
