@@ -5,7 +5,7 @@ module.exports = {
     getAllCategories: async (request, response, next) => {
         try {
             const categories = await Category.findAll({
-                include: 'list',
+                include: { all: true, nested: true},
                 order: [['name', 'ASC']]
             });
             response.json(categories);
