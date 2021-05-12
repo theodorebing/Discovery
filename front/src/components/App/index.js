@@ -7,28 +7,54 @@ import axios from 'axios';
 import './styles.scss';
 import LinkBox from '../LinkBox';
 
+const qs = require('qs');
+
 // == Composant
 const App = () => {
   const [links, setLinks] = useState([]);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState();
   const errorMessage = false;
-  const onChange = (evt) => {
-    console.log('evt.target.value', evt.target.value);
-    setUrl(evt.target.value);
-  };
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    console.log('url', url);
-    axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${url}`)
+  useEffect(() => {
+    axios.get('http://localhost:5050/lists/1/links')
       .then((result) => {
         if (result && result.data) {
-          setLinks([...links, result.data]);
-          setUrl('');
+          const urlsFromApi = result.data;
+          urlsFromApi.forEach((urlFromApi) => (
+            (axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${urlFromApi.url}`)
+              .then((getLinksData) => {
+                if (getLinksData && getLinksData.data) {
+                  setLinks([...links, getLinksData.data]);
+                }
+              })
+              .catch((error) => {
+                (console.error('error', error));
+              }))
+          ));
         }
       })
       .catch((error) => {
-        errorMessage = true;
         (console.log('cath tree', error));
+      });
+  }, []);
+
+  const onChange = (evt) => {
+    setUrl(evt.target.value);
+  };
+  const list = 1;
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    axios.post('http://localhost:5050/links',
+      qs.stringify({
+        url,
+        list_id: list,
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+      .then((result) => {
+        console.log('request ok', result);
+      })
+      .catch((error) => {
+        (console.log('error', error.response));
       });
   };
 
@@ -43,7 +69,7 @@ const App = () => {
   //       (console.log('cath tree', error));
   //     });
   // }, []);
-  console.log('url', url);
+
   return (
     <div className="app">
       <h1 className="app-title">Discovery</h1>
@@ -63,7 +89,9 @@ const App = () => {
       {links && Object.keys(links).length ? (
         <>
           {links.map((link) => (
-            <LinkBox key={link.url} link={link} />
+            <>
+              <LinkBox key={link.url} link={link} />
+            </>
           ))}
         </>
       ) : (
