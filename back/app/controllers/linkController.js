@@ -68,7 +68,7 @@ module.exports = {
             response.json(link);
 
         } catch (error) {
-            next(error);
+            next('error', error);
         }
     },
 

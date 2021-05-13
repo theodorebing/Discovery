@@ -6,7 +6,7 @@ module.exports = {
         try {
             const categories = await Category.findAll({
                 include: { all: true, nested: true},
-                order: [['name', 'ASC']]
+                order: [['id', 'ASC']]
             });
             response.json(categories);
         } catch (error) {

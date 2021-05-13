@@ -50,11 +50,11 @@ name=Ma playlist
 &category_id=1
 
 ### Change a list
-PATCH http://localhost:5050/lists/7
+PATCH http://localhost:5050/lists/5
 Content-Type: application/x-www-form-urlencoded
 
 name=J'aime pas
-&position=1
+&position=2
 &category_id=1
 
 ### Delete a list
@@ -63,7 +63,7 @@ DELETE http://localhost:5050/lists/7
 ############################## LINKS #############################
 
 ### Get all links from one list
-GET http://localhost:5050/lists/1/links
+GET http://localhost:5050/lists/5/links
 
 ### Get one link
 GET http://localhost:5050/links/3
@@ -72,8 +72,8 @@ GET http://localhost:5050/links/3
 POST http://localhost:5050/links
 Content-Type: application/x-www-form-urlencoded
 
-url=https://deezer.page.link/2J1zM6rZyyp22VoS9
-&list_id=1
+url=https://deezer.page.link/vLZTyke5dRagdxT57
+&list_id=5
 
 ### change a link
 PATCH http://localhost:5050/links/5
