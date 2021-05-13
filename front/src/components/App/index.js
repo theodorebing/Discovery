@@ -121,7 +121,12 @@ const App = () => {
               <div className="app-listBox-linksContainer">
                 {listBoxes.links && Object.keys(listBoxes.links).length ? (
                   listBoxes.links.map((link) => (
-                    <LinkBox key={link.id} link={link} />
+                    <LinkBox
+                      key={link.id}
+                      link={link}
+                      id={link.id}
+                      getAllCategories={getAllCategories}
+                    />
                   ))
                 ) : (
 

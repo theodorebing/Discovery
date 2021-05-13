@@ -1,15 +1,20 @@
 @use 'src/styles/vars';
 
   .linkBox {
+    display: flex;
+    flex-direction: row;
     border-radius: 25px;
     padding: 1rem;
     margin: 0.5rem auto;
     width: 666px;
     min-width: 666px;
     background-color: vars.$lightgrey-color;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+
+    &-a {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
 
     &-texts {
       display: flex;
