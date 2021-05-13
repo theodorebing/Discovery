@@ -25,7 +25,7 @@ const LinkBox = ({ link }) => {
     <>
       {linkDatas && Object.keys(linkDatas).length && (
         <div className="linkBox-mainDiv">
-          <a href={linkDatas.url} className="linkBox">
+          <a href={linkDatas.url} className="linkBox" target="_blank" rel="noreferrer">
             <img src={linkDatas.image} alt="link" className="linkBox-image" />
             <div className="linkBox-texts">
               <div className="linkBox-description linkBox-text">Description : {linkDatas.description}</div>
