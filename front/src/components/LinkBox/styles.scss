@@ -1,7 +1,5 @@
 @use 'src/styles/vars';
 
-
-
   .linkBox {
     border: 1px solid black;
     border-radius: 25px;
@@ -64,4 +62,50 @@
   -webkit-hyphens: auto;
   hyphens: auto;
 
+}
+
+@media screen and (max-width: 1500px), screen and (max-height: 1200px) {
+
+  .linkBox {
+
+    border-radius: 25px;
+    padding: 1rem;
+    margin: 0.2rem auto;
+    width: 30%;
+    min-width: 50%;
+    background-color: vars.$lightgrey-color;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &-texts {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      margin: 0 1rem;
+    }
+
+    &-image {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 15px;
+    }
+
+    &-text {
+      margin: 0.5rem 0;
+    }
+
+    &-description {
+
+    }
+
+    &-title {
+
+    }
+
+    &-url {
+
+    }
+
+  }
 }

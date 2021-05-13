@@ -11,46 +11,43 @@ const qs = require('qs');
 
 // == Composant
 const App = () => {
+// states
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState();
+  const [selectedList, setSelectedList] = useState('');
+  const [showListSelector, setShowListSelector] = useState(false);
   const [links, setLinks] = useState([]);
   const [url, setUrl] = useState();
+  console.log('selectedList', selectedList);
+  // variables
   const errorMessage = false;
-  console.log('links', links);
-  useEffect(() => {
-    axios.get('http://localhost:5050/lists/1/links')
-      .then((result) => {
-        if (result && result.data) {
-          setLinks(result.data);
-          // const urlsFromApi = result.data;
-          // console.log('urlsFromApi', urlsFromApi);
-          // urlsFromApi.forEach((urlFromApi) => (
-          //   (axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${urlFromApi.url}`)
-          //     .then((getLinksData) => {
-          //       if (getLinksData && getLinksData.data) {
-          //         setLinks([...links, getLinksData.data]);
-          //       }
-          //     })
-          //     .catch((error) => {
-          //       (console.error('error', error));
-          //     }))
-          // ));
-        }
-      })
-      .catch((error) => {
-        (console.log('cath tree', error));
-      });
-  }, []);
+  const list = 1;
+  // functions
+  const categorySelected = (e) => {
+    const { value } = e.target;
+    if (categories.find((category) => category.name === value)) {
+      const isSelectedCategory = (element) => element.name === value;
+      setSelectedCategoryIndex(categories.findIndex(isSelectedCategory));
+      setShowListSelector(true);
+    }
+    else {
+      setShowListSelector(false);
+    }
+  };
 
+  const listSelected = (e) => {
+    const { value } = e.target;
+    setSelectedList(value);
+  };
   const onChange = (evt) => {
     setUrl(evt.target.value);
   };
-  const list = 1;
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     axios.post('http://localhost:5050/links',
       qs.stringify({
         url,
-        list_id: list,
+        list_id: selectedList,
       }),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
@@ -60,24 +57,45 @@ const App = () => {
         (console.log('error', error.response));
       });
   };
-
-  // useEffect(() => {
-  //   axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&q=${url}`)
-  //     .then((result) => {
-  //       if (result && result.data) {
-  //         setLink(result.data);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       (console.log('cath tree', error));
-  //     });
-  // }, []);
+  // useEffect
+  useEffect(() => {
+    // get all categories
+    axios.get('http://localhost:5050/categories')
+      .then((result) => {
+        if (result && result.data) {
+          setCategories(result.data);
+        }
+      })
+      .catch((error) => {
+        setCategories('There is no category');
+      });
+    axios.get('http://localhost:5050/lists/1/links')
+      .then((result) => {
+        if (result && result.data) {
+          setLinks(result.data);
+        }
+      })
+      .catch((error) => {
+        (console.log('cath tree', error));
+      });
+  }, []);
+  // rendering
   return (
     <div className="app">
       <h1 className="app-title">Discovery</h1>
       {errorMessage && (
         <div>Il y a eu une erreur</div>
       )}
+      <form method="post" className="app-selectform">
+        <label htmlFor="category-select">Choose a category:
+          <select name="categories" id="category-select" onChange={categorySelected}>
+            <option value="">Please choose a category</option>
+            {categories.length && categories.map((category) => (
+              <option key={category.id} value={category.name}>{category.name}</option>
+            ))}
+          </select>
+        </label>
+      </form>
       <form method="post" className="app-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -88,12 +106,23 @@ const App = () => {
           onChange={onChange}
         />
       </form>
+      {showListSelector && (
+        <form method="post" className="app-selectform">
+          <label htmlFor="list-select">Choose a list:
+            <select name="lists" id="list-select" onChange={listSelected}>
+              <option value="">Please choose a list</option>
+              {categories[selectedCategoryIndex].list.length
+              && categories[selectedCategoryIndex].list.map((selectList) => (
+                <option key={selectList.id} value={selectList.id}>{selectList.name}</option>
+              ))}
+            </select>
+          </label>
+        </form>
+      )}
       {links && Object.keys(links).length ? (
         <>
           {links.map((link) => (
-            <>
-              <LinkBox key={link.url} link={link} />
-            </>
+            <LinkBox key={link.url} link={link} />
           ))}
         </>
       ) : (
