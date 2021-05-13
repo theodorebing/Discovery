@@ -18,23 +18,33 @@ const App = () => {
   const [showListSelector, setShowListSelector] = useState(false);
   const [links, setLinks] = useState([]);
   const [url, setUrl] = useState();
-  console.log('selectedList', selectedList);
   // variables
   const errorMessage = false;
-  const list = 1;
   // functions
+  const getListsFromSelectedCategory = () => {
+    axios.get('http://localhost:5050/lists/1/links')
+      .then((result) => {
+        if (result && result.data) {
+          setLinks(result.data);
+        }
+      })
+      .catch((error) => {
+        (console.log('cath tree', error));
+      });
+  };
   const categorySelected = (e) => {
     const { value } = e.target;
     if (categories.find((category) => category.name === value)) {
       const isSelectedCategory = (element) => element.name === value;
       setSelectedCategoryIndex(categories.findIndex(isSelectedCategory));
       setShowListSelector(true);
+      getListsFromSelectedCategory();
     }
     else {
+      setSelectedCategoryIndex();
       setShowListSelector(false);
     }
   };
-
   const listSelected = (e) => {
     const { value } = e.target;
     setSelectedList(value);
@@ -56,6 +66,8 @@ const App = () => {
       .catch((error) => {
         (console.log('error', error.response));
       });
+    setUrl('');
+    // getListsFromSelectedCategory().setTimeout(500);
   };
   // useEffect
   useEffect(() => {
@@ -68,15 +80,6 @@ const App = () => {
       })
       .catch((error) => {
         setCategories('There is no category');
-      });
-    axios.get('http://localhost:5050/lists/1/links')
-      .then((result) => {
-        if (result && result.data) {
-          setLinks(result.data);
-        }
-      })
-      .catch((error) => {
-        (console.log('cath tree', error));
       });
   }, []);
   // rendering
@@ -119,15 +122,25 @@ const App = () => {
           </label>
         </form>
       )}
-      {links && Object.keys(links).length ? (
+      {categories[selectedCategoryIndex]
+      && Object.keys(categories[selectedCategoryIndex]).length ? (
         <>
-          {links.map((link) => (
-            <LinkBox key={link.url} link={link} />
+          {categories[selectedCategoryIndex].list.map((listBoxes) => (
+            <div key={listBoxes.id} className="app-listBox">
+              <h2 className="app-listBox-title">{listBoxes.name}</h2>
+              {listBoxes.links && Object.keys(listBoxes.links).length ? (
+                listBoxes.links.map((link) => (
+                  <LinkBox key={link.url} link={link} />
+                ))
+              ) : (
+                <h2 className="tree-flex-loading">Loading</h2>
+              )}
+            </div>
           ))}
         </>
-      ) : (
-        <h2 className="tree-flex-loading">Loading</h2>
-      )}
+        ) : (
+          <h2 className="tree-flex-loading">Loading</h2>
+        )}
     </div>
   );
 };
