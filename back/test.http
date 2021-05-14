@@ -1,0 +1,86 @@
+### Not available
+GET http://localhost:5050/404
+
+
+############################## CATEGORIES #############################
+
+### Get all categories with lists and links
+GET http://localhost:5050/categories
+
+### Create a category
+POST http://localhost:5050/categories
+Content-Type: application/x-www-form-urlencoded
+
+name= Achats
+
+### Change a category
+PATCH http://localhost:5050/categories/4
+Content-Type: application/x-www-form-urlencoded
+
+name=Achats à faire
+
+### Delete a category
+DELETE http://localhost:5050/categories/4
+
+## Not used anymore
+### associer une liste à une catégorie
+# POST http://localhost:5050/lists/1/categories
+# Content-Type: application/x-www-form-urlencoded
+
+# category_id=1
+
+## Not used anymore
+### dissocier une catégorie d'une liste
+# DELETE http://localhost:5050/lists/1/categories/1
+
+############################## LISTS #############################
+
+### get all lists with their links
+GET http://localhost:5050/lists
+
+### Get one list with it's links
+GET http://localhost:5050/lists/1
+
+### Create a list inside a category
+POST http://localhost:5050/lists
+Content-Type: application/x-www-form-urlencoded
+
+name=Ma playlist
+&position=1
+&category_id=1
+
+### Change a list
+PATCH http://localhost:5050/lists/5
+Content-Type: application/x-www-form-urlencoded
+
+name=J'aime pas
+&position=2
+&category_id=1
+
+### Delete a list
+DELETE http://localhost:5050/lists/7
+
+############################## LINKS #############################
+
+### Get all links from one list
+GET http://localhost:5050/lists/5/links
+
+### Get one link
+GET http://localhost:5050/links/3
+
+### Create a link inside a list
+POST http://localhost:5050/links
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/vLZTyke5dRagdxT57
+&list_id=5
+
+### change a link
+PATCH http://localhost:5050/links/5
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/eJVm3MQcZrDuN1GA7
+&position=1
+
+### delete a link
+DELETE http://localhost:5050/links/5
