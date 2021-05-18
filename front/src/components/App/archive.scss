@@ -15,6 +15,8 @@ label, label ~ * {
   font-family: vars.$main-font;
     font-size: 6rem;
     font-weight: 400;
+    // color: #333333;
+    // text-shadow: -1px -1px 5px rgb(0, 0, 0), 1px 1px 1px rgb(88, 88, 88);
     background-color: rgb(77, 77, 77);
     color: transparent;
     text-shadow: 1.5px 1.5px 3px rgba(255, 255, 255, 0.171);
@@ -95,6 +97,72 @@ label, label ~ * {
   }
 
 }
+
+
+
+.categories {
+
+  &-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70%;    
+    transform: perspective(150px) rotateX(0deg);
+
+    &-link {
+      padding-bottom: 1rem;
+      font-family: vars.$main-font;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 5.5rem;
+      font-weight: 900;
+      background-color: rgba(70, 70, 70, 0.733);
+      color: transparent;
+      text-shadow: -2px -2px 3px rgba(12, 12, 12, 0.87);
+      -webkit-background-clip: text;
+        -moz-background-clip: text;
+              background-clip: text;
+      transition: all 0.3s ease 0s;
+
+      &:hover {
+        font-size: 5.8rem;;
+        background-color: rgb(78, 78, 78);
+        text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.692), 2px 2px 20px rgba(255, 255, 255, 0.5);
+        padding-bottom: 0.7rem;
+      }
+    } 
+  }
+
+  &-createLink {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: none;
+    height: 100%;
+    font-family: vars.$main-font;
+    text-transform: uppercase;
+    font-size: 3rem;
+    margin: 2rem 0;
+    transform: perspective(100px) rotateX(-5deg);
+    background-color: rgba(70, 70, 70, 0.733);
+    color: transparent;
+    text-shadow: -2px -2px 3px rgba(12, 12, 12, 0.87);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    transition: all 0.3s ease 0s;
+
+    &:hover {
+        font-size: 3.1rem;;
+        background-color: rgb(114, 114, 114);
+        text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.925);
+        padding-bottom: 0.2rem;
+      }
+  }
+}
+
+
 
 .dont-break-out {
 
