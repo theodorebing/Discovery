@@ -1,0 +1,105 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="430" height="195" view_box="0 0 430 195"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Tue, 18 May 2021 06:16:38</desc>
+
+<rect id="frame" x="0" y="0" width="430" height="195" fill="#ffffbf" stroke="none" stroke-width="0"/>
+
+<!-- Association A -->
+<line x1="274" y1="51" x2="167" y2="51" stroke="#f46d43" stroke-width="2"/>
+<text x="207" y="68.0" fill="#1a9850" font-family="Verdana" font-size="12">1,1</text>
+<line x1="66" y1="51" x2="167" y2="51" stroke="#f46d43" stroke-width="2"/>
+<text x="128" y="68.0" fill="#1a9850" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-A">
+	<path d="M 165 26 a 14 14 90 0 1 14 14 V 51 h -24 V 40 a 14 14 90 0 1 14 -14" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+	<path d="M 179 51.0 v 11 a 14 14 90 0 1 -14 14 H 169 a 14 14 90 0 1 -14 -14 V 51.0 H 24" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
+	<rect x="155" y="26" width="24" height="50" fill="none" rx="14" stroke="#f46d43" stroke-width="2"/>
+	<line x1="155" y1="51" x2="179" y2="51" stroke="#f46d43" stroke-width="1"/>
+	<text x="162" y="43.7" fill="#000000" font-family="Verdana" font-size="12">A</text>
+</g>
+
+<!-- Association POSSEDE -->
+<line x1="384" y1="152" x2="384" y2="51" stroke="#f46d43" stroke-width="2"/>
+<text x="389.0" y="110" fill="#1a9850" font-family="Verdana" font-size="12">1,1</text>
+<line x1="274" y1="51" x2="384" y2="51" stroke="#f46d43" stroke-width="2"/>
+<text x="320" y="68.0" fill="#1a9850" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-POSSEDE">
+	<path d="M 407 26 a 14 14 90 0 1 14 14 V 51 h -74 V 40 a 14 14 90 0 1 14 -14" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+	<path d="M 421 51.0 v 11 a 14 14 90 0 1 -14 14 H 361 a 14 14 90 0 1 -14 -14 V 51.0 H 74" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
+	<rect x="347" y="26" width="74" height="50" fill="none" rx="14" stroke="#f46d43" stroke-width="2"/>
+	<line x1="347" y1="51" x2="421" y2="51" stroke="#f46d43" stroke-width="1"/>
+	<text x="354" y="43.7" fill="#000000" font-family="Verdana" font-size="12">POSSEDE</text>
+</g>
+
+<!-- Association APPARTIENT -->
+<line x1="167" y1="152" x2="274" y2="152" stroke="#f46d43" stroke-width="2"/>
+<text x="201" y="169.0" fill="#1a9850" font-family="Verdana" font-size="12">1,1</text>
+<line x1="384" y1="152" x2="274" y2="152" stroke="#f46d43" stroke-width="2"/>
+<text x="328" y="169.0" fill="#1a9850" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-APPARTIENT">
+	<path d="M 306 127 a 14 14 90 0 1 14 14 V 152 h -92 V 141 a 14 14 90 0 1 14 -14" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+	<path d="M 320 152.0 v 11 a 14 14 90 0 1 -14 14 H 242 a 14 14 90 0 1 -14 -14 V 152.0 H 92" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
+	<rect x="228" y="127" width="92" height="50" fill="none" rx="14" stroke="#f46d43" stroke-width="2"/>
+	<line x1="228" y1="152" x2="320" y2="152" stroke="#f46d43" stroke-width="1"/>
+	<text x="235" y="144.7" fill="#000000" font-family="Verdana" font-size="12">APPARTIENT</text>
+</g>
+
+<!-- Entity LISTE -->
+<g id="entity-LISTE">
+	<g id="frame-LISTE">
+		<rect x="355" y="118" width="58" height="25" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
+		<rect x="355" y="143.0" width="58" height="43" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
+		<rect x="355" y="118" width="58" height="68" fill="none" stroke="#66bd63" stroke-width="2"/>
+		<line x1="355" y1="143" x2="413" y2="143" stroke="#66bd63" stroke-width="1"/>
+	</g>
+	<text x="366" y="135.7" fill="#000000" font-family="Verdana" font-size="12">LISTE</text>
+	<text x="360" y="160.8" fill="#000000" font-family="Verdana" font-size="12">nom</text>
+	<line x1="360" y1="163" x2="388" y2="163" stroke="#000000" stroke-width="1"/>
+	<text x="360" y="177.8" fill="#000000" font-family="Verdana" font-size="12">position</text>
+</g>
+
+<!-- Entity LIEN -->
+<g id="entity-LIEN">
+	<g id="frame-LIEN">
+		<rect x="138" y="118" width="58" height="25" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
+		<rect x="138" y="143.0" width="58" height="43" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
+		<rect x="138" y="118" width="58" height="68" fill="none" stroke="#66bd63" stroke-width="2"/>
+		<line x1="138" y1="143" x2="196" y2="143" stroke="#66bd63" stroke-width="1"/>
+	</g>
+	<text x="152" y="135.7" fill="#000000" font-family="Verdana" font-size="12">LIEN</text>
+	<text x="143" y="160.8" fill="#000000" font-family="Verdana" font-size="12">url</text>
+	<line x1="143" y1="163" x2="160" y2="163" stroke="#000000" stroke-width="1"/>
+	<text x="143" y="177.8" fill="#000000" font-family="Verdana" font-size="12">position</text>
+</g>
+
+<!-- Entity MEMBRE -->
+<g id="entity-MEMBRE">
+	<g id="frame-MEMBRE">
+		<rect x="9" y="9" width="114" height="25" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
+		<rect x="9" y="34.0" width="114" height="59" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
+		<rect x="9" y="9" width="114" height="84" fill="none" stroke="#66bd63" stroke-width="2"/>
+		<line x1="9" y1="34" x2="123" y2="34" stroke="#66bd63" stroke-width="1"/>
+	</g>
+	<text x="39" y="26.7" fill="#000000" font-family="Verdana" font-size="12">MEMBRE</text>
+	<text x="14" y="51.8" fill="#000000" font-family="Verdana" font-size="12">nom d'utilisateur</text>
+	<line x1="14" y1="54" x2="117" y2="54" stroke="#000000" stroke-width="1"/>
+	<text x="14" y="68.8" fill="#000000" font-family="Verdana" font-size="12">email</text>
+	<text x="14" y="85.8" fill="#000000" font-family="Verdana" font-size="12">mot de passe</text>
+</g>
+
+<!-- Entity CATEGORIE -->
+<g id="entity-CATEGORIE">
+	<g id="frame-CATEGORIE">
+		<rect x="233" y="26" width="82" height="25" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
+		<rect x="233" y="51.0" width="82" height="25" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
+		<rect x="233" y="26" width="82" height="50" fill="none" stroke="#66bd63" stroke-width="2"/>
+		<line x1="233" y1="51" x2="315" y2="51" stroke="#66bd63" stroke-width="1"/>
+	</g>
+	<text x="238" y="43.7" fill="#000000" font-family="Verdana" font-size="12">CATEGORIE</text>
+	<text x="238" y="68.8" fill="#000000" font-family="Verdana" font-size="12">nom</text>
+	<line x1="238" y1="71" x2="266" y2="71" stroke="#000000" stroke-width="1"/>
+</g>
+</svg>
