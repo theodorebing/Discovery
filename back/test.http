@@ -1,5 +1,81 @@
+@protocol= http
+@domainname= localhost
+@port= {{$dotenv PORT}}
+@baseUrl= {{protocol}}://{{domainname}}:{{port}}
+
 ### Not available
 GET http://localhost:5050/404
+
+
+############ CONNEXION - SUBSCRIPTION ##############
+
+### Route POST /subscription -- CREATE USER
+POST {{baseUrl}}/subscription
+Content-Type: application/x-www-form-urlencoded
+
+name=Théodore Bing
+&email=theo@gmail.com
+&password=secret
+
+
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=theodorebing@gmail.com
+&password=secret1
+
+### Route GET /logout -- DISCONNECT
+GET {{baseUrl}}/logout
+
+### Route POST /connexion -- UNKNOWN USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+&password=secret1
+
+### Route POST /connexion -- MISSING LOGIN INFORMATION
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+
+##################### ACCOUNT ######################
+
+### Route GET /account
+GET {{baseUrl}}/account
+
+### Route PATCH /account - UPDATE A USER
+PATCH {{baseUrl}}/account
+Content-Type: application/json
+
+{
+    "email" : "testupdate@gmail.com",
+    "password" : "toto"
+}
+
+### Route DELETE /account - DELETE A USER
+DELETE {{baseUrl}}/account
+
+### Route POST /account -- CREATE NEW FAMILY / for new members
+POST {{baseUrl}}/account
+Content-Type: application/json
+
+{
+    "designation": "testtree"
+}
+
+### Route POST /account/join  -- LINK TO EXISTING FAMILY
+POST {{baseUrl}}/account/join
+Content-Type: application/json
+
+{
+    "code" : 
+}
+
+### Route GET /family/account/leave-family
+GET {{baseUrl}}/account/leave-family
 
 
 ############################## CATEGORIES #############################

@@ -15,6 +15,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(sanitizer);
+const session = require('express-session');
+app.use(session({
+    secret:'zero imagination',
+    userid: null,
+    saveUninitialized: true,
+    resave:true
+}));
 app.use(router);
 app.listen(port, _ => {
    console.log(`http://localhost:${port}`);

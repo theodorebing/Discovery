@@ -1,198 +1,189 @@
-const { List, Category } = require('../models');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const emailValidator = require('email-validator');
 
-module.exports = {
+const userController = {
 
-    getAllCategories: async (request, response, next) => {
-        try {
-            const categories = await Category.findAll({
-                include: { all: true, nested: true},
-                order: [['id', 'ASC']]
-            });
-            response.json(categories);
-        } catch (error) {
-            next(error);
-        }
-    },
+    subscribe : async (request, response, next) => {
 
-    createCategory: async (request, response, next) => {
-        const data = request.body;
+        const theUserData = request.body;
+        console.log('request.body.email', request.body.email)
+        // email validation 
+        const isValidEmail = emailValidator.validate(theUserData.email);
 
-        if (!data.name) {
-            return response.status(400).json({
-                error: `You must provide a name`
-            });
-        }
-
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
-            });
-        }
+        if (!isValidEmail) {
+            response
+                .status(401)
+                .json({"error":"invalid email"});
+            return;
+        };        
 
         try {
-            const category = await Category.create(data);
-            response.json(category);
-
-        } catch (error) {
-            next(error);
-        }
-    },
-
-    updateCategory: async (request, response, next) => {
-
-        const data = request.body;
-
-        const id = Number(request.params.id);
-
-        if (isNaN(id)) {
-            return response.status(400).json({
-                error: `the provided id must be a number`
+            
+            // check user not already in base
+            const userExists = await User.findAll({
+                where: {email: theUserData.email}
             });
-        }
+            if (userExists.id) {
+                throw new Error('user already exists');
+            };
 
-        if (!data.name) {
-            return response.status(400).json({
-                error: `You must provide a name`
+            // create a hashed password
+            const saltRounds = 10;
+            theUserData.password = await new Promise((resolve, reject) => {
+                bcrypt.hash(theUserData.password, saltRounds, function(error, hash) {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(hash)
+                    }
+                });
             });
-        }
 
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
-            });
-        }
+            // const newUser = new User(theUserData);
 
-        try {
-            const category = await Category.findByPk(id);
-            if (!category) {
-                return next();
-            }
+            // save user in relationnal PG database
+            await User.create(theUserData);
 
-            for (const field in data) {
-
-                if (typeof category[field] !== 'undefined') {
-                    category[field] = data[field];
-                }
-
-            }
-            await category.save();
-            response.json(category);
-        } catch (error) {
-            next(error);
-        }
-
-    },
-
-    deleteCategory: async (request, response, next) => {
-
-        const id = Number(request.params.id);
-
-        if (isNaN(id)) {
-            return response.status(400).json({
-                error: `the provided id must be a number`
-            });
-        }
-
-        try {
-            const category = await Category.findByPk(id);
-            if (!category) {
-                next();
-            }
-
-            await category.destroy();
-            response.json('OK');
-
-        } catch (error) {
-            next(error);
-        }
-
-    },
-
-    addListToCategory: async (request, response, next) => {
-
-        const listId = request.params.id;
+            response.json(theUserData);
         
-
-        if (isNaN(listId)) {
-            return response.status(400).json({
-                error: `the provided id must be a number`
-            });
+        } catch (error) {
+            next(error);
         }
 
-        const categoryId = request.body.category_id;
+    },
 
-        if (isNaN(categoryId)) {
-            return response.status(400).json({
-                error: `the provided category_id must be a number`
-            });
-        }
+    openSession : async (request, response, next) => {
+        const searchedUser = request.body;
+        
+        // check email & password have been filled
+        if (!searchedUser.email || !searchedUser.password) {
+            response
+                .status(400)
+                .json({"error":"missing connexion information"});
+            return;
+        };
 
         try {
-
-            let list = await List.findByPk(listId, {
-                include: ['categories']
+            let user = await User.findAll({
+                where: {email: searchedUser.email}
             });
-
-            if (!list) {
-                return next();
+            if (user[0]) {
+                user = user[0].dataValues;
             }
-
-            let category = await Category.findByPk(categoryId);
-            if (!category) {
-                return next();
+            if (user.id) {
+                // compare passwords
+                const match = await bcrypt.compare(searchedUser.password, user.password)
+                    if (match) {
+                        request.session.userid = user.id
+                        response.json(user);    
+                    } else {
+                        response
+                            .status(404)
+                            .json({"error":"invalid connexion information"})
+                    }
+        } else {
+                response
+                    .status(404)
+                    .json({"error":"invalid connexion information"})
             }
-
-            // on laisse faire la magie de Sequelize !
-            await list.addCategory(category);
-            // malheureusement, les associations de l'instance ne sont pas mises à jour
-            // on doit donc refaire un select
-            list = await List.findByPk(listId, {
-                include: ['categories']
-            });
-            response.json(list);
 
         } catch (error) {
-            console.log("listID", listId);
             next(error);
         }
     },
 
-    removeListFromCategory: async (request, response) => {
-
-        const { list_id, category_id } = request.params;
-
-        if (isNaN(list_id)) {
-            return response.status(400).json({
-                error: `the provided listId must be a number`
+    getUserInfo : async (request, response, next) => {
+        console.log('request.session.id getuserinfo', request.session.userid)
+        try {
+            const user = await User.findAll({
+                where : {id : request.session.userid}
             });
+            
+            response.json(user);
+        } catch (error) {
+            next(error);
         }
+    },
 
-        if (isNaN(category_id)) {
-            return response.status(400).json({
-                error: `the provided categoryId must be a number`
+    logout : (request, response) => {
+        request.session.id = null;
+        response.json({"status":"déconnecté"});
+    },
+
+    deleteUser : async (request, response, next) => {
+        try {
+            const user = await User.findAll({
+                where : {id : request.session.id}
+            });
+            if (user.id===undefined) {
+                next();
+            } else {
+                await User.destroy({
+                    where : {id : request.session.id}
+                });
+                response
+                    .status(200)
+                    .json({"information":"user deleted"}); 
+            };
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    updateUser : async (request, response, next) => {
+ 
+        const patchUser = request.body;
+
+        // if update email: validate it 
+        if (patchUser.email) {
+            const isValidEmail = emailValidator.validate(patchUser.email);
+            if (!isValidEmail) {
+                response
+                    .status(401)
+                    .json({"error":"invalid email"});
+                return;
+            };
+        };
+
+        // if update password: bcrypt
+        if (patchUser.password) {
+            // create a hashed password
+            const saltRounds = 10;
+            patchUser.password = await new Promise((resolve, reject) => {
+                bcrypt.hash(patchUser.password, saltRounds, function(error, hash) {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(hash)
+                    }
+                });
             });
         }
 
         try {
-            let list = await List.findByPk(list_id);
-            if (!list) {
-                return next();
-            }
-
-            let category = await Category.findByPk(category_id);
-            if (!category) {
-                return next();
-            }
-
-            await list.removeCategory(category);
-            list = await List.findByPk(list_id, {
-                include: ['categories']
+            const sessionUser = await User.findAll({
+                where : {id : request.session.id}
             });
-            response.json(list);
+            if (sessionUser.id===undefined) {
+                next();
+            } else {
 
+                // compare original user & modified user, and build a user to save
+                for (const property in patchUser) {
+                    if (typeof sessionUser[property] !== 'undefined') {
+                        sessionUser[property] = patchUser[property];
+                    }
+                };
+                const newUser = new User(sessionUser);
+                
+                await User.update(newUser); 
+                response.json(newUser); 
+            };
         } catch (error) {
             next(error);
         }
-    }
-
+    },
 }
+
+module.exports = userController;

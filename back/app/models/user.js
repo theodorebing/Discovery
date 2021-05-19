@@ -10,7 +10,7 @@ User.init({
     password: DataTypes.TEXT,
 }, {
     sequelize,
-    tableName: 'user'
+    tableName: 'member'
 });
 
 module.exports = User;
