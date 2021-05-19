@@ -99,15 +99,22 @@ const userController = {
             const user = await User.findAll({
                 where : {id : request.session.userid}
             });
-            
-            response.json(user);
+            if (user[0]) {
+                response.json(user[0]);
+            } else {
+                response
+                    .status(404)
+                    .json({"error":"user is not connected"})
+            }
         } catch (error) {
             next(error);
         }
     },
 
     logout : (request, response) => {
+        request.session.userid = null;
         request.session.id = null;
+        user = null;
         response.json({"status":"déconnecté"});
     },
 
