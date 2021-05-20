@@ -1,11 +1,21 @@
-const { List, Category } = require('../models');
+const { List, Category, Link } = require('../models');
 
 module.exports = {
 
     getAllCategories: async (request, response, next) => {
         try {
             const categories = await Category.findAll({
-                include: { all: true, nested: true},
+                where: {member_id : request.session.userid},
+                // include: { all: true, nested: true},
+                // include: 'list',
+                include: {
+                    model: List, 
+                    as: 'list',
+                    include: {
+                        model: Link,
+                        as: 'links',            
+                    }        
+                },
                 order: [['id', 'ASC']]
             });
             response.json(categories);
@@ -16,21 +26,23 @@ module.exports = {
 
     createCategory: async (request, response, next) => {
         const data = request.body;
-
+        const userId = request.session.userid;
+        console.log('data', data)
         if (!data.name) {
             return response.status(400).json({
                 error: `You must provide a name`
             });
         }
 
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
-            });
-        }
+        // if (data.position && isNaN(Number(data.position))) {
+        //     return response.status(400).json({
+        //         error: `position must be a number`
+        //     });
+        // }
 
         try {
-            const category = await Category.create(data);
+
+            const category = await Category.create({name: data.name, member_id: userId});
             response.json(category);
 
         } catch (error) {
@@ -41,8 +53,10 @@ module.exports = {
     updateCategory: async (request, response, next) => {
 
         const data = request.body;
-
         const id = Number(request.params.id);
+        const memberCategories = await Category.findAll({
+            where: {member_id : request.session.userid}
+        });
 
         if (isNaN(id)) {
             return response.status(400).json({
@@ -56,14 +70,27 @@ module.exports = {
             });
         }
 
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
+        if (!memberCategories[0]) {
+            return response.status(403).json({
+                error: `Not one of your categories`
             });
         }
 
+        // if (userId !== categories[0].dataValues.member_id) {
+        //     return response.status(403).json({
+        //         error: `Not one of your categories`
+        //     });
+        // }
+
+        // if (data.position && isNaN(Number(data.position))) {
+        //     return response.status(400).json({
+        //         error: `position must be a number`
+        //     });
+        // }
+
         try {
             const category = await Category.findByPk(id);
+
             if (!category) {
                 return next();
             }
@@ -86,6 +113,15 @@ module.exports = {
     deleteCategory: async (request, response, next) => {
 
         const id = Number(request.params.id);
+        const memberCategories = await Category.findAll({
+            where: {member_id : request.session.userid}
+        });
+
+        if (!memberCategories[0]) {
+            return response.status(400).json({
+                error: `Not one of your categories`
+            });
+        }
 
         if (isNaN(id)) {
             return response.status(400).json({
@@ -100,7 +136,7 @@ module.exports = {
             }
 
             await category.destroy();
-            response.json('OK');
+            response.json('OK, category deleted');
 
         } catch (error) {
             next(error);

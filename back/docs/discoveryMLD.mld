@@ -2,7 +2,7 @@ membre (
     id INT,
     nom TEXT,
     email TEXT,
-    mot de passe TEXT
+    mot de passe TEXT,
     date de création DATETIME, 
     date de mise à jour DATETIME
 )
@@ -11,7 +11,7 @@ catégorie (
     id INT,
     nom TEXT,
     date de création DATETIME, 
-    date de mise à jour DATETIME
+    date de mise à jour DATETIME,
     membre("id") INT
 )
 

@@ -19,16 +19,16 @@ router.patch('/account',isConnected,userController.updateUser);
 router.delete('/account',isConnected,userController.deleteUser);
 
 // CATEGORIES
-router.route('/categories/:id')
-    .patch(isConnected, categoryController.updateCategory)
-    .delete(isConnected, categoryController.deleteCategory);
 router.route('/categories')
     .get(isConnected, categoryController.getAllCategories)
     .post(isConnected, categoryController.createCategory);
+router.route('/categories/:id')
+    .patch(isConnected, categoryController.updateCategory)
+    .delete(isConnected, categoryController.deleteCategory);
 router.route('/lists/:id/categories')
     .post(isConnected,categoryController.addListToCategory);
 router.route('/lists/:list_id/categories/:category_id')
-    .delete(cisConnected,ategoryController.removeListFromCategory);
+    .delete(isConnected,categoryController.removeListFromCategory);
 
 // LISTS
 router.route('/lists')

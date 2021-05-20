@@ -5,12 +5,12 @@ const Category = require('./category');
 
 User.hasMany(Category, {
     as: 'categories',
-    foreignKey: 'user_id'
+    foreignKey: 'member_id'
 });
 
 Category.belongsTo(User, {
     as: 'users',
-    foreignKey: 'user_id'
+    foreignKey: 'member_id'
 });
 
 List.hasMany(Link, {
