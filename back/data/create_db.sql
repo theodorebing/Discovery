@@ -26,7 +26,8 @@ CREATE TABLE "list"(
     "position" INTEGER NOT NULL DEFAULT 0,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     "updated_at" TIMESTAMPTZ,
-    "category_id" INTEGER NOT NULL REFERENCES "category"("id") ON DELETE CASCADE
+    "category_id" INTEGER NOT NULL REFERENCES "category"("id") ON DELETE CASCADE,
+    "member_id" INTEGER NOT NULL REFERENCES "member"("id") ON DELETE CASCADE
 
 );
 
@@ -36,7 +37,9 @@ CREATE TABLE "link"(
     "position" INTEGER NOT NULL DEFAULT 0,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     "updated_at" TIMESTAMPTZ,
-    "list_id" INTEGER NOT NULL REFERENCES "list"("id") ON DELETE CASCADE
+    "list_id" INTEGER NOT NULL REFERENCES "list"("id") ON DELETE CASCADE,
+    "member_id" INTEGER NOT NULL REFERENCES "member"("id") ON DELETE CASCADE
+
 );
 
 INSERT INTO "member" ("id", "name", "email", "password")
@@ -54,23 +57,23 @@ VALUES
 (5, 'recettes', 2),
 (6, 'Théâtre', 3);
 
-INSERT INTO "list" ("id", "name", "position", "category_id")
+INSERT INTO "list" ("id", "name", "position", "category_id", "member_id")
 VALUES
-(1, 'À écouter', 1, 1),
-(2, 'À réécouter', 0, 1),
-(3, 'À regarder', 0, 2),
-(4, 'À acheter', 0, 3),
-(5, 'Auteurs francophones', 0, 4),
-(6, 'Sans lactose', 0, 5),
-(7, 'À Paris', 0, 6);
+(1, 'À écouter', 1, 1, 1),
+(2, 'À réécouter', 0, 1, 1),
+(3, 'À regarder', 0, 2, 1),
+(4, 'À acheter', 0, 3, 1),
+(5, 'Auteurs francophones', 0, 4, 2),
+(6, 'Sans lactose', 0, 5, 2),
+(7, 'À Paris', 0, 6, 3);
 
 
-INSERT INTO "link" ("id", "url", "list_id", "position")
+INSERT INTO "link" ("id", "url", "list_id", "position", "member_id")
 VALUES
-(1, 'https://deezer.page.link/svcDETuGbBHyeAFG8', 1, 0),
-(2, 'https://deezer.page.link/xTZroX7xSB3bFKph7', 2, 0),
-(3, 'https://www.youtube.com/watch?v=wa-E3WlQcSE', 3, 0),
-(4, 'https://www.sallepleyel.com/concerts-spectacles/metal-hard-rock/opeth_e734', 4, 0);
+(1, 'https://deezer.page.link/svcDETuGbBHyeAFG8', 1, 0, 1),
+(2, 'https://deezer.page.link/xTZroX7xSB3bFKph7', 2, 0, 1),
+(3, 'https://www.youtube.com/watch?v=wa-E3WlQcSE', 3, 0, 1),
+(4, 'https://www.sallepleyel.com/concerts-spectacles/metal-hard-rock/opeth_e734', 4, 0, 1);
 
 SELECT setval('member_id_seq', (SELECT MAX(id) from "member"));
 SELECT setval('list_id_seq', (SELECT MAX(id) from "list"));

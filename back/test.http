@@ -14,7 +14,7 @@ POST {{baseUrl}}/subscription
 Content-Type: application/x-www-form-urlencoded
 
 name=Théodore Bing
-&email=theodorebing3@gmail.com
+&email=theodorebing2@gmail.com
 &password=secret
 
 
@@ -75,10 +75,24 @@ Content-Type: application/x-www-form-urlencoded
 name= Musique
 
 ### Delete a category
-DELETE http://localhost:5050/categories/4
+DELETE http://localhost:5050/categories/12
 
 
 ############################## LISTS #############################
+
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=theodorebing2@gmail.com
+&password=secret
+
+### Create a list inside a category
+POST http://localhost:5050/lists
+Content-Type: application/x-www-form-urlencoded
+
+name=Ma playlist
+&category_id=7
 
 ### get all lists with their links
 GET http://localhost:5050/lists
@@ -86,13 +100,6 @@ GET http://localhost:5050/lists
 ### Get one list with it's links
 GET http://localhost:5050/lists/1
 
-### Create a list inside a category
-POST http://localhost:5050/lists
-Content-Type: application/x-www-form-urlencoded
-
-name=Ma playlist
-&position=1
-&category_id=10
 
 ### Change a list
 PATCH http://localhost:5050/lists/5

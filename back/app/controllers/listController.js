@@ -2,18 +2,57 @@ const { List } = require('../models');
 
 module.exports = {
 
+    createList: async (request, response, next) => {
+        const data = request.body;
+        const userId = request.session.userid;
+        console.log('userId', userId);
+
+        if (!data.name) {
+            return response.status(400).json({
+                error: `You must provide a name`
+            });
+        }
+
+        if (data.position && isNaN(Number(data.position))) {
+            return response.status(400).json({
+                error: `position must be a number`
+            });
+        }
+
+        try {
+            const list = await List.create({
+                name: data.name, 
+                position: data.position, 
+                category_id: data.category_id, 
+                member_id: userId});
+            response.json(list);
+
+        } catch (error) {
+            next(error);
+        }
+    },
+
     getAllLists: async (request, response, next) => {
+
         try {
             const lists = await List.findAll({
+                where: {member_id : request.session.userid},
                 include: {
                     association: 'links'
                 }, 
                 order: [
                     ['position', 'ASC']
                 ]
-            });
+            });       
 
-            response.json(lists);
+            if (!lists[0]) {
+                return response.status(404).json({
+                    error: `There are no lists`
+                });
+            } else {
+                response.json(lists);
+            }
+            
         } catch (error) {
             next(error);
         }
@@ -41,30 +80,6 @@ module.exports = {
             }
 
             response.json(list);
-        } catch (error) {
-            next(error);
-        }
-    },
-
-    createList: async (request, response, next) => {
-        const data = request.body;
-
-        if (!data.name) {
-            return response.status(400).json({
-                error: `You must provide a name`
-            });
-        }
-
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
-            });
-        }
-
-        try {
-            const list = await List.create(data);
-            response.json(list);
-
         } catch (error) {
             next(error);
         }

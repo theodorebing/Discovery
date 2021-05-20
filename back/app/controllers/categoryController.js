@@ -6,8 +6,6 @@ module.exports = {
         try {
             const categories = await Category.findAll({
                 where: {member_id : request.session.userid},
-                // include: { all: true, nested: true},
-                // include: 'list',
                 include: {
                     model: List, 
                     as: 'list',
@@ -18,7 +16,13 @@ module.exports = {
                 },
                 order: [['id', 'ASC']]
             });
-            response.json(categories);
+            if (!categories[0]) {
+                return response.status(404).json({
+                    error: `There are no categories`
+                });
+            } else {
+               response.json(categories);
+            }          
         } catch (error) {
             next(error);
         }
@@ -27,7 +31,6 @@ module.exports = {
     createCategory: async (request, response, next) => {
         const data = request.body;
         const userId = request.session.userid;
-        console.log('data', data)
         if (!data.name) {
             return response.status(400).json({
                 error: `You must provide a name`
@@ -147,7 +150,14 @@ module.exports = {
     addListToCategory: async (request, response, next) => {
 
         const listId = request.params.id;
-        
+        const memberCategories = await Category.findAll({
+            where: {member_id : request.session.userid}
+        });
+        if (!memberCategories[0]) {
+            return response.status(400).json({
+                error: `Not one of your categories`
+            });
+        }
 
         if (isNaN(listId)) {
             return response.status(400).json({
