@@ -7,7 +7,7 @@ const userController = {
     subscribe : async (request, response, next) => {
 
         const theUserData = request.body;
-        console.log('request.body.email', request.body.email)
+
         // email validation 
         const isValidEmail = emailValidator.validate(theUserData.email);
 
@@ -16,17 +16,22 @@ const userController = {
                 .status(401)
                 .json({"error":"invalid email"});
             return;
-        };        
+        };     
 
         try {
-            
+
             // check user not already in base
             const userExists = await User.findAll({
-                where: {email: theUserData.email}
+                where : {email: theUserData.email}
             });
-            if (userExists.id) {
-                throw new Error('user already exists');
-            };
+
+            if (userExists[0]) {
+                // throw new Error('user already exists');
+                response
+                .status(401)
+                .json({"error":"user already exists"});
+                return;
+            }
 
             // create a hashed password
             const saltRounds = 10;
@@ -40,13 +45,10 @@ const userController = {
                 });
             });
 
-            // const newUser = new User(theUserData);
-
             // save user in relationnal PG database
             await User.create(theUserData);
-
             response.json(theUserData);
-        
+
         } catch (error) {
             next(error);
         }
@@ -121,13 +123,15 @@ const userController = {
     deleteUser : async (request, response, next) => {
         try {
             const user = await User.findAll({
-                where : {id : request.session.id}
+                where : {id : request.session.userid}
             });
-            if (user.id===undefined) {
+            console.log('user', user)
+            const userDatas = user[0].dataValues;
+            if (userDatas.id===undefined) {
                 next();
             } else {
                 await User.destroy({
-                    where : {id : request.session.id}
+                    where : {id : request.session.userid}
                 });
                 response
                     .status(200)
@@ -141,7 +145,7 @@ const userController = {
     updateUser : async (request, response, next) => {
  
         const patchUser = request.body;
-
+        console.log('patchUser', patchUser)
         // if update email: validate it 
         if (patchUser.email) {
             const isValidEmail = emailValidator.validate(patchUser.email);
@@ -155,6 +159,7 @@ const userController = {
 
         // if update password: bcrypt
         if (patchUser.password) {
+
             // create a hashed password
             const saltRounds = 10;
             patchUser.password = await new Promise((resolve, reject) => {
@@ -170,24 +175,29 @@ const userController = {
 
         try {
             const sessionUser = await User.findAll({
-                where : {id : request.session.id}
+                where : {id : request.session.userid}
             });
-            if (sessionUser.id===undefined) {
+            const sessionUserDatas = sessionUser[0].dataValues;
+            console.log('sessionUser[0].dataValues.id', sessionUser[0].dataValues.id)
+            if (sessionUserDatas.id===undefined) {
+                console.log('id undefined')
                 next();
             } else {
 
                 // compare original user & modified user, and build a user to save
                 for (const property in patchUser) {
-                    if (typeof sessionUser[property] !== 'undefined') {
-                        sessionUser[property] = patchUser[property];
+                    console.log('property', property)
+                    if (typeof sessionUserDatas[property] !== 'undefined') {
+                        sessionUserDatas[property] = patchUser[property];
                     }
                 };
-                const newUser = new User(sessionUser);
+                // const newUser = new User(sessionUserDatas);
                 
-                await User.update(newUser); 
-                response.json(newUser); 
+                await User.update(sessionUserDatas, {where : {id : request.session.userid}}); 
+                response.json(sessionUserDatas); 
             };
         } catch (error) {
+            console.log('catch error')
             next(error);
         }
     },

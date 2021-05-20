@@ -20,34 +20,34 @@ router.delete('/account',isConnected,userController.deleteUser);
 
 // CATEGORIES
 router.route('/categories/:id')
-    .patch(categoryController.updateCategory)
-    .delete(categoryController.deleteCategory);
+    .patch(isConnected, categoryController.updateCategory)
+    .delete(isConnected, categoryController.deleteCategory);
 router.route('/categories')
-    .get(categoryController.getAllCategories)
-    .post(categoryController.createCategory);
+    .get(isConnected, categoryController.getAllCategories)
+    .post(isConnected, categoryController.createCategory);
 router.route('/lists/:id/categories')
-    .post(categoryController.addListToCategory);
+    .post(isConnected,categoryController.addListToCategory);
 router.route('/lists/:list_id/categories/:category_id')
-    .delete(categoryController.removeListFromCategory);
+    .delete(cisConnected,ategoryController.removeListFromCategory);
 
 // LISTS
 router.route('/lists')
-    .get(listController.getAllLists)
-    .post(listController.createList);
+    .get(isConnected,listController.getAllLists)
+    .post(isConnected,listController.createList);
 router.route('/lists/:id')
-    .get(listController.getOneList)
-    .patch(listController.updateList)
-    .delete(listController.deleteList);
+    .get(isConnected,listController.getOneList)
+    .patch(isConnected,listController.updateList)
+    .delete(isConnected,listController.deleteList);
 
 // LINKS
 router.route('/lists/:id/links')
-    .get(linkController.getLinksInList);
+    .get(isConnected,linkController.getLinksInList);
 router.route('/links/:id')
-    .get(linkController.getOneLink)
-    .patch(linkController.updateLink)
-    .delete(linkController.deleteLink);
+    .get(isConnected,linkController.getOneLink)
+    .patch(isConnected,linkController.updateLink)
+    .delete(isConnected,linkController.deleteLink);
 router.route('/links/')
-    .post(linkController.createLink);
+    .post(isConnected,linkController.createLink);
 
 router.use(mainController.notFound);
 router.use(mainController.errorServer);

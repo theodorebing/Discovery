@@ -1,5 +1,5 @@
 const isConnected = (request, response, next) => { 
-  if (!request.session.id) {
+  if (!request.session.userid) {
     response
       .status(401)
       .json({"error":"please connect"});
