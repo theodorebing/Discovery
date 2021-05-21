@@ -5,7 +5,14 @@ module.exports = {
     createList: async (request, response, next) => {
         const data = request.body;
         const userId = request.session.userid;
-
+        let findIfCategoryExists = await Category.findOne({
+            where: {member_id : request.session.userid, id : data.category_id}
+        });
+        if (!findIfCategoryExists) {
+                return response.status(404).json({
+                    error: `A user can only create a list to one of his existing categories`
+                });
+        }
         if (!data.name) {
             return response.status(400).json({
                 error: `You must provide a name`
