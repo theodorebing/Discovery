@@ -58,8 +58,8 @@ module.exports = {
     },
 
     getLinksInList: async (request, response, next) => {
-
-        const id = Number(request.params.id);
+        const data = request.params;
+        const id = Number(data.id);
 
         if (isNaN(id)) {
             return response.status(400).json({
@@ -70,11 +70,16 @@ module.exports = {
         try {
             const links = await Link.findAll({
                 where: {
-                    list_id: id
+                    list_id: id, member_id: request.session.userid
                 }
             });
-
-            response.json(links);
+            if (!links[0]) {
+                return response.status(404).json({
+                    error: `There are no links`
+                });
+            } else {
+               response.json(links);
+            }   
         } catch (error) {
             next(error);
         }
@@ -91,10 +96,16 @@ module.exports = {
         }
 
         try {
-            const link = await Link.findByPk(id);
+            const link = await Link.findOne({
+                where: {
+                    id: id, member_id: request.session.userid
+                }
+            });
 
             if (!link) {
-                return next();
+                return response.status(404).json({
+                    error: `There are no links`
+                });
             }
 
             response.json(link);
@@ -115,11 +126,11 @@ module.exports = {
             });
         }
 
-        if (!data.url) {
-            return response.status(400).json({
-                error: `You must provide a url`
-            });
-        }
+        // if (!data.url) {
+        //     return response.status(400).json({
+        //         error: `You must provide a url`
+        //     });
+        // }
 
         if (data.position && isNaN(Number(data.position))) {
             return response.status(400).json({
@@ -128,9 +139,15 @@ module.exports = {
         }
 
         try {
-            const link = await Link.findByPk(id);
+            const link = await Link.findOne({
+                where: {
+                    id: id, member_id: request.session.userid
+                }
+            });
             if (!link) {
-                return next();
+                return response.status(404).json({
+                    error: `User can't change a link if it's not one of his`
+                });
             }
             
             for (const field in data) {
@@ -159,13 +176,19 @@ module.exports = {
         }
 
         try {
-            const link = await Link.findByPk(id);
+            const link = await Link.findOne({
+                where: {
+                    id: id, member_id: request.session.userid
+                }
+            });
             if (!link) {
-                next();
+                return response.status(404).json({
+                    error: `User can't delete a link if it's not one of his`
+                });
             }
 
             await link.destroy();
-            response.json('OK');
+            response.json('OK, link deleted');
 
         } catch (error) {
             next(error);
