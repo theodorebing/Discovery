@@ -14,7 +14,7 @@ POST {{baseUrl}}/subscription
 Content-Type: application/x-www-form-urlencoded
 
 name=Théodore Bing
-&email=theodorebing2@gmail.com
+&email=theodorebing@gmail.com
 &password=secret
 
 
@@ -22,7 +22,7 @@ name=Théodore Bing
 POST {{baseUrl}}/connexion
 Content-Type: application/x-www-form-urlencoded
 
-email=theodorebing2@gmail.com
+email=theodorebing@gmail.com
 &password=secret
 
 ### Route GET /logout -- DISCONNECT
@@ -66,13 +66,13 @@ GET http://localhost:5050/categories
 POST http://localhost:5050/categories
 Content-Type: application/x-www-form-urlencoded
 
-name= Cinéma
+name=Musique
 
 ### Change a category
 PATCH http://localhost:5050/categories/12
 Content-Type: application/x-www-form-urlencoded
 
-name= Musique
+name=Musique
 
 ### Delete a category
 DELETE http://localhost:5050/categories/12
@@ -80,19 +80,12 @@ DELETE http://localhost:5050/categories/12
 
 ############################## LISTS #############################
 
-### Route POST /connexion -- EXISTING USER
-POST {{baseUrl}}/connexion
-Content-Type: application/x-www-form-urlencoded
-
-email=theodorebing2@gmail.com
-&password=secret
-
 ### Create a list inside a category
 POST http://localhost:5050/lists
 Content-Type: application/x-www-form-urlencoded
 
-name=Films à voir
-&category_id=8
+name=À écouter
+&category_id=1
 
 ### get all lists with their links
 GET http://localhost:5050/lists
@@ -109,22 +102,30 @@ name=J'aime bien
 &category_id=7
 
 ### Delete a list
-DELETE http://localhost:5050/lists/5
+DELETE http://localhost:5050/lists/15
 
 ############################## LINKS #############################
 
-### Get all links from one list
-GET http://localhost:5050/lists/5/links
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
 
-### Get one link
-GET http://localhost:5050/links/3
+email=theodorebing@gmail.com
+&password=secret
 
 ### Create a link inside a list
 POST http://localhost:5050/links
 Content-Type: application/x-www-form-urlencoded
 
 url=https://deezer.page.link/vLZTyke5dRagdxT57
-&list_id=8
+&list_id=17
+
+### Get all links from one list
+GET http://localhost:5050/lists/1/links
+
+### Get one link
+GET http://localhost:5050/links/3
+
 
 ### change a link
 PATCH http://localhost:5050/links/5
