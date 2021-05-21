@@ -1,4 +1,4 @@
-const { Link } = require('../models');
+const { List, Link } = require('../models');
 const axios = require('axios')
 
 module.exports = {
@@ -7,23 +7,32 @@ module.exports = {
 
         const data = request.body;
         const userId = request.session.userid;
-        console.log(data);
+        const findIfListExists = await List.findOne({
+            where: {member_id : request.session.userid, id : data.list_id}
+        });
         const getLinkPreviewDatas = async () => {  
-        try {          
-            return await axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&fields=site_name&q=${data.url}`)
-        } catch(error) {
-            console.error('catch tree', error);
-        }}
 
-        if (!data.url) {
-            return response.status(400).json({
-                error: `You must provide a url`
-            });
+            try {          
+                return await axios.get(`http://api.linkpreview.net/?key=881162a141e99a69629e7a4a4661a633&fields=site_name&q=${data.url}`)
+            } catch(error) {
+                console.error('catch tree', error);
+            }}
+
+            if (!data.url) {
+                return response.status(400).json({
+                    error: `You must provide a url`
+                });
         }
 
         if (data.position && isNaN(Number(data.position))) {
             return response.status(400).json({
                 error: `position must be a number`
+            });
+        }
+
+        if (!findIfListExists) {
+            return response.status(400).json({
+                error: `user must insert the link into one of his categories`
             });
         }
 
