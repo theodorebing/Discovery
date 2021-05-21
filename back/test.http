@@ -66,7 +66,7 @@ GET http://localhost:5050/categories
 POST http://localhost:5050/categories
 Content-Type: application/x-www-form-urlencoded
 
-name= Musique
+name= Cinéma
 
 ### Change a category
 PATCH http://localhost:5050/categories/12
@@ -91,26 +91,25 @@ email=theodorebing2@gmail.com
 POST http://localhost:5050/lists
 Content-Type: application/x-www-form-urlencoded
 
-name=Ma playlist
-&category_id=7
+name=Films à voir
+&category_id=8
 
 ### get all lists with their links
 GET http://localhost:5050/lists
 
 ### Get one list with it's links
-GET http://localhost:5050/lists/1
-
+GET http://localhost:5050/lists/15
 
 ### Change a list
-PATCH http://localhost:5050/lists/5
+PATCH http://localhost:5050/lists/15
 Content-Type: application/x-www-form-urlencoded
 
-name=J'aime pas
+name=J'aime bien
 &position=2
-&category_id=1
+&category_id=7
 
 ### Delete a list
-DELETE http://localhost:5050/lists/7
+DELETE http://localhost:5050/lists/5
 
 ############################## LINKS #############################
 

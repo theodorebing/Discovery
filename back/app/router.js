@@ -25,10 +25,6 @@ router.route('/categories')
 router.route('/categories/:id')
     .patch(isConnected, categoryController.updateCategory)
     .delete(isConnected, categoryController.deleteCategory);
-router.route('/lists/:id/categories')
-    .post(isConnected,categoryController.addListToCategory);
-router.route('/lists/:list_id/categories/:category_id')
-    .delete(isConnected,categoryController.removeListFromCategory);
 
 // LISTS
 router.route('/lists')
