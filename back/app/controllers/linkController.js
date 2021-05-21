@@ -32,7 +32,7 @@ module.exports = {
                 let datas = await getLinkPreviewDatas()
                 datas = datas.data;
                 const link = await Link.create({
-                    url: datas.url,
+                    url: data.url,
                     title: datas.title,
                     description: datas.description,
                     image: datas.image,
