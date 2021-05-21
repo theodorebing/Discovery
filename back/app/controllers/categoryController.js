@@ -57,8 +57,8 @@ module.exports = {
 
         const data = request.body;
         const id = Number(request.params.id);
-        const memberCategories = await Category.findAll({
-            where: {member_id : request.session.userid}
+        const memberCategories = await Category.findOne({
+            where: {member_id : request.session.userid, id : id}
         });
 
         if (isNaN(id)) {
@@ -73,7 +73,7 @@ module.exports = {
             });
         }
 
-        if (!memberCategories[0]) {
+        if (!memberCategories) {
             return response.status(403).json({
                 error: `Not one of your categories`
             });
@@ -116,12 +116,12 @@ module.exports = {
     deleteCategory: async (request, response, next) => {
 
         const id = Number(request.params.id);
-        const memberCategories = await Category.findAll({
-            where: {member_id : request.session.userid}
+        const memberCategories = await Category.findOne({
+            where: {member_id : request.session.userid, id : id}
         });
 
-        if (!memberCategories[0]) {
-            return response.status(400).json({
+        if (!memberCategories) {
+            return response.status(403).json({
                 error: `Not one of your categories`
             });
         }
