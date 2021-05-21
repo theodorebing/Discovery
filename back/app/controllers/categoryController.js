@@ -9,9 +9,11 @@ module.exports = {
                 include: {
                     model: List, 
                     as: 'list',
+                    where: {member_id : request.session.userid},
                     include: {
                         model: Link,
-                        as: 'links',            
+                        as: 'links',
+                        where: {member_id : request.session.userid},         
                     }        
                 },
                 order: [['id', 'ASC']]
