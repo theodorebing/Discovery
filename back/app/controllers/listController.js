@@ -1,19 +1,64 @@
-const { List } = require('../models');
+const { List, Category } = require('../models');
 
 module.exports = {
 
+    createList: async (request, response, next) => {
+        const data = request.body;
+        const userId = request.session.userid;
+        let findIfCategoryExists = await Category.findOne({
+            where: {member_id : request.session.userid, id : data.category_id}
+        });
+        if (!findIfCategoryExists) {
+                return response.status(404).json({
+                    error: `A user can only create a list to one of his existing categories`
+                });
+        }
+        if (!data.name) {
+            return response.status(400).json({
+                error: `You must provide a name`
+            });
+        }
+
+        if (data.position && isNaN(Number(data.position))) {
+            return response.status(400).json({
+                error: `position must be a number`
+            });
+        }
+
+        try {
+            const list = await List.create({
+                name: data.name, 
+                position: data.position, 
+                category_id: data.category_id, 
+                member_id: userId});
+            response.json(list);
+
+        } catch (error) {
+            next(error);
+        }
+    },
+
     getAllLists: async (request, response, next) => {
+
         try {
             const lists = await List.findAll({
+                where: {member_id : request.session.userid},
                 include: {
                     association: 'links'
                 }, 
                 order: [
                     ['position', 'ASC']
                 ]
-            });
+            });       
 
-            response.json(lists);
+            if (!lists[0]) {
+                return response.status(404).json({
+                    error: `There are no lists`
+                });
+            } else {
+                response.json(lists);
+            }
+            
         } catch (error) {
             next(error);
         }
@@ -30,14 +75,17 @@ module.exports = {
         }
 
         try {
-            const list = await List.findByPk(id, {
+            const list = await List.findOne({
+                where: {member_id : request.session.userid, id: id},
                 include: {
                     association: 'links'
                 }
             });
 
             if (!list) {
-                return next();
+            return response.status(404).json({
+                error: `Not one of your lists`
+            });
             }
 
             response.json(list);
@@ -46,33 +94,13 @@ module.exports = {
         }
     },
 
-    createList: async (request, response, next) => {
-        const data = request.body;
-
-        if (!data.name) {
-            return response.status(400).json({
-                error: `You must provide a name`
-            });
-        }
-
-        if (data.position && isNaN(Number(data.position))) {
-            return response.status(400).json({
-                error: `position must be a number`
-            });
-        }
-
-        try {
-            const list = await List.create(data);
-            response.json(list);
-
-        } catch (error) {
-            next(error);
-        }
-    },
-
     updateList: async (request, response, next) => {
 
         const data = request.body;
+
+        let findIfCategoryExists = await Category.findOne({
+            where: {member_id : request.session.userid, id : data.category_id}
+        });
 
         const id = Number(request.params.id);
         if (isNaN(id)) {
@@ -87,16 +115,27 @@ module.exports = {
             });
         }
 
-        /*if (!data.name) {
-            return response.status(400).json({
-                error: `You must provide a name`
-            });
-        }*/
+
+        if (!findIfCategoryExists) {
+                return response.status(404).json({
+                    error: `A user can only move a list to one of his existing categories`
+                });
+        }
+
+        // if (!data.name) {
+        //     return response.status(400).json({
+        //         error: `You must provide a name`
+        //     });
+        // }
 
         try {
-            const list = await List.findByPk(id);
+            const list = await List.findOne({
+                where: {member_id : request.session.userid, id: id},
+            });
             if (!list) {
-                next();
+                return response.status(404).json({
+                    error: `Not one of your lists`
+                });
             }
 
             for (const field in data) {
@@ -123,13 +162,17 @@ module.exports = {
         }
 
         try {
-            const list = await List.findByPk(id);
+            const list = await List.findOne({
+                where: {member_id : request.session.userid, id: id},
+            });
             if (!list) {
-                return next();
+                return response.status(404).json({
+                    error: `Not one of your lists`
+                });
             }
 
             await list.destroy();
-            response.json('OK');
+            response.json('OK, list deleted');
 
         } catch (error) {
             next(error);

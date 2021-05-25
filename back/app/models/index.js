@@ -1,6 +1,17 @@
+const User = require('./user');
 const List = require('./list');
 const Link = require('./link');
 const Category = require('./category');
+
+User.hasMany(Category, {
+    as: 'categories',
+    foreignKey: 'member_id'
+});
+
+Category.belongsTo(User, {
+    as: 'users',
+    foreignKey: 'member_id'
+});
 
 List.hasMany(Link, {
     as: 'links',

@@ -1,6 +1,61 @@
+@protocol= http
+@domainname= localhost
+@port= {{$dotenv PORT}}
+@baseUrl= {{protocol}}://{{domainname}}:{{port}}
+
 ### Not available
 GET http://localhost:5050/404
 
+
+############ CONNEXION - SUBSCRIPTION ##############
+
+### Route POST /subscription -- CREATE USER
+POST {{baseUrl}}/subscription
+Content-Type: application/x-www-form-urlencoded
+
+name=Théodore Bing
+&email=theodorebing@gmail.com
+&password=secret
+
+
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=theodorebing@gmail.com
+&password=secret
+
+### Route GET /logout -- DISCONNECT
+GET {{baseUrl}}/logout
+
+### Route POST /connexion -- UNKNOWN USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+&password=secret1
+
+### Route POST /connexion -- MISSING LOGIN INFORMATION
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+
+##################### ACCOUNT ######################
+
+### Route GET /account
+GET {{baseUrl}}/account
+
+### Route PATCH /account - UPDATE A USER
+PATCH {{baseUrl}}/account
+Content-Type: application/x-www-form-urlencoded
+
+name=Tarte en piont
+&email=theodorebing2@gmail.com
+&password=secret1
+
+### Route DELETE /account - DELETE A USER
+DELETE {{baseUrl}}/account
 
 ############################## CATEGORIES #############################
 
@@ -11,69 +66,66 @@ GET http://localhost:5050/categories
 POST http://localhost:5050/categories
 Content-Type: application/x-www-form-urlencoded
 
-name= Achats
+name=Musique
 
 ### Change a category
-PATCH http://localhost:5050/categories/4
+PATCH http://localhost:5050/categories/12
 Content-Type: application/x-www-form-urlencoded
 
-name=Achats à faire
+name=Musique
 
 ### Delete a category
-DELETE http://localhost:5050/categories/4
+DELETE http://localhost:5050/categories/12
 
-## Not used anymore
-### associer une liste à une catégorie
-# POST http://localhost:5050/lists/1/categories
-# Content-Type: application/x-www-form-urlencoded
-
-# category_id=1
-
-## Not used anymore
-### dissocier une catégorie d'une liste
-# DELETE http://localhost:5050/lists/1/categories/1
 
 ############################## LISTS #############################
-
-### get all lists with their links
-GET http://localhost:5050/lists
-
-### Get one list with it's links
-GET http://localhost:5050/lists/1
 
 ### Create a list inside a category
 POST http://localhost:5050/lists
 Content-Type: application/x-www-form-urlencoded
 
-name=Ma playlist
-&position=1
+name=À écouter
 &category_id=1
+
+### get all lists with their links
+GET http://localhost:5050/lists
+
+### Get one list with it's links
+GET http://localhost:5050/lists/15
 
 ### Change a list
-PATCH http://localhost:5050/lists/5
+PATCH http://localhost:5050/lists/15
 Content-Type: application/x-www-form-urlencoded
 
-name=J'aime pas
+name=J'aime bien
 &position=2
-&category_id=1
+&category_id=7
 
 ### Delete a list
-DELETE http://localhost:5050/lists/7
+DELETE http://localhost:5050/lists/15
 
 ############################## LINKS #############################
 
-### Get all links from one list
-GET http://localhost:5050/lists/5/links
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
 
-### Get one link
-GET http://localhost:5050/links/3
+email=theodorebing@gmail.com
+&password=secret
 
 ### Create a link inside a list
 POST http://localhost:5050/links
 Content-Type: application/x-www-form-urlencoded
 
 url=https://deezer.page.link/vLZTyke5dRagdxT57
-&list_id=5
+&list_id=17
+
+### Get all links from one list
+GET http://localhost:5050/lists/1/links
+
+### Get one link
+GET http://localhost:5050/links/3
+
 
 ### change a link
 PATCH http://localhost:5050/links/5

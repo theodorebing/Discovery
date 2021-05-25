@@ -6,8 +6,10 @@ module.exports = {
     },
     errorServer: (error, request, response, next) => {
         console.trace(error);
+        console.log('error', error);
         response.status(500).json({
             error: 'Error : Something went wrong !'
         });
+
     } 
 }

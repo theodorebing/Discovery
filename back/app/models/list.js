@@ -6,7 +6,8 @@ class List extends Model { }
 
 List.init({
     name: DataTypes.TEXT,
-    position: DataTypes.INTEGER
+    position: DataTypes.INTEGER,
+    member_id: DataTypes.INTEGER
 }, {
     sequelize,
     tableName: 'list'
