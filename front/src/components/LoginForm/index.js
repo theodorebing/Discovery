@@ -4,7 +4,9 @@ import axios from 'axios';
 import './styles.scss';
 import baseUrl from 'src/baseurl';
 
-const LoginForm = () => {
+const qs = require('qs');
+
+const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,15 +16,25 @@ const LoginForm = () => {
   const onChangePassword = (evt) => {
     setPassword(evt.target.value);
   };
+
+  const abortController = new AbortController();
+  const { signal } = abortController;
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios.post(`${baseUrl}connexion`, { email, password })
-      .then(() => {
-        setEmail('');
-        setPassword('');
+    axios.post(`${baseUrl}connexion`, qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } }, { signal })
+      .then((result) => {
+        if (result) {
+          setEmail('');
+          setPassword('');
+          handleLogin();
+        }
+        return function cleanup() {
+          abortController.abort();
+        };
       })
       .catch((error) => {
-        (console.log('error', error.response));
+        (console.log('error', error));
       });
   };
 
