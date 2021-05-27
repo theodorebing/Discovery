@@ -4,7 +4,40 @@
 body {
   background-color: #0f0f0f;
   font-family: sans-serif;
+}
 
+label {
+  font-family: vars.$main-font;
+  color: vars.$white;
+  display: block;
+}
+
+input {
+  display: block;
+  background-color: #ddd;
+  border: 1px; 
+  border-radius: 2px;
+  padding: 6px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  box-shadow: inset 2px 2px 5px rgb(160, 160, 160), inset -2px -2px 5px rgb(250, 250, 250);
+
+  -webkit-appearance: none;
+  &::placeholder {color: vars.$placeholder;}
+}
+
+button {
+  background-color: #222222;
+  border: 1px solid none;
+  border-radius: 5px;
+  padding: 8px;
+  color: vars.$grey;
+  font-size: 1rem;
+  box-shadow: inset 1px 1px 3px #b2b2b2, inset -1px -1px 3px rgb(15, 15, 15);
+}
+
+.link {
+  color: vars.$grey;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');

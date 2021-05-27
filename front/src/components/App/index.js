@@ -10,16 +10,16 @@ import './styles.scss';
 import Index from '../Index';
 
 // == Composant
-const App = () => (
+const App = ({ isLogged }) => (
   <div className="app">
     <Switch>
-      {/* {!isLogged && (
-        <> */}
-      <Route path="/">
-        <Index />
-      </Route>
-      {/* </>
-        )} */}
+      {!isLogged && (
+        <>
+          <Route path="/">
+            <Index />
+          </Route>
+        </>
+      )}
       {/* {isLogged && (
           <>
             <Route path="/" exact>
