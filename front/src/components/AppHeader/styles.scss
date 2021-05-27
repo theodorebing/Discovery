@@ -1,0 +1,18 @@
+@use 'src/styles/vars';
+
+.header {
+  text-align: center;
+
+  &-title {
+    font-family: vars.$main-font;
+    font-size: 2rem;
+    font-weight: 400;
+    background-color: #f0f0f070;
+    color: transparent;
+    text-shadow: 0.5px 0.5px 1px rgb(255, 255, 255);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    margin: 4rem 0;
+  }
+}
