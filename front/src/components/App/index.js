@@ -13,14 +13,20 @@ import Categories from '../Categories';
 import baseUrl from '../../baseurl';
 
 // == Composant
-const App = ({ isLogged, id }) => {
-  useEffect(() => {
-    axios.get(`${baseUrl}account`)
-      .then((result) => {
-        console.log('result', result);
-      });
-  });
-  console.log('id', id);
+const App = ({ isLogged }) => {
+  if (isLogged) {
+    useEffect(() => {
+      axios.get(`${baseUrl}account`)
+        .then((result) => {
+          console.log('result', result);
+          console.log('isLogged', isLogged);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    });
+  }
+  // console.log('isLogged', isLogged);
 
   return (
     <div className="app">
