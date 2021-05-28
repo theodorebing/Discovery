@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleLogin: () => dispatch(setIsLogged()),
+  handleLogin: (id) => dispatch(setIsLogged(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

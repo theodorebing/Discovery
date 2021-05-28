@@ -9,6 +9,7 @@ const qs = require('qs');
 const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [id, setId] = useState(null);
 
   const onChangeEmail = (evt) => {
     setEmail(evt.target.value);
@@ -17,21 +18,17 @@ const LoginForm = ({ handleLogin }) => {
     setPassword(evt.target.value);
   };
 
-  const abortController = new AbortController();
-  const { signal } = abortController;
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios.post(`${baseUrl}connexion`, qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } }, { signal })
+    axios.post(`${baseUrl}connexion`, qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
+          console.log('result.data.id', result.data.id);
           setEmail('');
           setPassword('');
-          handleLogin();
+          setId(result.data.id);
+          handleLogin(id);
         }
-        return function cleanup() {
-          abortController.abort();
-        };
       })
       .catch((error) => {
         (console.log('error', error));

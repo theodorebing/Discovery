@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   isLogged: false,
+  id: null,
 };
 
 export default (state = initialState, action = {}) => {
@@ -12,6 +13,7 @@ export default (state = initialState, action = {}) => {
     case SET_ISLOGGED:
       return {
         isLogged: true,
+        id: action.id,
       };
     case LOGOUT:
       return {

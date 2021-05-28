@@ -5,6 +5,7 @@ import App from 'src/components/App';
 
 const mapStateToProps = (state) => ({
   isLogged: state.auth.isLogged,
+  id: state.auth.id,
 });
 
 const mapDispatchToProps = () => ({

@@ -1,5 +1,5 @@
 // == Import npm
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Route,
   Switch,
@@ -7,12 +7,20 @@ import {
 
 // == Import
 import './styles.scss';
+import axios from 'axios';
 import Index from '../Index';
 import Categories from '../Categories';
+import baseUrl from '../../baseurl';
 
 // == Composant
-const App = ({ isLogged }) => {
-  console.log('isLogged', isLogged);
+const App = ({ isLogged, id }) => {
+  useEffect(() => {
+    axios.get(`${baseUrl}account`)
+      .then((result) => {
+        console.log('result', result);
+      });
+  });
+  console.log('id', id);
 
   return (
     <div className="app">
