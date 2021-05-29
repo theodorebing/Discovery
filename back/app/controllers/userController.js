@@ -67,27 +67,31 @@ const userController = {
         };
 
         try {
-            let user = await User.findAll({
+            let user = await User.findOne({
                 where: {email: searchedUser.email}
             });
-            if (user[0]) {
-                user = user[0].dataValues;
-            }
-            if (user.id) {
-                // compare passwords
-                const match = await bcrypt.compare(searchedUser.password, user.password)
-                    if (match) {
-                        request.session.userid = user.id
-                        response.json(user);    
-                    } else {
-                        response
-                            .status(404)
-                            .json({"error":"invalid connexion information"})
-                    }
-        } else {
-                response
-                    .status(404)
-                    .json({"error":"invalid connexion information"})
+            if (user) {  
+                user = user.dataValues;
+                if (user.id) {
+                    // compare passwords
+                    const match = await bcrypt.compare(searchedUser.password, user.password)
+                        if (match) {
+                            request.session.userid = user.id
+                            response.json(user);    
+                        } else {
+                            response
+                                .status(404)
+                                .json({"error":"invalid connexion information"})
+                        }
+                } else {
+                    response
+                        .status(404)
+                        .json({"error":"invalid connexion information"})
+                }
+            } else {
+                    response
+                        .status(404)
+                        .json({"error":"invalid connexion information"})
             }
 
         } catch (error) {
@@ -96,7 +100,7 @@ const userController = {
     },
 
     getUserInfo : async (request, response, next) => {
-        console.log('request.session.id getuserinfo', request.session.userid)
+        console.log('request.session.id getuserinfo', request.session.id)
         try {
             const user = await User.findAll({
                 where : {id : request.session.userid}
