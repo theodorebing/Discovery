@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'src/api';
 
 import './styles.scss';
-import baseUrl from 'src/baseurl';
 
 const qs = require('qs');
 
@@ -17,21 +16,15 @@ const LoginForm = ({ handleLogin }) => {
     setPassword(evt.target.value);
   };
 
-  const abortController = new AbortController();
-  const { signal } = abortController;
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios.post(`${baseUrl}connexion`, qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } }, { signal })
+    axios.post('connexion', qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
-          setEmail('');
+          // setEmail('');
           setPassword('');
           handleLogin();
         }
-        return function cleanup() {
-          abortController.abort();
-        };
       })
       .catch((error) => {
         (console.log('error', error));

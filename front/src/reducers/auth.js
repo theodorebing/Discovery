@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   isLogged: false,
+  id: null,
 };
 
 export default (state = initialState, action = {}) => {
