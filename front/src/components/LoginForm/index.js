@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'src/api';
 
 import './styles.scss';
-import baseUrl from 'src/baseurl';
 
 const qs = require('qs');
 
@@ -19,12 +18,12 @@ const LoginForm = ({ handleLogin }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios.post(`${baseUrl}connexion`, qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    axios.post('connexion', qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
-          setEmail('');
+          // setEmail('');
           setPassword('');
-          handleLogin(result.data.id);
+          handleLogin();
         }
       })
       .catch((error) => {

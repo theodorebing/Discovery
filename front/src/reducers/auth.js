@@ -13,7 +13,6 @@ export default (state = initialState, action = {}) => {
     case SET_ISLOGGED:
       return {
         isLogged: true,
-        id: action.id,
       };
     case LOGOUT:
       return {

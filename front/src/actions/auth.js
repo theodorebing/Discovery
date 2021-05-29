@@ -1,9 +1,8 @@
 export const SET_ISLOGGED = 'SET_ISLOGGED';
 
-export const setIsLogged = (isLogged, id) => ({
+export const setIsLogged = (isLogged) => ({
   type: SET_ISLOGGED,
   isLogged,
-  id,
 });
 
 export const LOGOUT = 'LOGOUT';
