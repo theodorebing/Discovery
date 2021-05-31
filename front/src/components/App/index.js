@@ -1,23 +1,22 @@
 // == Import npm
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Route,
   Switch,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // == Import
 import './styles.scss';
 import axios from 'src/api';
 import Index from '../Index';
-import Categories from '../Categories';
+import Categories from '../../containers/Categories';
 
 // == Composant
 const App = ({ isLogged, setIsLogged }) => {
   useEffect(() => {
-    axios.get('account', { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-      .then((result) => {
-        console.log('result', result);
-        console.log('isLogged', isLogged);
+    axios.get('account')
+      .then(() => {
         setIsLogged();
       })
       .catch((error) => {
@@ -37,7 +36,7 @@ const App = ({ isLogged, setIsLogged }) => {
           </>
         ) : (
           <>
-            <Route path="/" exact>
+            <Route path={['/', '/categories']} exact>
               <Categories />
             </Route>
             {/* <Route path="/recipe/:recipeSlug">
@@ -51,6 +50,15 @@ const App = ({ isLogged, setIsLogged }) => {
       </Switch>
     </div>
   );
+};
+
+App.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
+  setIsLogged: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+
 };
 
 // == Export
