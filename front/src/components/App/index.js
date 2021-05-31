@@ -1,9 +1,10 @@
 // == Import npm
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Route,
   Switch,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // == Import
 import './styles.scss';
@@ -49,6 +50,15 @@ const App = ({ isLogged, setIsLogged }) => {
       </Switch>
     </div>
   );
+};
+
+App.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
+  setIsLogged: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+
 };
 
 // == Export
