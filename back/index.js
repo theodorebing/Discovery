@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: true,
     resave:true
 }));
-app.use('/api/', router);
+app.use(router);
 app.listen(port, _ => {
    console.log(`http://localhost:${port}`);
 });
