@@ -11,6 +11,7 @@ import './styles.scss';
 import axios from 'src/api';
 import Index from '../Index';
 import Categories from '../../containers/Categories';
+import SignUp from '../SignUp';
 
 // == Composant
 const App = ({ isLogged, setIsLogged }) => {
@@ -23,15 +24,17 @@ const App = ({ isLogged, setIsLogged }) => {
         console.log('error', error.response.data.error);
       });
   });
-  // console.log('isLogged', isLogged);
 
   return (
     <div className="app">
       <Switch>
         {!isLogged ? (
           <>
-            <Route path="/">
+            <Route path="/" exact>
               <Index />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
             </Route>
           </>
         ) : (
@@ -44,6 +47,7 @@ const App = ({ isLogged, setIsLogged }) => {
           </Route> */}
           </>
         )}
+
         <Route>
           <Error />
         </Route>
