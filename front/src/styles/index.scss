@@ -6,6 +6,40 @@ body {
   font-family: sans-serif;
 }
 
+.form {
+  width: 50%;
+  height: 300px;
+  background-color: vars.$black;
+  border: solid 2px none;
+  border-radius: vars.$radius;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+
+  &-form {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  &-label {
+    font-size: 0.7rem;
+  }
+
+  &-input{
+    width: 100%;
+    margin-top: 0.2rem;
+  }
+
+  &-link {
+    font-size: 0.9rem;
+  }
+}
+
 label {
   font-family: vars.$main-font;
   color: vars.$white;
@@ -38,6 +72,14 @@ button {
 
 .link {
   color: vars.$grey;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.confirmationMessage {
+  color: green;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');

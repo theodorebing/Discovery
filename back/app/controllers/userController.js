@@ -11,6 +11,20 @@ const userController = {
         // email validation 
         const isValidEmail = emailValidator.validate(theUserData.email);
 
+        if (!theUserData.password || !theUserData.email || !theUserData.name) {
+            response
+                .status(401)
+                .json({"error":"you must complete all the fields of this form to subscribe"});
+            return;
+        }
+
+        if (theUserData.password.length <5 ) {
+            response
+                .status(401)
+                .json({"error":"you must type a password with at list 5 charachters"});
+            return;
+        }
+
         if (!isValidEmail) {
             response
                 .status(401)
@@ -29,7 +43,7 @@ const userController = {
                 // throw new Error('user already exists');
                 response
                 .status(401)
-                .json({"error":"user already exists"});
+                .json({"error":"you can't use this email address"});
                 return;
             }
 

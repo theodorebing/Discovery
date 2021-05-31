@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'src/api';
 
 import './styles.scss';
+import Input from '../Input';
 
 const qs = require('qs');
 
@@ -10,12 +11,11 @@ const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const onChangeEmail = (evt) => {
-    setEmail(evt.target.value);
+  const onChangeEmail = (value) => {
+    setEmail(value);
   };
-  const onChangePassword = (evt) => {
-    setPassword(evt.target.value);
+  const onChangePassword = (value) => {
+    setPassword(value);
   };
 
   const handleSubmit = (evt) => {
@@ -23,50 +23,36 @@ const LoginForm = ({ handleLogin }) => {
     axios.post('connexion', qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
-          // setEmail('');
           setPassword('');
           handleLogin();
         }
       })
       .catch((error) => {
-        (console.log('error', error.response.data.error));
         setErrorMessage(error.response.data.error);
       });
   };
 
   return (
-    <div className="loginForm">
+    <div className="form">
       {errorMessage && (
         <p className="errorMessage">{errorMessage}</p>
       )}
-      <form action="" className="loginForm-form" onSubmit={handleSubmit}>
-        <label htmlFor="email-input" className="loginForm-label">
-          e-mail
-          <input
-            type="email"
-            value={email}
-            name="email"
-            className="loginForm-input"
-            placeholder="e-mail"
-            onChange={onChangeEmail}
-          />
-        </label>
-        <label htmlFor="password-input" className="loginForm-label">
-          password
-          <input
-            type="password"
-            value={password}
-            name="password"
-            className="loginForm-input"
-            placeholder="password"
-            onChange={onChangePassword}
-          />
-        </label>
+      <form action="" className="form-form" onSubmit={handleSubmit}>
+        <Input
+          onChange={onChangeEmail}
+          value={email}
+          name="email"
+        />
+        <Input
+          onChange={onChangePassword}
+          value={password}
+          name="password"
+        />
         <button type="submit">
           Sign in
         </button>
       </form>
-      <Link to="/signup" className="loginForm-link link">Sign up</Link>
+      <Link to="/signup" className="form-link link">Sign up</Link>
     </div>
   );
 };
