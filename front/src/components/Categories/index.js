@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Page from 'src/components/Page';
 import './styles.scss';
 import Logout from '../../containers/Logout';

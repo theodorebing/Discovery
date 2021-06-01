@@ -18,7 +18,7 @@ module.exports = {
                 // },
                 order: [['name', 'ASC']]
             });
-            if (!categories) {
+            if (!categories.length) {
                 return response.status(404).json({
                     error: `There are no categories`
                 });
