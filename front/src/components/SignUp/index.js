@@ -27,7 +27,6 @@ const SignUp = () => {
     axios.post('subscription', qs.stringify({ name, email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
-          console.log('subscription worked fine', result);
           setPassword('');
           setErrorMessage(null);
           setConfirmationMessage('You are now subscribed! Please go back to sign in page and connect');
@@ -41,7 +40,9 @@ const SignUp = () => {
     <Page>
       <div className="form">
         {errorMessage && (
-          <p className="errorMessage">{errorMessage}</p>
+          <div className="message-div">
+            <p className="message-text errorMessage">{errorMessage}</p>
+          </div>
         )}
         {!confirmationMessage ? (
           <>
@@ -69,8 +70,11 @@ const SignUp = () => {
           </>
         ) : (
           <>
-            <p className="confirmationMessage">{confirmationMessage}</p>
-            <Link to="/" className="form-link link">Go to sign in page!</Link>
+            <div className="message-div">
+              <p className="message-text confirmationMessage">{confirmationMessage}</p>
+            </div>
+
+            <Link to="/" className="form-link link"><button type="button">Go to sign in page!</button></Link>
           </>
         )}
       </div>

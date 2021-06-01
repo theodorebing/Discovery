@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'src/api';
 
-import './styles.scss';
 import Input from '../Input';
 
 const qs = require('qs');
@@ -35,7 +34,9 @@ const LoginForm = ({ handleLogin }) => {
   return (
     <div className="form">
       {errorMessage && (
-        <p className="errorMessage">{errorMessage}</p>
+        <div className="message-div">
+          <p className="message-text errorMessage">{errorMessage}</p>
+        </div>
       )}
       <form action="" className="form-form" onSubmit={handleSubmit}>
         <Input
