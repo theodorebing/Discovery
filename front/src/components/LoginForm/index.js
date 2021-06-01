@@ -19,7 +19,11 @@ const LoginForm = ({ handleLogin }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    axios.post('connexion', qs.stringify({ email, password }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    axios.post(
+      'connexion',
+      qs.stringify({ email, password }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } },
+    )
       .then((result) => {
         if (result) {
           setPassword('');

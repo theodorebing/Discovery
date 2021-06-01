@@ -38,11 +38,14 @@ module.exports = {
         }
     },
 
-    getAllLists: async (request, response, next) => {
+    getAllListsFromCategory: async (request, response, next) => {
+
+        const id = Number(request.params.id);
+        console.log('id', id)
 
         try {
             const lists = await List.findAll({
-                where: {member_id : request.session.userid},
+                where: {member_id : request.session.userid, category_id : id},
                 include: {
                     association: 'links'
                 }, 

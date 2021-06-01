@@ -27,8 +27,8 @@ router.route('/categories/:id')
     .delete(isConnected, categoryController.deleteCategory);
 
 // LISTS
-router.route('/lists')
-    .get(isConnected,listController.getAllLists)
+router.route('/categories/:id/lists')
+    .get(isConnected,listController.getAllListsFromCategory)
     .post(isConnected,listController.createList);
 router.route('/lists/:id')
     .get(isConnected,listController.getOneList)

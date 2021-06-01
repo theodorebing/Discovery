@@ -3,6 +3,8 @@ import Input from '../Input';
 import Select from '../Select';
 import axios from '../../api';
 
+const qs = require('qs');
+
 const LinkForm = ({
   onChangeLink, openLinkForm, linkFormOpened, link,
 }) => {
@@ -11,7 +13,7 @@ const LinkForm = ({
     openLinkForm();
   };
   const [categories, setCategories] = useState({});
-  const [category, setCategory] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
   useEffect(() => {
     axios.get('categories')
       .then((result) => {
@@ -24,10 +26,32 @@ const LinkForm = ({
       });
   }, []);
   const categorySelected = (evt) => {
-    setCategory(evt.target.value);
+    setCategoryId(evt.target.value);
   };
-  if (category) {
-    console.log(category);
+
+  const [lists, setLists] = useState(null);
+  const [listId, setListId] = useState(null);
+  const getListsFromSelectedCategory = () => {
+    axios.get(`categories/${categoryId}/lists`)
+      .then((result) => {
+        if (result && result.data) {
+          console.log('result', result);
+          setLists(result.data);
+        }
+      })
+      .catch((error) => {
+        (console.log('error', error));
+      });
+  };
+  if (categoryId) {
+    getListsFromSelectedCategory();
+  }
+
+  const listSelected = (evt) => {
+    setListId(evt.target.value);
+  };
+  if (lists) {
+    console.log('lists', lists);
   }
 
   return (
@@ -44,12 +68,24 @@ const LinkForm = ({
       {linkFormOpened && (
         <>
           {categories.length ? (
-            <Select
-              values={categories}
-              name="category"
-              label="choose a category"
-              valueSelected={categorySelected}
-            />
+            <>
+              <Select
+                values={categories}
+                name="category"
+                label="choose a category"
+                valueSelected={categorySelected}
+              />
+              {categoryId && lists ? (
+                <Select
+                  values={lists}
+                  name="list"
+                  label="choose a list"
+                  valueSelected={listSelected}
+                />
+              ) : (
+                <p>Create a list</p>
+              )}
+            </>
           ) : (
             <p>Create a category</p>
           )}
