@@ -9,8 +9,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeLink: (link) => dispatch(onChangeLink(link)),
-  openLinkForm: () => dispatch(openLinkForm),
-  closeLinkForm: () => dispatch(closeLinkForm),
+  openLinkForm: () => dispatch(openLinkForm()),
+  closeLinkForm: () => dispatch(closeLinkForm()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LinkForm);

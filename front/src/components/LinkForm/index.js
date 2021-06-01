@@ -1,17 +1,10 @@
 import React from 'react';
 import Input from '../Input';
+import Select from '../Select';
 
 const LinkForm = ({
   onChangeLink, openLinkForm, linkFormOpened, link,
 }) => {
-  // const [link, setLink] = useState('');
-  // const onChangeLink = (value) => {
-  //   setLink(value);
-  // };
-  // let linkFormOpened = false;
-  // const openLinkForm = () => {
-  //   linkFormOpened = true;
-  // };
   const handleSubmit = (evt) => {
     evt.preventDefault();
     openLinkForm();
@@ -27,10 +20,10 @@ const LinkForm = ({
           value={link}
           name="link"
         />
-        {linkFormOpened && (
-          <Select />
-        )}
       </form>
+      {linkFormOpened && (
+        <Select />
+      )}
     </div>
   );
 };

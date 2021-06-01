@@ -7,14 +7,12 @@ export const onChangeLink = (link) => ({
 
 export const OPEN_LINK_FORM = 'OPEN_LINK_FORM';
 
-export const openLinkForm = (linkFormOpened) => ({
+export const openLinkForm = () => ({
   type: OPEN_LINK_FORM,
-  linkFormOpened,
 });
 
 export const CLOSE_LINK_FORM = 'CLOSE_LINK_FORM';
 
-export const closeLinkForm = (linkFormOpened) => ({
+export const closeLinkForm = () => ({
   type: CLOSE_LINK_FORM,
-  linkFormOpened,
 });
