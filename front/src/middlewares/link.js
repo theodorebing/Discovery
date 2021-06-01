@@ -1,9 +1,8 @@
 /* eslint-disable no-empty */
 
 import {
-  SET_ISLOGGED,
-  setIsLogged,
-} from 'src/actions/auth';
+
+} from 'src/actions/link';
 
 export default (store) => (next) => (action) => {
   switch (action.type) {

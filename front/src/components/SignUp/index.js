@@ -51,16 +51,19 @@ const SignUp = () => {
           <>
             <form action="" className="form-form" onSubmit={handleSubmitSubscription}>
               <Input
+                label="name"
                 onChange={onChangeName}
                 value={name}
                 name="name"
               />
               <Input
+                label="email"
                 onChange={onChangeEmail}
                 value={email}
                 name="email"
               />
               <Input
+                label="password"
                 onChange={onChangePassword}
                 value={password}
                 name="password"

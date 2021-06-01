@@ -46,6 +46,11 @@ label {
   display: block;
 }
 
+.linkInput {
+  width: 500px;
+  border-radius: 5px 5px 5px 5px ;
+}
+
 input {
   display: block;
   background-color: #ddd;
@@ -102,6 +107,8 @@ button {
   color: vars.$grey;
   margin-top: 1rem;
 }
+
+
 
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');

@@ -43,11 +43,13 @@ const LoginForm = ({ handleLogin }) => {
       )}
       <form action="" className="form-form" onSubmit={handleSubmit}>
         <Input
+          label="email"
           onChange={onChangeEmail}
           value={email}
           name="email"
         />
         <Input
+          label="password"
           onChange={onChangePassword}
           value={password}
           name="password"
