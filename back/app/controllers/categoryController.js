@@ -6,19 +6,19 @@ module.exports = {
         try {
             const categories = await Category.findAll({
                 where: {member_id : request.session.userid},
-                include: {
-                    model: List, 
-                    as: 'list',
-                    where: {member_id : request.session.userid},
-                    include: {
-                        model: Link,
-                        as: 'links',
-                        where: {member_id : request.session.userid},         
-                    }        
-                },
-                order: [['id', 'ASC']]
+                // include: {
+                //     model: List, 
+                //     as: 'list',
+                //     where: {member_id : request.session.userid},
+                //     include: {
+                //         model: Link,
+                //         as: 'links',
+                //         where: {member_id : request.session.userid},         
+                //     }        
+                // },
+                order: [['name', 'ASC']]
             });
-            if (!categories[0]) {
+            if (!categories) {
                 return response.status(404).json({
                     error: `There are no categories`
                 });
