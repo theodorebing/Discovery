@@ -33,6 +33,9 @@ const LoginForm = ({ handleLogin }) => {
 
   return (
     <div className="form">
+      <div className="message-div">
+        <p className="message-text formMessage">please enter your connection informations to be linked</p>
+      </div>
       {errorMessage && (
         <div className="message-div">
           <p className="message-text errorMessage">{errorMessage}</p>

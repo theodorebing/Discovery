@@ -39,6 +39,9 @@ const SignUp = () => {
   return (
     <Page>
       <div className="form">
+        <div className="message-div">
+          <p className="message-text formMessage">you must fill in each field to complete subscription</p>
+        </div>
         {errorMessage && (
           <div className="message-div">
             <p className="message-text errorMessage">{errorMessage}</p>
