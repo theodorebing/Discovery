@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 
 const Select = ({
   name, label, valueSelected, values,
-}) => {
-  console.log('values', values);
-  return (
-    <form method="post" className="">
-      {name && (
+}) => (
+  <>
+    {name && (
       <label htmlFor={`${name}-select`} className="">{label}
         <select name={`${name}`} id={`${name}-select`} onChange={valueSelected}>
           {values && Object.keys(values).length ? (
@@ -23,10 +21,9 @@ const Select = ({
           )}
         </select>
       </label>
-      )}
-    </form>
-  );
-};
+    )}
+  </>
+);
 
 Select.propTypes = {
   name: PropTypes.string.isRequired,

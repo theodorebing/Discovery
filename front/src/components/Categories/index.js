@@ -8,6 +8,7 @@ const Categories = () => (
   <Page>
     <div className="categories">
       <LinkForm />
+      {/* <CategoriesList /> */}
       <Logout />
     </div>
   </Page>

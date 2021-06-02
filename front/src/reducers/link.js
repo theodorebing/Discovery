@@ -25,6 +25,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         linkFormOpened: false,
+        link: '',
       };
     default:
       return state;
