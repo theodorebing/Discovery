@@ -19,7 +19,7 @@ const Select = ({
           ))}
             </>
           ) : (
-            <option value="">no {`${name}`}, create one</option>
+            <option value="">no {`${name}`} yet, create one</option>
           )}
         </select>
       </label>
@@ -32,11 +32,11 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   valueSelected: PropTypes.func.isRequired,
-  values: PropTypes.object,
+  values: PropTypes.array,
 };
 
 Select.defaultProps = {
-  values: {},
+  values: null,
 };
 
 export default Select;

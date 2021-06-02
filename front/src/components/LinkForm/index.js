@@ -10,9 +10,9 @@ const LinkForm = ({
     evt.preventDefault();
     openLinkForm();
   };
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
-  const [lists, setLists] = useState({});
+  const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
   const getListsFromSelectedCategory = async () => {
     await (
@@ -26,7 +26,7 @@ const LinkForm = ({
         })
         .catch((error) => {
           (console.log('error', error));
-          setLists({});
+          setLists([]);
         })
     );
   };
@@ -48,7 +48,7 @@ const LinkForm = ({
       })
       .catch((error) => {
         (console.log('error', error));
-        setCategories({});
+        setCategories([]);
       });
     if (categoryId) {
       getListsFromSelectedCategory();
@@ -68,18 +68,14 @@ const LinkForm = ({
       </form>
       {linkFormOpened && (
         <>
-          {categories.length && (
-            <>
-              <Select
-                values={categories}
-                name="category"
-                label="choose a category"
-                valueSelected={categorySelected}
-              />
-              <p>Create a category</p>
-            </>
-          )}
-          {categoryId && lists && (
+          <Select
+            values={categories}
+            name="category"
+            label="choose a category"
+            valueSelected={categorySelected}
+          />
+          <p>Create a category</p>
+          {categoryId && (
           <>
             <Select
               values={lists}
@@ -90,6 +86,7 @@ const LinkForm = ({
             <p>Create a list</p>
           </>
           )}
+
         </>
       )}
     </div>
