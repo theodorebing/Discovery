@@ -23,7 +23,7 @@ const App = ({ isLogged, setIsLogged }) => {
       .catch((error) => {
         console.log('error', error.response.data.error);
       });
-  });
+  }, []);
 
   return (
     <div className="app">

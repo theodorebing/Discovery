@@ -3,8 +3,6 @@ import Input from '../Input';
 import Select from '../Select';
 import axios from '../../api';
 
-const qs = require('qs');
-
 const LinkForm = ({
   onChangeLink, openLinkForm, linkFormOpened, link,
 }) => {
@@ -14,6 +12,33 @@ const LinkForm = ({
   };
   const [categories, setCategories] = useState({});
   const [categoryId, setCategoryId] = useState(null);
+  const [lists, setLists] = useState({});
+  const [listId, setListId] = useState(null);
+  const getListsFromSelectedCategory = async () => {
+    await (
+      axios.get(`categories/${categoryId}/lists`)
+        .then((result) => {
+          if (result && result.data) {
+            console.log('result', result);
+            setLists(result.data);
+            return result;
+          }
+        })
+        .catch((error) => {
+          (console.log('error', error));
+          setLists({});
+        })
+    );
+  };
+
+  const listSelected = (evt) => {
+    setListId(evt.target.value);
+  };
+
+  const categorySelected = (evt) => {
+    setCategoryId(evt.target.value);
+  };
+
   useEffect(() => {
     axios.get('categories')
       .then((result) => {
@@ -23,36 +48,12 @@ const LinkForm = ({
       })
       .catch((error) => {
         (console.log('error', error));
+        setCategories({});
       });
-  }, []);
-  const categorySelected = (evt) => {
-    setCategoryId(evt.target.value);
-  };
-
-  const [lists, setLists] = useState(null);
-  const [listId, setListId] = useState(null);
-  const getListsFromSelectedCategory = () => {
-    axios.get(`categories/${categoryId}/lists`)
-      .then((result) => {
-        if (result && result.data) {
-          console.log('result', result);
-          setLists(result.data);
-        }
-      })
-      .catch((error) => {
-        (console.log('error', error));
-      });
-  };
-  if (categoryId) {
-    getListsFromSelectedCategory();
-  }
-
-  const listSelected = (evt) => {
-    setListId(evt.target.value);
-  };
-  if (lists) {
-    console.log('lists', lists);
-  }
+    if (categoryId) {
+      getListsFromSelectedCategory();
+    }
+  }, [categoryId]);
 
   return (
     <div className="linkForm">
@@ -67,7 +68,7 @@ const LinkForm = ({
       </form>
       {linkFormOpened && (
         <>
-          {categories.length ? (
+          {categories.length && (
             <>
               <Select
                 values={categories}
@@ -75,19 +76,19 @@ const LinkForm = ({
                 label="choose a category"
                 valueSelected={categorySelected}
               />
-              {categoryId && lists ? (
-                <Select
-                  values={lists}
-                  name="list"
-                  label="choose a list"
-                  valueSelected={listSelected}
-                />
-              ) : (
-                <p>Create a list</p>
-              )}
+              <p>Create a category</p>
             </>
-          ) : (
-            <p>Create a category</p>
+          )}
+          {categoryId && lists && (
+          <>
+            <Select
+              values={lists}
+              name="list"
+              label="choose a list"
+              valueSelected={listSelected}
+            />
+            <p>Create a list</p>
+          </>
           )}
         </>
       )}
