@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Select = ({
   name, label, valueSelected, values,
@@ -25,6 +26,17 @@ const Select = ({
       )}
     </form>
   );
+};
+
+Select.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  valueSelected: PropTypes.func.isRequired,
+  values: PropTypes.object,
+};
+
+Select.defaultProps = {
+  values: {},
 };
 
 export default Select;
