@@ -14,14 +14,16 @@ import Categories from '../../containers/Categories';
 import SignUp from '../SignUp';
 
 // == Composant
-const App = ({ isLogged, setIsLogged }) => {
+const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
   useEffect(() => {
     axios.get('account')
       .then(() => {
+        closeLinkForm();
         setIsLogged();
       })
       .catch((error) => {
         console.log('error', error.response.data.error);
+        closeLinkForm();
       });
   }, []);
 

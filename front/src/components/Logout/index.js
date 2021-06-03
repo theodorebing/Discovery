@@ -2,10 +2,13 @@ import React from 'react';
 import axios from 'src/api';
 import './styles.scss';
 
-const Logout = ({ handleLogout }) => {
+const Logout = ({ handleLogout, closeLinkForm }) => {
   const deconnect = () => {
     axios.get('logout')
-      .then(() => handleLogout());
+      .then(() => {
+        handleLogout();
+        closeLinkForm();
+      });
   };
   return (
     <div className="logout-button">

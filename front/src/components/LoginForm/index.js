@@ -6,7 +6,7 @@ import Input from '../Input';
 
 const qs = require('qs');
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = ({ handleLogin, closeLinkForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
@@ -26,6 +26,7 @@ const LoginForm = ({ handleLogin }) => {
     )
       .then((result) => {
         if (result) {
+          closeLinkForm();
           setPassword('');
           handleLogin();
         }

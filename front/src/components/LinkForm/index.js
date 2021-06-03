@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import Select from '../Select';
+import CreateNewCategoryInput from '../CreateNewCategoryInput';
 import axios from '../../api';
 
 import './styles.scss';
@@ -16,6 +17,7 @@ const LinkForm = ({
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [inputOpen, setInputOpen] = useState(false);
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
     openLinkForm();
@@ -79,6 +81,10 @@ const LinkForm = ({
     }
   }, [categoryId]);
 
+  const openInput = () => {
+    setInputOpen(true);
+  };
+
   return (
     <div className="linkForm">
       <form action="" className="form-form" onSubmit={handleSubmitLink}>
@@ -95,47 +101,49 @@ const LinkForm = ({
           {errorMessage && (
           <p className="errorMessage">{errorMessage}</p>
           )}
-          <form method="post" className="linkForm-part2-form" onSubmit={handleSubmitForm}>
-            <div className="linkForm-part2-div">
-              <Select
-                values={categories}
-                name="category"
-                label="choose a category"
-                valueSelected={categorySelected}
-              />
-              <p
-                className="linkForm-part2-create"
-                onClick={() => {
-                  console.log('test');
-                }}
-              >or create a category +
-              </p>
-            </div>
-            {categoryId && (
-            <div className="linkForm-part2-div">
-              <Select
-                values={lists}
-                name="list"
-                label="choose a list"
-                valueSelected={listSelected}
-              />
-              <p
-                className="linkForm-part2-create"
-                onClick={() => {
-                  console.log('test');
-                }}
-              >or create a list +
-              </p>
-            </div>
-            )}
-            {listId && (
-            <div className="linkForm-part2-div">
-              <button type="button" onClick={handleSubmitForm}>
-                create the link
-              </button>
-            </div>
-            )}
-          </form>
+          {!inputOpen ? (
+            <form method="post" className="linkForm-part2-form" onSubmit={handleSubmitForm}>
+              <div className="linkForm-part2-div">
+
+                <Select
+                  values={categories}
+                  name="category"
+                  label="choose a category"
+                  valueSelected={categorySelected}
+                />
+                <p
+                  className="linkForm-part2-create"
+                  onClick={openInput}
+                >or create a category +
+                </p>
+
+              </div>
+              {categoryId && (
+              <div className="linkForm-part2-div">
+                <Select
+                  values={lists}
+                  name="list"
+                  label="choose a list"
+                  valueSelected={listSelected}
+                />
+                <p
+                  className="linkForm-part2-create"
+                  onClick={openInput}
+                >or create a list +
+                </p>
+              </div>
+              )}
+              {listId && (
+              <div className="linkForm-part2-div">
+                <button type="button" onClick={handleSubmitForm}>
+                  create the link
+                </button>
+              </div>
+              )}
+            </form>
+          ) : (
+            <CreateNewCategoryInput setInputOpen={setInputOpen} />
+          )}
         </div>
       )}
     </div>
