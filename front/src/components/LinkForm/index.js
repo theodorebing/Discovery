@@ -31,7 +31,7 @@ const LinkForm = ({
           closeLinkForm();
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage('There is a problem with your link');
       });
   };
