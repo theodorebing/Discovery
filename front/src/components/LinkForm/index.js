@@ -4,6 +4,8 @@ import Input from '../Input';
 import Select from '../Select';
 import axios from '../../api';
 
+import './styles.scss';
+
 const qs = require('qs');
 
 const LinkForm = ({
@@ -89,36 +91,52 @@ const LinkForm = ({
         />
       </form>
       {linkFormOpened && (
-        <>
+        <div className="linkForm-part2">
           {errorMessage && (
           <p className="errorMessage">{errorMessage}</p>
           )}
-          <form method="post" className="" onSubmit={handleSubmitForm}>
-            <Select
-              values={categories}
-              name="category"
-              label="choose a category"
-              valueSelected={categorySelected}
-            />
-            <p>Create a category</p>
+          <form method="post" className="linkForm-part2-form" onSubmit={handleSubmitForm}>
+            <div className="linkForm-part2-div">
+              <Select
+                values={categories}
+                name="category"
+                label="choose a category"
+                valueSelected={categorySelected}
+              />
+              <p
+                className="linkForm-part2-create"
+                onClick={() => {
+                  console.log('test');
+                }}
+              >or create a category +
+              </p>
+            </div>
             {categoryId && (
-            <>
+            <div className="linkForm-part2-div">
               <Select
                 values={lists}
                 name="list"
                 label="choose a list"
                 valueSelected={listSelected}
               />
-              <p>Create a list</p>
-            </>
+              <p
+                className="linkForm-part2-create"
+                onClick={() => {
+                  console.log('test');
+                }}
+              >or create a list +
+              </p>
+            </div>
             )}
             {listId && (
-            <button type="button" onClick={handleSubmitForm}>
-              create the link
-            </button>
+            <div className="linkForm-part2-div">
+              <button type="button" onClick={handleSubmitForm}>
+                create the link
+              </button>
+            </div>
             )}
           </form>
-        </>
+        </div>
       )}
     </div>
   );

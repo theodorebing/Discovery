@@ -6,21 +6,22 @@ const Select = ({
 }) => (
   <>
     {name && (
-      <label htmlFor={`${name}-select`} className="">{label}
-        <select name={`${name}`} id={`${name}-select`} onChange={valueSelected}>
-          {values && Object.keys(values).length ? (
-            <>
-              <option value="">please choose a {`${name}`}</option>
-              {values.length
+    <>
+      <label htmlFor={`${name}-select`} className="select-label">{label}</label>
+      <select className="select-select" name={`${name}`} id={`${name}-select`} onChange={valueSelected}>
+        {values && Object.keys(values).length ? (
+          <>
+            <option value="">please choose a {`${name}`}</option>
+            {values.length
           && values.map((selectValue) => (
             <option key={selectValue.id} value={selectValue.id}>{selectValue.name}</option>
           ))}
-            </>
-          ) : (
-            <option value="">no {`${name}`} yet, create one</option>
-          )}
-        </select>
-      </label>
+          </>
+        ) : (
+          <option value="">no {`${name}`} yet, create one</option>
+        )}
+      </select>
+    </>
     )}
   </>
 );
