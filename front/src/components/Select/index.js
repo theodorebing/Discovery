@@ -13,9 +13,9 @@ const Select = ({
           <>
             <option value="">please choose a {`${name}`}</option>
             {values.length
-          && values.map((selectValue) => (
-            <option key={selectValue.id} value={selectValue.id}>{selectValue.name}</option>
-          ))}
+              && values.map((selectValue) => (
+                <option key={selectValue.id} value={selectValue.id}>{selectValue.name}</option>
+              ))}
           </>
         ) : (
           <option value="">no {`${name}`} yet, create one</option>

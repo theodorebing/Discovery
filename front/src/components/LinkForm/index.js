@@ -57,12 +57,12 @@ const LinkForm = ({
     );
   };
 
-  const listSelected = (evt) => {
-    setListId(evt.target.value);
-  };
-
   const categorySelected = (evt) => {
     setCategoryId(evt.target.value);
+  };
+
+  const listSelected = (evt) => {
+    setListId(evt.target.value);
   };
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const LinkForm = ({
     if (categoryId) {
       getListsFromSelectedCategory();
     }
-  }, [categoryId]);
+  }, [categoryId, inputOpen]);
 
   const openInput = () => {
     setInputOpen(true);
@@ -116,7 +116,6 @@ const LinkForm = ({
                   onClick={openInput}
                 >or create a category +
                 </p>
-
               </div>
               {categoryId && (
               <div className="linkForm-part2-div">
@@ -142,7 +141,10 @@ const LinkForm = ({
               )}
             </form>
           ) : (
-            <CreateNewCategoryInput setInputOpen={setInputOpen} />
+            <CreateNewCategoryInput
+              setInputOpen={setInputOpen}
+              setCategoryId={setCategoryId}
+            />
           )}
         </div>
       )}
