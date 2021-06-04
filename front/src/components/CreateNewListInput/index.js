@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios from '../../api';
 import Input from '../Input';
 
-import './styles.scss';
-
 const qs = require('qs');
 
 const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessage }) => {
@@ -32,7 +30,7 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
       });
   };
   return (
-    <form action="" className="form-form newCategory" onSubmit={handleSubmitNewList}>
+    <form action="" className="form-form newInput" onSubmit={handleSubmitNewList}>
       {errorMessage && (
       <p className="errorMessage">{errorMessage}</p>
       )}
@@ -43,7 +41,7 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
         value={newList}
         name="list"
       />
-      <p onClick={closeInput} className="newCategory-close">close</p>
+      <p onClick={closeInput} className="newInput-close">close</p>
     </form>
   );
 };

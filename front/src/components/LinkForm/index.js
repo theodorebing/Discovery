@@ -179,7 +179,7 @@ const LinkForm = ({
                 </button>
               </div>
             )}
-          <p onClick={closeAndResetForm} className="newCategory-close">cancel</p>
+          <p onClick={closeAndResetForm} className="newInput-close">cancel</p>
         </div>
       )}
     </div>
