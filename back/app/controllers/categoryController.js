@@ -33,9 +33,10 @@ module.exports = {
     createCategory: async (request, response, next) => {
         const data = request.body;
         const userId = request.session.userid;
+        console.log('data', data)
         if (!data.name) {
             return response.status(400).json({
-                error: `You must provide a name`
+                error: `you must provide a name`
             });
         }
 
