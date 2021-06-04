@@ -37,6 +37,11 @@ const LinkForm = ({
     setListInputOpen(false);
   };
 
+  const closeAndResetForm = () => {
+    closeLinkForm();
+    resetForm();
+  };
+
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
     axios.post('links',
@@ -44,8 +49,7 @@ const LinkForm = ({
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
       .then((result) => {
         if (result) {
-          closeLinkForm();
-          resetForm();
+          closeAndResetForm();
         }
       })
       .catch((error) => {
@@ -175,6 +179,7 @@ const LinkForm = ({
                 </button>
               </div>
             )}
+          <p onClick={closeAndResetForm} className="newCategory-close">cancel</p>
         </div>
       )}
     </div>
