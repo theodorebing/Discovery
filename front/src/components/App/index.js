@@ -22,7 +22,7 @@ const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
         setIsLogged();
       })
       .catch((error) => {
-        console.log('error', error.response.data.error);
+        console.log('error', error);
         closeLinkForm();
       });
   }, []);
