@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
 
@@ -19,13 +20,11 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
       qs.stringify({ name: newList }))
       .then((result) => {
         if (result && result.data) {
-          console.log(result.data);
           setConfirmationMessage(`list ${newList} created`);
           closeInput();
         }
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.error);
       });
   };
@@ -44,6 +43,12 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
       <p onClick={closeInput} className="newInput-close">close</p>
     </form>
   );
+};
+
+CreateNewListInput.propTypes = {
+  setListInputOpen: PropTypes.func.isRequired,
+  categoryId: PropTypes.string.isRequired,
+  setConfirmationMessage: PropTypes.func.isRequired,
 };
 
 export default CreateNewListInput;

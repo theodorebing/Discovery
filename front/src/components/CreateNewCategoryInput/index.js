@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
 
@@ -19,17 +20,14 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
       qs.stringify({ name: newCategory }))
       .then((result) => {
         if (result && result.data) {
-          console.log(result.data);
           setConfirmationMessage(`category ${newCategory} created`);
           closeInput();
         }
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage(error.response.data.error);
       });
   };
-  console.log(newCategory);
   return (
     <form action="" className="form-form newInput" onSubmit={handleSubmitNewCategory}>
       {errorMessage && (
@@ -45,6 +43,11 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
       <p onClick={closeInput} className="newInput-close">close</p>
     </form>
   );
+};
+
+CreateNewCategoryInput.propTypes = {
+  setCategoryInputOpen: PropTypes.func.isRequired,
+  setConfirmationMessage: PropTypes.func.isRequired,
 };
 
 export default CreateNewCategoryInput;
