@@ -6,23 +6,23 @@ import './styles.scss';
 
 const qs = require('qs');
 
-const CreateNewCategoryInput = ({ setCategoryInputOpen }) => {
-  const [newCategory, setNewCategory] = useState('');
+const CreateNewListInput = ({ setListInputOpen, categoryId }) => {
+  const [newList, setNewList] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const onChangeNewCategory = (value) => {
-    setNewCategory(value);
+  const onChangeNewList = (value) => {
+    setNewList(value);
   };
   const closeInput = () => {
-    setCategoryInputOpen(false);
+    setListInputOpen(false);
   };
-  const handleSubmitNewCategory = (evt) => {
+  const handleSubmitNewList = (evt) => {
     evt.preventDefault();
-    axios.post('categories',
-      qs.stringify({ name: newCategory }))
+    axios.post(`categories/${categoryId}/lists`,
+      qs.stringify({ name: newList }))
       .then((result) => {
         if (result && result.data) {
           console.log(result.data);
-          setCategoryInputOpen(false);
+          closeInput();
         }
       })
       .catch((error) => {
@@ -30,22 +30,21 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen }) => {
         setErrorMessage(error.response.data.error);
       });
   };
-  console.log(newCategory);
   return (
-    <form action="" className="form-form newCategory" onSubmit={handleSubmitNewCategory}>
+    <form action="" className="form-form newCategory" onSubmit={handleSubmitNewList}>
       {errorMessage && (
       <p className="errorMessage">{errorMessage}</p>
       )}
       <Input
-        label="give a name to this new category"
-        className="categoryInput"
-        onChange={onChangeNewCategory}
-        value={newCategory}
-        name="category"
+        label="give a name to this new list"
+        className="CategoryInput"
+        onChange={onChangeNewList}
+        value={newList}
+        name="list"
       />
       <p onClick={closeInput} className="newCategory-close">close</p>
     </form>
   );
 };
 
-export default CreateNewCategoryInput;
+export default CreateNewListInput;

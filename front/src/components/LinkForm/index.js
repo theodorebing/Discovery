@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input from '../Input';
 import Select from '../Select';
 import CreateNewCategoryInput from '../CreateNewCategoryInput';
+import CreateNewListInput from '../CreateNewListInput';
 import axios from '../../api';
 
 import './styles.scss';
@@ -17,13 +18,22 @@ const LinkForm = ({
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [inputOpen, setInputOpen] = useState(false);
+  const [categoryInputOpen, setCategoryInputOpen] = useState(false);
+  const [listInputOpen, setListInputOpen] = useState(false);
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
     openLinkForm();
   };
 
   const url = link;
+
+  const resetForm = () => {
+    setCategoryId(null);
+    setListId(null);
+    setErrorMessage('');
+    setCategoryInputOpen(false);
+    setListInputOpen(false);
+  };
 
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
@@ -33,9 +43,11 @@ const LinkForm = ({
       .then((result) => {
         if (result) {
           closeLinkForm();
+          resetForm();
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         setErrorMessage('There is a problem with your link');
       });
   };
@@ -79,10 +91,14 @@ const LinkForm = ({
     if (categoryId) {
       getListsFromSelectedCategory();
     }
-  }, [categoryId, inputOpen]);
+  }, [categoryId, categoryInputOpen, listId, listInputOpen]);
 
-  const openInput = () => {
-    setInputOpen(true);
+  const openCategoryInput = () => {
+    setCategoryInputOpen(true);
+  };
+
+  const openListInput = () => {
+    setListInputOpen(true);
   };
 
   return (
@@ -101,10 +117,8 @@ const LinkForm = ({
           {errorMessage && (
           <p className="errorMessage">{errorMessage}</p>
           )}
-          {!inputOpen ? (
-            <form method="post" className="linkForm-part2-form" onSubmit={handleSubmitForm}>
+            {!categoryInputOpen ? (
               <div className="linkForm-part2-div">
-
                 <Select
                   values={categories}
                   name="category"
@@ -113,39 +127,48 @@ const LinkForm = ({
                 />
                 <p
                   className="linkForm-part2-create"
-                  onClick={openInput}
+                  onClick={openCategoryInput}
                 >or create a category +
                 </p>
               </div>
-              {categoryId && (
-              <div className="linkForm-part2-div">
-                <Select
-                  values={lists}
-                  name="list"
-                  label="choose a list"
-                  valueSelected={listSelected}
+            ) : (
+              <CreateNewCategoryInput
+                setCategoryInputOpen={setCategoryInputOpen}
+                setCategoryId={setCategoryId}
+              />
+            )}
+            {categoryId && (
+            <>
+              {!listInputOpen ? (
+                <div className="linkForm-part2-div">
+                  <Select
+                    values={lists}
+                    name="list"
+                    label="choose a list"
+                    valueSelected={listSelected}
+                  />
+                  <p
+                    className="linkForm-part2-create"
+                    onClick={openListInput}
+                  >or create a list +
+                  </p>
+                </div>
+              ) : (
+                <CreateNewListInput
+                  setListInputOpen={setListInputOpen}
+                  setListId={setListId}
+                  categoryId={categoryId}
                 />
-                <p
-                  className="linkForm-part2-create"
-                  onClick={openInput}
-                >or create a list +
-                </p>
-              </div>
               )}
-              {listId && (
+            </>
+            )}
+            {listId && (
               <div className="linkForm-part2-div">
                 <button type="button" onClick={handleSubmitForm}>
                   create the link
                 </button>
               </div>
-              )}
-            </form>
-          ) : (
-            <CreateNewCategoryInput
-              setInputOpen={setInputOpen}
-              setCategoryId={setCategoryId}
-            />
-          )}
+            )}
         </div>
       )}
     </div>
