@@ -6,7 +6,7 @@ import './styles.scss';
 
 const qs = require('qs');
 
-const CreateNewListInput = ({ setListInputOpen, categoryId }) => {
+const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessage }) => {
   const [newList, setNewList] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const onChangeNewList = (value) => {
@@ -22,6 +22,7 @@ const CreateNewListInput = ({ setListInputOpen, categoryId }) => {
       .then((result) => {
         if (result && result.data) {
           console.log(result.data);
+          setConfirmationMessage(`list ${newList} created`);
           closeInput();
         }
       })

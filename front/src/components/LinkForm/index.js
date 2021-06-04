@@ -18,6 +18,7 @@ const LinkForm = ({
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState('');
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [listInputOpen, setListInputOpen] = useState(false);
   const handleSubmitLink = (evt) => {
@@ -31,6 +32,7 @@ const LinkForm = ({
     setCategoryId(null);
     setListId(null);
     setErrorMessage('');
+    setConfirmationMessage('');
     setCategoryInputOpen(false);
     setListInputOpen(false);
   };
@@ -47,7 +49,6 @@ const LinkForm = ({
         }
       })
       .catch((error) => {
-        console.log(error);
         setErrorMessage('There is a problem with your link');
       });
   };
@@ -115,7 +116,10 @@ const LinkForm = ({
       {linkFormOpened && (
         <div className="linkForm-part2">
           {errorMessage && (
-          <p className="errorMessage">{errorMessage}</p>
+            <p className="errorMessage">{errorMessage}</p>
+          )}
+          {confirmationMessage && (
+            <p className="confirmationMessage">{confirmationMessage}</p>
           )}
             {!categoryInputOpen ? (
               <div className="linkForm-part2-div">
@@ -135,6 +139,7 @@ const LinkForm = ({
               <CreateNewCategoryInput
                 setCategoryInputOpen={setCategoryInputOpen}
                 setCategoryId={setCategoryId}
+                setConfirmationMessage={setConfirmationMessage}
               />
             )}
             {categoryId && (
@@ -158,6 +163,7 @@ const LinkForm = ({
                   setListInputOpen={setListInputOpen}
                   setListId={setListId}
                   categoryId={categoryId}
+                  setConfirmationMessage={setConfirmationMessage}
                 />
               )}
             </>

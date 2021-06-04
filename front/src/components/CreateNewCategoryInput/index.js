@@ -6,7 +6,7 @@ import './styles.scss';
 
 const qs = require('qs');
 
-const CreateNewCategoryInput = ({ setCategoryInputOpen }) => {
+const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }) => {
   const [newCategory, setNewCategory] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const onChangeNewCategory = (value) => {
@@ -22,7 +22,8 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen }) => {
       .then((result) => {
         if (result && result.data) {
           console.log(result.data);
-          setCategoryInputOpen(false);
+          setConfirmationMessage(`category ${newCategory} created`);
+          closeInput();
         }
       })
       .catch((error) => {
