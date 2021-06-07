@@ -9,7 +9,6 @@ export default (store) => (next) => (action) => {
     case GET_CATEGORIES:
       axios.get('categories')
         .then((result) => {
-          console.log('result', result);
           if (result && result.data) {
             store.dispatch(setCategories(result.data));
           }

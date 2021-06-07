@@ -62,7 +62,6 @@ const LinkForm = ({
       axios.get(`categories/${categoryId}/lists`)
         .then((result) => {
           if (result && result.data) {
-            console.log('result', result);
             setLists(result.data);
             return result;
           }

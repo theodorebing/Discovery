@@ -1,0 +1,69 @@
+@use 'src/styles/vars';
+
+
+.categories-list {
+
+  margin: 2rem 0;
+  text-align: center;
+
+  &__container {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 200px;
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+    scroll-snap-type: y mandatory;
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    font-family: vars.$main-font;
+    text-transform: uppercase;
+    padding: 0.5rem 0; 
+    font-size: 2rem;
+    font-weight: 400;
+    background-color: #4b4b4b;
+    color: transparent;
+    text-shadow: 1px 1px 1px rgb(206, 206, 206);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    scroll-snap-stop: always;
+    scroll-snap-align: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.1s ease 0s;
+
+    &:hover {
+      letter-spacing: .02rem;
+      text-shadow: 1px 1px 1px rgb(255, 255, 255);
+
+    }
+
+  }
+
+  &--fade {
+    height: 100%;
+    position: relative;
+    &:before {
+      
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 5rem;
+      background: linear-gradient(to top, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 5rem;
+      background: linear-gradient(to bottom, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
+    }
+  }
+}
