@@ -12,6 +12,8 @@ import axios from 'src/api';
 import Index from '../Index';
 import Categories from '../../containers/Categories';
 import SignUp from '../SignUp';
+import CategoryPage from '../../containers/CategoryPage';
+import Error from '../Error';
 
 // == Composant
 const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
@@ -43,6 +45,9 @@ const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
           <>
             <Route path={['/', '/categories']} exact>
               <Categories />
+            </Route>
+            <Route path="/:categoryName" exact>
+              <CategoryPage />
             </Route>
             {/* <Route path="/recipe/:recipeSlug">
             <Recipe />
