@@ -8,7 +8,7 @@
   &__container {
     overflow-x: hidden;
     overflow-y: auto;
-    height: 300px;
+    height: 200px;
     padding-top: 8rem;
     padding-bottom: 8rem;
     scroll-snap-type: y mandatory;
@@ -39,7 +39,7 @@
   }
 
   &--fade {
-    height: 100%;
+    // height: 100%;
     position: relative;
     &:before {
       
@@ -48,7 +48,7 @@
       top: 0;
       right: 0;
       width: 100%;
-      height: 7.7rem;
+      height: 5.7rem;
       background: linear-gradient(to top, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
     }
     &:after {
@@ -57,7 +57,7 @@
       bottom: 0;
       right: 0;
       width: 100%;
-      height: 7.7rem;
+      height: 5.7rem;
       background: linear-gradient(to bottom, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
     }
   }

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 // == Import
 import './styles.scss';
-import axios from 'src/api';
+import axios from '../../api';
 import Index from '../Index';
 import Categories from '../../containers/Categories';
 import SignUp from '../SignUp';
@@ -58,8 +58,7 @@ const App = ({
           </Route> */}
           </>
         )}
-
-        <Route>
+        <Route path="/error">
           <Error />
         </Route>
       </Switch>

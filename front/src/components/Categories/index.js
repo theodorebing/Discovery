@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import Page from 'src/components/Page';
+import React from 'react';
+import Page from '../Page';
 import './styles.scss';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import CategoriesList from '../CategoriesList';
+
 // import axios from '../../api';
 
 const Categories = ({ categories }) =>
@@ -19,4 +20,5 @@ const Categories = ({ categories }) =>
       </div>
     </Page>
   );
+
 export default Categories;
