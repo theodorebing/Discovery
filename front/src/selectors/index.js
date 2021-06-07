@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 
-export const findCategoryByName = (categories, name) => (
-  categories.find((category) => category.name === name)
+export const findCategoryById = (categories, id) => (
+  categories.find((category) => category.id.toString() === id)
 );

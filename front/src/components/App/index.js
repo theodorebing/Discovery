@@ -16,7 +16,9 @@ import CategoryPage from '../../containers/CategoryPage';
 import Error from '../Error';
 
 // == Composant
-const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
+const App = ({
+  isLogged, setIsLogged, closeLinkForm, getCategories,
+}) => {
   useEffect(() => {
     axios.get('account')
       .then(() => {
@@ -27,7 +29,9 @@ const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
         console.log('error', error);
         closeLinkForm();
       });
-  }, []);
+
+    getCategories();
+  }, [isLogged]);
 
   return (
     <div className="app">
@@ -46,7 +50,7 @@ const App = ({ isLogged, setIsLogged, closeLinkForm }) => {
             <Route path={['/', '/categories']} exact>
               <Categories />
             </Route>
-            <Route path="/:categoryName" exact>
+            <Route path="/:categoryId" exact>
               <CategoryPage />
             </Route>
             {/* <Route path="/recipe/:recipeSlug">

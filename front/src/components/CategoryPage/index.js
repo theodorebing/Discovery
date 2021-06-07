@@ -5,18 +5,18 @@ import LinkForm from '../../containers/LinkForm';
 
 import './styles.scss';
 
-const Categories = ({ category }) => {
+const CategoryPage = ({ category }) => {
   console.log('category', category);
 
   return (
     <Page>
       <div className="category-page">
         <LinkForm />
-        <h2 className="category-page__name">Category name</h2>
+        <h2 className="category-page__name">{category.name}</h2>
         <Logout />
       </div>
     </Page>
   );
 };
 
-export default Categories;
+export default CategoryPage;

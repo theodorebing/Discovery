@@ -6,12 +6,10 @@ import LinkForm from '../../containers/LinkForm';
 import CategoriesList from '../CategoriesList';
 // import axios from '../../api';
 
-const Categories = ({ getCategories, categories }) => {
-  // const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    getCategories();
-  }, []);
-  return (
+const Categories = ({ categories }) =>
+// const [categories, setCategories] = useState([]);
+
+  (
     <Page>
       <div className="categories">
         <LinkForm />
@@ -21,5 +19,4 @@ const Categories = ({ getCategories, categories }) => {
       </div>
     </Page>
   );
-};
 export default Categories;
