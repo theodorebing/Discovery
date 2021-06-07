@@ -16,6 +16,7 @@ const Categories = ({ getCategories, categories }) => {
       <div className="categories">
         <LinkForm />
         <CategoriesList categories={categories} />
+        <p className="categories__create">create a new category +</p>
         <Logout />
       </div>
     </Page>

@@ -1,3 +1,9 @@
-.categories {
+@use 'src/styles/vars';
 
+.categories {
+  &__create {
+    text-align: center;
+    color: vars.$grey;
+    font-family: vars.$main-font;
+  }
 }

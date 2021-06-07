@@ -8,11 +8,15 @@ const CategoriesList = ({ categories }) => {
   return (
     <div className="categories-list categories-list--fade">
       <div className="categories-list__container">
-        {categories.map((category) => (
+        {categories.length && categories.map((category) => (
           <NavLink to="/" key={category.id} className="categories-list__name">{category.name}</NavLink>
         ))}
+        {!categories.length && (
+        <>
+          <p className="categories-list__name categories-list__name--no-category">no category yet<br />create one first</p>
+        </>
+        )}
       </div>
-
     </div>
   );
 };
