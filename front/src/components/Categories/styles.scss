@@ -1,10 +1,32 @@
 @use 'src/styles/vars';
 
 .categories {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__text {
+    font-family: vars.$main-font;
+    color: vars.$grey;
+    margin-top: 2rem;
+  }
+
   &__create {
-    text-align: center;
     color: vars.$grey;
     font-family: vars.$main-font;
+    margin-top: 2rem;
     margin-bottom: 5rem;
+    cursor: pointer;
+
+    &-input {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      min-height: 200px;
+      min-width: 100%;
+    }
   }
 }

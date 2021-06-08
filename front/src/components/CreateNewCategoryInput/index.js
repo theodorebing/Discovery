@@ -17,7 +17,7 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
   const handleSubmitNewCategory = (evt) => {
     evt.preventDefault();
     axios.post('categories',
-      qs.stringify({ name: newCategory }))
+      qs.stringify({ name: newCategory.toUpperCase() }))
       .then((result) => {
         if (result && result.data) {
           setConfirmationMessage(`category ${newCategory} created`);

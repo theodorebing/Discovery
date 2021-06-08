@@ -1,8 +1,9 @@
 const { List, Category, Link } = require('../models');
-
+var sequelize = require("sequelize");
 module.exports = {
 
     getAllCategories: async (request, response, next) => {
+
         try {
             const categories = await Category.findAll({
                 where: {member_id : request.session.userid},
@@ -16,7 +17,11 @@ module.exports = {
                 //         where: {member_id : request.session.userid},         
                 //     }        
                 // },
-                order: [['name', 'ASC']]
+
+                order: [[
+                        'name',
+                        'ASC',
+                        ]]
             });
             if (!categories.length) {
                 return response.status(404).json({

@@ -2,15 +2,14 @@
 
 .categories-list {
 
-  // margin: 2rem 0;
   text-align: center;
 
   &__container {
     overflow-x: hidden;
     overflow-y: auto;
     height: 200px;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     scroll-snap-type: y mandatory;
   }
 
@@ -39,7 +38,7 @@
   }
 
   &--fade {
-    // height: 100%;
+
     position: relative;
     &:before {
       
@@ -48,7 +47,7 @@
       top: 0;
       right: 0;
       width: 100%;
-      height: 5.7rem;
+      height: 4rem;
       background: linear-gradient(to top, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
     }
     &:after {
@@ -57,7 +56,7 @@
       bottom: 0;
       right: 0;
       width: 100%;
-      height: 5.7rem;
+      height: 4rem;
       background: linear-gradient(to bottom, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
     }
   }
