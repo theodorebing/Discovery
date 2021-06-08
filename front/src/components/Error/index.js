@@ -1,16 +1,16 @@
 import React from 'react';
 
-import AppHeader from '../AppHeader';
+import Logout from '../Logout';
 import Content from '../Content';
 import Page from '../Page';
 
 const Error = () => (
   <Page>
-    <AppHeader />
     <Content
-      title="Erreur"
-      text="Nous sommes désolé, Une erreur s'est produite."
+      title="404 not found"
+      text="your are not linked to anything existing, try again"
     />
+    <Logout />
   </Page>
 );
 

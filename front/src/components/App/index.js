@@ -1,8 +1,9 @@
 // == Import npm
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Route,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -14,12 +15,16 @@ import Categories from '../../containers/Categories';
 import SignUp from '../SignUp';
 import CategoryPage from '../../containers/CategoryPage';
 import Error from '../Error';
+import Loading from '../Loading';
 
 // == Composant
 const App = ({
   isLogged, setIsLogged, closeLinkForm, getCategories,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    setLoading(true);
     axios.get('account')
       .then(() => {
         closeLinkForm();
@@ -31,11 +36,21 @@ const App = ({
       });
 
     getCategories();
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [isLogged]);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="app">
       <Switch>
+
         {!isLogged ? (
           <>
             <Route path="/" exact>
@@ -44,23 +59,26 @@ const App = ({
             <Route path="/signup">
               <SignUp />
             </Route>
+            <Route path="/error" exact>
+              <Error />
+            </Route>
+            <Redirect to="/error" />
           </>
         ) : (
           <>
             <Route path={['/', '/categories']} exact>
               <Categories />
             </Route>
-            <Route path="/:categoryId" exact>
-              <CategoryPage />
+            <Route path="/category/:categoryId">
+              <CategoryPage loading={loading} />
             </Route>
-            {/* <Route path="/recipe/:recipeSlug">
-            <Recipe />
-          </Route> */}
+            <Route path="/error" exact>
+              <Error />
+            </Route>
+            <Redirect to="/error" />
           </>
         )}
-        <Route path="/error">
-          <Error />
-        </Route>
+        <Redirect to="/error" />
       </Switch>
     </div>
   );
