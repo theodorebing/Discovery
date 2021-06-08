@@ -4,18 +4,19 @@ module.exports = {
 
     createList: async (request, response, next) => {
         const data = request.body;
+        const categoryId = request.params.id;
         const userId = request.session.userid;
         let findIfCategoryExists = await Category.findOne({
-            where: {member_id : request.session.userid, id : data.category_id}
+            where: {member_id : request.session.userid, id : categoryId}
         });
         if (!findIfCategoryExists) {
-                return response.status(404).json({
+                return response.status(400).json({
                     error: `A user can only create a list to one of his existing categories`
                 });
         }
         if (!data.name) {
             return response.status(400).json({
-                error: `You must provide a name`
+                error: `you must provide a name`
             });
         }
 
@@ -29,7 +30,7 @@ module.exports = {
             const list = await List.create({
                 name: data.name, 
                 position: data.position, 
-                category_id: data.category_id, 
+                category_id: categoryId, 
                 member_id: userId});
             response.json(list);
 
@@ -38,11 +39,14 @@ module.exports = {
         }
     },
 
-    getAllLists: async (request, response, next) => {
+    getAllListsFromCategory: async (request, response, next) => {
+
+        const id = Number(request.params.id);
+        console.log('id', id)
 
         try {
             const lists = await List.findAll({
-                where: {member_id : request.session.userid},
+                where: {member_id : request.session.userid, category_id : id},
                 include: {
                     association: 'links'
                 }, 

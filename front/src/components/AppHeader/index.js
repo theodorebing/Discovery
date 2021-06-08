@@ -4,9 +4,11 @@ import './styles.scss';
 
 const AppHeader = () => (
   <header className="header">
-    <Link to="/">
-      <h1 className="header-title">the link</h1>
-    </Link>
+    <h1 className="header-title">
+      <Link to="/">
+        the link
+      </Link>
+    </h1>
   </header>
 );
 

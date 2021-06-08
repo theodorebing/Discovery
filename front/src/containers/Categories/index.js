@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Categories from 'src/components/Categories';
-import { logout } from 'src/actions/auth';
+import { getCategories } from 'src/actions/categories';
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+  categories: state.categories.categories,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleLogout: () => dispatch(logout()),
+  getCategories: () => dispatch(getCategories()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

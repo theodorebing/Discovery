@@ -6,19 +6,19 @@ module.exports = {
         try {
             const categories = await Category.findAll({
                 where: {member_id : request.session.userid},
-                include: {
-                    model: List, 
-                    as: 'list',
-                    where: {member_id : request.session.userid},
-                    include: {
-                        model: Link,
-                        as: 'links',
-                        where: {member_id : request.session.userid},         
-                    }        
-                },
-                order: [['id', 'ASC']]
+                // include: {
+                //     model: List, 
+                //     as: 'list',
+                //     where: {member_id : request.session.userid},
+                //     include: {
+                //         model: Link,
+                //         as: 'links',
+                //         where: {member_id : request.session.userid},         
+                //     }        
+                // },
+                order: [['name', 'ASC']]
             });
-            if (!categories[0]) {
+            if (!categories.length) {
                 return response.status(404).json({
                     error: `There are no categories`
                 });
@@ -33,9 +33,10 @@ module.exports = {
     createCategory: async (request, response, next) => {
         const data = request.body;
         const userId = request.session.userid;
+        console.log('data', data)
         if (!data.name) {
             return response.status(400).json({
-                error: `You must provide a name`
+                error: `you must provide a name`
             });
         }
 

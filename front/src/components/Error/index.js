@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Page from 'src/components/Page';
-import AppHeader from 'src/components/AppHeader';
-import Content from 'src/components/Content';
+import AppHeader from '../AppHeader';
+import Content from '../Content';
+import Page from '../Page';
 
 const Error = () => (
   <Page>

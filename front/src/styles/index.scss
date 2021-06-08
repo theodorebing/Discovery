@@ -44,6 +44,12 @@ label {
   font-family: vars.$main-font;
   color: vars.$white;
   display: block;
+  cursor: default;
+}
+
+.linkInput {
+  width: 500px;
+  border-radius: 5px 5px 5px 5px ;
 }
 
 input {
@@ -91,10 +97,12 @@ button {
 }
 
 .errorMessage {
+  font-family: vars.$main-font;
   color: red;
 }
 
 .confirmationMessage {
+  font-family: vars.$main-font;
   color: green;
 }
 
@@ -102,6 +110,22 @@ button {
   color: vars.$grey;
   margin-top: 1rem;
 }
+
+.newInput {
+
+  text-align: center;
+
+
+    &-close {
+      color: vars.$grey;
+      font-family: vars.$main-font;
+      text-align: center;
+      cursor: pointer;
+    }
+}
+
+
+
 
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');

@@ -59,14 +59,14 @@ DELETE {{baseUrl}}/account
 
 ############################## CATEGORIES #############################
 
-### Get all categories with lists and links
+### Get all categories
 GET http://localhost:5050/categories
 
 ### Create a category
 POST http://localhost:5050/categories
 Content-Type: application/x-www-form-urlencoded
 
-name=Musique
+name=Recettes
 
 ### Change a category
 PATCH http://localhost:5050/categories/12
@@ -80,29 +80,29 @@ DELETE http://localhost:5050/categories/12
 
 ############################## LISTS #############################
 
+### get all lists inside one category with their links
+GET http://localhost:5050/categories/1/lists
+
 ### Create a list inside a category
 POST http://localhost:5050/lists
 Content-Type: application/x-www-form-urlencoded
 
 name=À écouter
-&category_id=1
-
-### get all lists with their links
-GET http://localhost:5050/lists
+&category_id=2
 
 ### Get one list with it's links
-GET http://localhost:5050/lists/15
+GET http://localhost:5050/lists/1
 
 ### Change a list
-PATCH http://localhost:5050/lists/15
+PATCH http://localhost:5050/lists/2
 Content-Type: application/x-www-form-urlencoded
 
-name=J'aime bien
-&position=2
-&category_id=7
+name=J'aime pas
+&position=0
+&category_id=1
 
 ### Delete a list
-DELETE http://localhost:5050/lists/15
+DELETE http://localhost:5050/lists/7
 
 ############################## LINKS #############################
 

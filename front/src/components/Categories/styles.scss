@@ -1,3 +1,10 @@
-p {
-  color: white;
+@use 'src/styles/vars';
+
+.categories {
+  &__create {
+    text-align: center;
+    color: vars.$grey;
+    font-family: vars.$main-font;
+    margin-bottom: 5rem;
+  }
 }
