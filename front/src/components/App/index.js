@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Route,
   Switch,
-  Redirect,
+  useHistory,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -22,64 +22,58 @@ const App = ({
   isLogged, setIsLogged, closeLinkForm, getCategories,
 }) => {
   const [loading, setLoading] = useState(false);
-
+  const history = useHistory();
   useEffect(() => {
     setLoading(true);
     axios.get('account')
       .then(() => {
         closeLinkForm();
         setIsLogged();
+        getCategories();
       })
       .catch((error) => {
         console.log('error', error);
         closeLinkForm();
+        history.push('/');
       });
-
-    getCategories();
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1500);
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLogged]);
+  }, []);
 
   if (loading) {
     return <Loading />;
   }
   return (
     <div className="app">
-      <Switch>
-
-        {!isLogged ? (
-          <>
-            <Route path="/" exact>
-              <Index />
-            </Route>
-            <Route path="/signup">
-              <SignUp />
-            </Route>
-            <Route path="/error" exact>
-              <Error />
-            </Route>
-            <Redirect to="/error" />
-          </>
-        ) : (
-          <>
-            <Route path={['/', '/categories']} exact>
-              <Categories />
-            </Route>
-            <Route path="/category/:categoryId">
-              <CategoryPage loading={loading} />
-            </Route>
-            <Route path="/error" exact>
-              <Error />
-            </Route>
-            <Redirect to="/error" />
-          </>
-        )}
-        <Redirect to="/error" />
-      </Switch>
+      {!isLogged ? (
+        <Switch>
+          <Route path="/" exact>
+            <Index />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path={['/error', '*']} exact>
+            <Error />
+          </Route>
+        </Switch>
+      ) : (
+        <Switch>
+          <Route path={['/', '/categories']} exact>
+            <Categories />
+          </Route>
+          <Route path="/category/:categoryId">
+            <CategoryPage />
+          </Route>
+          <Route path={['/error', '*']} exact>
+            <Error />
+          </Route>
+        </Switch>
+      )}
     </div>
   );
 };

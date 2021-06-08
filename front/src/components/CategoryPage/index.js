@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Page from 'src/components/Page';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
 import Loading from '../Loading';
 
 const CategoryPage = ({ category }) => {
-  console.log('category', category);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
