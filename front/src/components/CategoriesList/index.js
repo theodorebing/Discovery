@@ -9,7 +9,7 @@ const CategoriesList = ({ categories }) => {
     <div className="categories-list categories-list--fade">
       <div className="categories-list__container">
         {categories.length && categories.map((category) => (
-          <NavLink to={`/${category.id}`} key={category.id} className="categories-list__name">{category.name}</NavLink>
+          <NavLink to={`category/${category.id}`} key={category.id} className="categories-list__name">{category.name}</NavLink>
         ))}
         {!categories.length && (
         <>

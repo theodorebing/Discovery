@@ -2,19 +2,17 @@
 @use 'src/styles/vars';
 
 .content {
-  padding: 1.5rem;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: vars.$grey;
+  font-family: vars.$main-font;
   &-title {
     font-size: 2em;
-    color: vars.$grey;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem / 4;
-    border-bottom: 1px solid color.scale(vars.$grey, $alpha: -80%);
   }
 
-  &-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  &-text {
+    
   }
 }

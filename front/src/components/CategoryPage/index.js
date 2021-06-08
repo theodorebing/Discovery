@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from 'src/components/Page';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
+import Loading from '../Loading';
 
 const CategoryPage = ({ category }) => {
-  console.log('category', category);
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
-  // const redirect = () => {
-  //     return <Redirect to="/error" />;
-  // };
-  // setTimeout(
-  //   if (!category) {
-  //   redirect(), 2000,
-  //   }
-  // );
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    if (category === undefined) {
+      history.push('/error');
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <Page>
       <div className="category-page">
         <LinkForm />
-        {category && (
+        {loading && (
+          <Loading />
+        )}
+        {!loading && category && (
           <h2 className="category-page__name">{category.name}</h2>
         )}
         <Logout />
