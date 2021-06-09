@@ -43,12 +43,13 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        min-height: 250px;
+        // min-height: 250px;
         min-width: 100%;
         border: solid 2px none;
         border-radius: vars.$radius;
         box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
         margin-top: 0.75rem;
+        padding-top: 1rem;
       }
     }
   }
@@ -59,5 +60,5 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 230px;
+  // min-height: 230px;
 }
