@@ -14,7 +14,13 @@ const Select = ({
             <option value="">please choose a {`${name}`}</option>
             {values.length
               && values.map((selectValue) => (
-                <option key={selectValue.id} value={selectValue.id}>{selectValue.name}</option>
+                <option
+                  key={selectValue.id}
+                  value={selectValue.id}
+                  valuename={selectValue.name}
+                >
+                  {selectValue.name}
+                </option>
               ))}
           </>
         ) : (
