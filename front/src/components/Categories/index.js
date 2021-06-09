@@ -7,6 +7,7 @@ import CategoriesList from '../CategoriesList';
 import CreateNewCategoryInput from '../CreateNewCategoryInput';
 import Loading from '../Loading';
 import Select from '../Select';
+import Button from '../Button';
 
 import axios from '../../api';
 
@@ -91,8 +92,8 @@ const Categories = ({ categories, getCategories }) => {
         {!loading && !categoryInputOpen && !categorySelectOpen && (
           <>
             <div className="categories-div">
-              <button type="button" className="categories-div__action" onClick={openCategoryInput}>+ create a new category +</button>
-              <button type="button" className="categories-div__action" onClick={openCategorySelect}>- delete a category -</button>
+              <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
+              <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
             </div>
             {showConfirmationMessage ? (
               <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
@@ -110,22 +111,25 @@ const Categories = ({ categories, getCategories }) => {
         )}
         {!loading && categorySelectOpen && (
           <div className="categories-div__action-input">
-            {errorMessage && (
+            <form className="form-form newInput big-form">
+              {errorMessage && (
               <p className="errorMessage">{errorMessage}</p>
-            )}
-            <Select
-              values={categories}
-              name="category"
-              label="choose a category to delete"
-              valueSelected={categorySelected}
-            />
-            {categorytToDeleteId && (
-            <>
-              <p className="errorMessage">if you confirm deletion it will delete the category and all it's lists and links</p>
-              <button type="button" className="categories-div__action" onClick={confirmCategoryDeletion}>confirm deletion</button>
-            </>
-            )}
-            <p onClick={cancelDeleteCategory} className="newInput-close">cancel</p>
+              )}
+              <Select
+                values={categories}
+                name="category"
+                label="choose a category to delete"
+                valueSelected={categorySelected}
+              />
+              {categorytToDeleteId && (
+              <>
+                <p className="errorMessage errorMessage--delete-category">if you confirm deletion it will delete the category and all it's lists and links</p>
+                <Button classname="categories-div__action categories-div__action--little" onClick={confirmCategoryDeletion} text="confirm deletion" />
+              </>
+              )}
+              {/* <p onClick={cancelDeleteCategory} className="newInput-close">cancel</p> */}
+              <Button classname="linkForm__button newInput-close" onClick={cancelDeleteCategory} text="cancel" />
+            </form>
           </div>
         )}
 

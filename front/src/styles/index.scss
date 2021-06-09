@@ -8,19 +8,19 @@ body {
 
 .form {
   width: 50%;
-  min-height: 300px;
+  height: 350px;
   background-color: vars.$black;
   border: solid 2px none;
   border-radius: vars.$radius;
   display: flex;
   flex-direction: column;
-  // justify-content: space-evenly;
+  justify-content: space-evenly;
   align-items: center;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
 
   &-form {
     // width: 50%;
-    height: 50%;
+    // height: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -37,6 +37,14 @@ body {
   &-link {
     font-size: 0.9rem;
   }
+}
+
+.login-form {
+  height: 180px;
+}
+
+.signup-form {
+  height: 250px;
 }
 
 label {
@@ -105,12 +113,17 @@ button {
 
 .errorMessage {
   font-family: vars.$main-font;
-  color: red;
+  color: rgb(255, 20, 20);
+
+  &--delete-category{
+    margin-top: 1rem;
+  }
+
 }
 
 .confirmationMessage {
   font-family: vars.$main-font;
-  color: green;
+  color: rgb(125, 255, 125);
 
   &__category-page {
     margin-top: 2rem;
@@ -130,8 +143,7 @@ button {
   // margin-top: 0.2rem;
 
     &-close {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
+      margin: 1rem auto;
       color: vars.$grey;
       font-family: vars.$main-font;
       text-align: center;
