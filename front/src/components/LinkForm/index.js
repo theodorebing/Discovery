@@ -4,6 +4,7 @@ import Input from '../Input';
 import Select from '../Select';
 import CreateNewCategoryInput from '../CreateNewCategoryInput';
 import CreateNewListInput from '../CreateNewListInput';
+import Button from '../Button';
 import axios from '../../api';
 
 import './styles.scss';
@@ -21,12 +22,30 @@ const LinkForm = ({
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [listInputOpen, setListInputOpen] = useState(false);
-  const handleSubmitLink = (evt) => {
-    evt.preventDefault();
-    openLinkForm();
-  };
 
   const url = link;
+
+  const validURL = (str) => {
+    const pattern = new RegExp('^(https?:\\/\\/)?' // protocol
+      + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
+      + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
+      + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
+      + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
+      + '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return !!pattern.test(str);
+  };
+
+  const handleSubmitLink = (evt) => {
+    evt.preventDefault();
+    if (validURL(url)) {
+      openLinkForm();
+      setErrorMessage('');
+    }
+    else {
+      setErrorMessage('please use a valid link');
+      closeLinkForm();
+    }
+  };
 
   const resetForm = () => {
     setCategoryId(null);
@@ -52,7 +71,7 @@ const LinkForm = ({
           closeAndResetForm();
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage('There is a problem with your link');
       });
   };
@@ -66,8 +85,7 @@ const LinkForm = ({
             return result;
           }
         })
-        .catch((error) => {
-          (console.log('error', error));
+        .catch(() => {
           setLists([]);
         })
     );
@@ -75,6 +93,7 @@ const LinkForm = ({
 
   const categorySelected = (evt) => {
     setCategoryId(evt.target.value);
+    setListId(null);
   };
 
   const listSelected = (evt) => {
@@ -88,8 +107,7 @@ const LinkForm = ({
           setCategories(result.data);
         }
       })
-      .catch((error) => {
-        (console.log('error', error));
+      .catch(() => {
         setCategories([]);
       });
     if (categoryId) {
@@ -99,22 +117,29 @@ const LinkForm = ({
 
   const openCategoryInput = () => {
     setCategoryInputOpen(true);
+    setCategoryId(null);
+    setConfirmationMessage('');
   };
 
   const openListInput = () => {
     setListInputOpen(true);
+    setListId(null);
+    setConfirmationMessage('');
   };
 
   return (
     <div className="linkForm">
       <form action="" className="form-form" onSubmit={handleSubmitLink}>
         <Input
-          label="paste your link here"
+          label="paste your link here and click enter"
           className="linkInput"
           onChange={onChangeLink}
           value={link}
           name="link"
         />
+        {errorMessage && !linkFormOpened && (
+        <p className="errorMessage linkForm__message">{errorMessage}</p>
+        )}
       </form>
       {linkFormOpened && (
         <div className="linkForm-part2">
@@ -135,7 +160,7 @@ const LinkForm = ({
                 <p
                   className="linkForm-part2-create"
                   onClick={openCategoryInput}
-                >or create a category +
+                >+ or create a category +
                 </p>
               </div>
             ) : (
@@ -158,7 +183,7 @@ const LinkForm = ({
                   <p
                     className="linkForm-part2-create"
                     onClick={openListInput}
-                  >or create a list +
+                  >+ or create a list +
                   </p>
                 </div>
               ) : (
@@ -178,7 +203,7 @@ const LinkForm = ({
                 </button>
               </div>
             )}
-          <p onClick={closeAndResetForm} className="newInput-close">cancel</p>
+          <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />
         </div>
       )}
     </div>

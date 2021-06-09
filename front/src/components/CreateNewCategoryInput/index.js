@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
 
+import './styles.scss';
+
 const qs = require('qs');
 
 const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }) => {
   const [newCategory, setNewCategory] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const onChangeNewCategory = (value) => {
-    setNewCategory(value);
+    setNewCategory(value.toUpperCase());
   };
   const closeInput = () => {
     setCategoryInputOpen(false);
@@ -17,7 +19,7 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
   const handleSubmitNewCategory = (evt) => {
     evt.preventDefault();
     axios.post('categories',
-      qs.stringify({ name: newCategory.toUpperCase() }))
+      qs.stringify({ name: newCategory }))
       .then((result) => {
         if (result && result.data) {
           setConfirmationMessage(`category ${newCategory} created`);
