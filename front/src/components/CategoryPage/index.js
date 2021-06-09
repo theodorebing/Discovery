@@ -5,11 +5,12 @@ import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
 import Loading from '../Loading';
+import ListsContainer from '../ListsContainer';
 
 const CategoryPage = ({ category }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-
+  console.log(category);
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
@@ -33,6 +34,7 @@ const CategoryPage = ({ category }) => {
         {!loading && category && (
           <h2 className="category-page__name">{category.name}</h2>
         )}
+        <ListsContainer category={category} />
         <Logout />
       </div>
     </Page>
