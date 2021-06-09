@@ -46,7 +46,7 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
           <p className="message-text errorMessage">{errorMessage}</p>
         </div>
       )}
-      <form action="" className="form-form" onSubmit={handleSubmit}>
+      <form action="" className="form-form login-form" onSubmit={handleSubmit}>
         <Input
           label="email"
           onChange={onChangeEmail}

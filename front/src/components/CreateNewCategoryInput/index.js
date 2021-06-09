@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
+import Button from '../Button';
 
 import './styles.scss';
 
@@ -42,7 +43,8 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
         value={newCategory}
         name="category"
       />
-      <p onClick={closeInput} className="newInput-close">close</p>
+      {/* <p onClick={closeInput} className="newInput-close">cancel</p> */}
+      <Button classname="linkForm__button newInput-close" onClick={closeInput} text="cancel" />
     </form>
   );
 };

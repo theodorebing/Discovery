@@ -49,7 +49,7 @@ const SignUp = () => {
         )}
         {!confirmationMessage ? (
           <>
-            <form action="" className="form-form" onSubmit={handleSubmitSubscription}>
+            <form action="" className="form-form signup-form" onSubmit={handleSubmitSubscription}>
               <Input
                 label="name"
                 onChange={onChangeName}
