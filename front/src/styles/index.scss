@@ -104,6 +104,11 @@ button {
 .confirmationMessage {
   font-family: vars.$main-font;
   color: green;
+
+  &__category-page {
+    margin-top: 2rem;
+  }
+
 }
 
 .formMessage {

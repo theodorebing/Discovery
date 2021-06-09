@@ -29,20 +29,24 @@ const App = ({
       .then(() => {
         closeLinkForm();
         setIsLogged();
-        getCategories();
+        // getCategories();
       })
-      .catch((error) => {
-        console.log('error', error);
+      .catch(() => {
         closeLinkForm();
         history.push('/');
       });
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 2000);
     return () => {
       clearTimeout(timeout);
     };
   }, []);
+
+  if (isLogged) {
+    getCategories();
+    console.log('getCategories');
+  }
 
   if (loading) {
     return <Loading />;
