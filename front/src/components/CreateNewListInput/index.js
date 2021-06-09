@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
 
+import './styles.scss';
+
 const qs = require('qs');
 
 const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessage }) => {

@@ -9,7 +9,7 @@ const Input = ({
   };
   const inputId = `input-${name}`;
   return (
-    <label htmlFor={`${name}-input`} className="form-label">
+    <label htmlFor={`${name}-input`} className={`${className} form-label`}>
       {label}
       <input
         id={inputId}

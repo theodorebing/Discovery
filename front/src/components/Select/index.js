@@ -17,7 +17,6 @@ const Select = ({
                 <option
                   key={selectValue.id}
                   value={selectValue.id}
-                  valuename={selectValue.name}
                 >
                   {selectValue.name}
                 </option>
