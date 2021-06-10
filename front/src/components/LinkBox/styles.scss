@@ -8,7 +8,6 @@
   border: solid 2px none;
   border-radius: vars.$radius;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
-  font-family: vars.$main-font;
   margin: 0.5rem 0;
 
   &__image {
@@ -32,12 +31,31 @@
     border-radius: 0 vars.$radius vars.$radius 0;
     box-shadow: inset 2px 0 3px 0px rgb(107, 107, 107), inset 0px 0 0 0 rgb(107, 107, 107);
     &-p {
-      margin-bottom: 0.5rem;
-      margin-left: 0.8rem;
+      font-family: vars.$link-font;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 0 0.8rem 0.5rem;
       font-size: 0.8rem;
-      &--title{
+      &--title {
         color: vars.$white;
         font-weight: 700;
+      }
+
+      &--description {
+        color: vars.$white;
+        font-weight: 400;
+      }
+
+      &--source {
+        color: #c2c2c2;
+        font-weight: 300;
+      }
+
+      &--date {
+        color: vars.$darkgrey;
+        font-weight: 300;
       }
     }
   }

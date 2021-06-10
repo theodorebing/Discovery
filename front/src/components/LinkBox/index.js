@@ -2,6 +2,8 @@ import React from 'react';
 
 import './styles.scss';
 
+const dayjs = require('dayjs');
+
 const LinkBox = ({ link }) => {
   console.log(link);
   return (
@@ -14,14 +16,14 @@ const LinkBox = ({ link }) => {
           <p className="link-box__text-p link-box__text-p--title">
             {link.title}
           </p>
-          <p className="link-box__text-p">
+          <p className="link-box__text-p link-box__text-p--description">
             {link.description}
           </p>
-          <p className="link-box__text-p">
+          <p className="link-box__text-p link-box__text-p--source">
             {link.site_name}
           </p>
-          <p className="link-box__text-p">
-            {link.created_at}
+          <p className="link-box__text-p link-box__text-p--date">
+            {dayjs(link.updated_at).format('DD-MMM-YYYY H:mm')}
           </p>
         </div>
       </div>
