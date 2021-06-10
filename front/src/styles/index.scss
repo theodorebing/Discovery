@@ -4,6 +4,8 @@
 body {
   background-color: #0f0f0f;
   font-family: sans-serif;
+  position: relative;
+  z-index: 0;
 }
 
 .form {

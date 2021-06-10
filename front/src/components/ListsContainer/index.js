@@ -25,13 +25,10 @@ const ListsContainer = ({ category, link }) => {
   }, [link]);
 
   return (
-    <div className="listsContainer--main-grid">
-      <div className="listsContainer">
-        {lists && lists.map((list) => (
-          <List key={list.id} list={list} />
-        ))}
-      </div>
-
+    <div className="listsContainer">
+      {lists && lists.map((list) => (
+        <List key={list.id} list={list} />
+      ))}
     </div>
   );
 };

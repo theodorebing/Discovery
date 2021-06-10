@@ -2,16 +2,9 @@
 
 .listsContainer {
   display: grid;
-  grid-auto-columns: 272px;
+  // grid-auto-columns: 300px;
   grid-auto-flow: column;
-  grid-gap: 8px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  &--main-grid {
-
-    display: grid;
-    grid-gap: 10px;
-    margin-bottom: 1rem;
-  }
+  overflow-x: hidden;
+  overflow-y: scroll;
 
 }

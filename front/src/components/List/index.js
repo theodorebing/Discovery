@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Link from '../Link';
+import LinkBox from '../LinkBox';
 import axios from '../../api';
 import './styles.scss';
 
@@ -23,7 +23,7 @@ const List = ({ list, link }) => {
       <h3 className="list-header">{list.name}</h3>
       {/* <div className="list--scroll"> */}
       {links && links.map((link) => (
-        <Link key={link.id} link={link} />
+        <LinkBox key={link.id} link={link} />
       ))}
       {/* </div> */}
     </div>

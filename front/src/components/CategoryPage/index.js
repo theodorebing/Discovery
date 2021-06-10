@@ -36,16 +36,20 @@ const CategoryPage = ({ category }) => {
   return (
     <Page>
       <div className="category-page">
-        <LinkForm />
+        <div className="category-page--fixed-components">
+          <LinkForm />
+        </div>
 
         {loading && (
           <Loading />
         )}
         {!loading && category && (
         <>
-          <div className="categories-div">
-            <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
-            <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+          <div className="category-page--fixed-components">
+            <div className="categories-div">
+              <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
+              <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+            </div>
           </div>
           <h2 className="category-page__name">{category.name}</h2>
           <ListsContainer category={category} />
