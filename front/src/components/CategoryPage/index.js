@@ -52,7 +52,9 @@ const CategoryPage = ({ category }) => {
             </div>
           </div>
           <h2 className="category-page__name">{category.name}</h2>
-          <ListsContainer category={category} />
+          <div className="grid">
+            <ListsContainer category={category} />
+          </div>
         </>
         )}
 

@@ -2,9 +2,7 @@
 
 .listsContainer {
   display: grid;
-  // grid-auto-columns: 300px;
   grid-auto-flow: column;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
+  overflow: scroll;
+  border-radius: 1px;
 }

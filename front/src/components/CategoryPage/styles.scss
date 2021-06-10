@@ -25,3 +25,9 @@
   }
 
 }
+
+.grid {
+  display: grid;
+  grid-template-rows: max-content auto;
+  margin: 0 0.5rem;
+}

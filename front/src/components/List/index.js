@@ -21,11 +21,11 @@ const List = ({ list, link }) => {
   return (
     <div className="list">
       <h3 className="list-header">{list.name}</h3>
-      {/* <div className="list--scroll"> */}
-      {links && links.map((link) => (
-        <LinkBox key={link.id} link={link} />
-      ))}
-      {/* </div> */}
+      <div className="list--scroll">
+        {links && links.map((link) => (
+          <LinkBox key={link.id} link={link} />
+        ))}
+      </div>
     </div>
   );
 };
