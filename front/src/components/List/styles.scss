@@ -1,0 +1,52 @@
+@use 'src/styles/vars';
+
+.list {
+  display: grid;
+  // grid-auto-rows: max-content;
+  grid-gap: 10px;
+  height: max-content;
+  padding: 10px;
+  background-color: vars.$black;
+  border: solid 2px none;
+  border-radius: vars.$radius;
+  box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+  overflow-x: scroll;
+  margin-bottom: 1rem;
+}
+
+
+// @media (max-height: 850px) {
+//   .list {
+//     max-height: 75%;
+//   }
+// }
+
+// @media (max-height: 800px) {
+//   .list {
+//     max-height: 70%;
+//   }
+// }
+
+// @media (max-height: 750px) {
+//   .list {
+//     max-height: 60%;
+//   }
+// }
+
+// @media (max-height: 715px) {
+//   .list {
+//     max-height: 50%;
+//   }
+// }
+
+// @media (max-height: 675px) {
+//   .list {
+//     max-height: 45%;
+//   }
+// }
+
+// @media (max-height: 650px) {
+//   .list {
+//     max-height: 40%;
+//   }
+// }

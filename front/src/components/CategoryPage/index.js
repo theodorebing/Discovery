@@ -5,12 +5,13 @@ import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
 import Loading from '../Loading';
-import ListsContainer from '../ListsContainer';
+import ListsContainer from '../../containers/ListsContainer';
+import Button from '../Button';
 
 const CategoryPage = ({ category }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  console.log(category);
+
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
@@ -23,18 +24,34 @@ const CategoryPage = ({ category }) => {
       clearTimeout(timeout);
     };
   }, []);
+  const [listInputOpen, setListInputOpen] = useState(false);
+  const [listSelectOpen, setListSelectOpen] = useState(false);
+  const openListInput = () => {
+    setListInputOpen(true);
+  };
 
+  const openListSelect = () => {
+    setListSelectOpen(true);
+  };
   return (
     <Page>
       <div className="category-page">
         <LinkForm />
+
         {loading && (
           <Loading />
         )}
         {!loading && category && (
+        <>
+          <div className="categories-div">
+            <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
+            <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+          </div>
           <h2 className="category-page__name">{category.name}</h2>
+          <ListsContainer category={category} />
+        </>
         )}
-        <ListsContainer category={category} />
+
         <Logout />
       </div>
     </Page>

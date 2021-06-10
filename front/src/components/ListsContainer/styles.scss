@@ -1,0 +1,17 @@
+@use 'src/styles/vars';
+
+.listsContainer {
+  display: grid;
+  grid-auto-columns: 272px;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  &--main-grid {
+
+    display: grid;
+    grid-gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+}
