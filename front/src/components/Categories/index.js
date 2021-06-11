@@ -96,7 +96,7 @@ const Categories = ({ categories, getCategories }) => {
               <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
             </div>
             {showConfirmationMessage ? (
-              <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
+              <p className="confirmationMessage confirmationMessage__categories-page">{confirmationMessage}</p>
             ) : (<p className="categories__text">choose a category below</p>)}
             <CategoriesList categories={categories} />
           </>

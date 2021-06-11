@@ -11,7 +11,7 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
   const [newList, setNewList] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const onChangeNewList = (value) => {
-    setNewList(value);
+    setNewList(value.toUpperCase());
   };
   const closeInput = () => {
     setListInputOpen(false);

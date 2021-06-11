@@ -3,7 +3,7 @@
 .category-page {
 
     &__name {
-      font-family: vars.$main-font;
+      font-family: vars.$link-font;
       text-align: center;
       margin: 2rem 0;
       font-size: 2rem;
@@ -16,4 +16,18 @@
               background-clip: text;
     }
 
+  &--fixed-components {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 532px;
+    margin: auto;
+  }
+
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: max-content auto;
+  margin: 0 0.5rem;
 }
