@@ -40,6 +40,14 @@
     max-height: 66.6vh;
     border-radius: vars.$radius;
   }
+
+  &-noLinkMessage {
+    color: vars.$white;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 200;
+    margin: 0.5rem 0;
+  }
 }
 
 

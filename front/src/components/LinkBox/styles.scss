@@ -18,11 +18,13 @@
   }
 
   &__image {
+    object-fit: cover;
     width: 90px;
-    width: 90px;
+    height: 90px;
     position: relative;
     z-index: -2;
     border-radius: vars.$radius 0 0 vars.$radius;
+    
   }
 
   &__div-image {

@@ -8,7 +8,6 @@ import './styles.scss';
 const ListsContainer = ({
   category, link, setLists, lists,
 }) => {
-  // const [lists, setLists] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -20,7 +19,10 @@ const ListsContainer = ({
         }
       })
       .catch((error) => {
-        setErrorMessage('there are no lists yet, create one first!');
+        if (isMounted) {
+          setLists([]);
+          setErrorMessage('there are no lists yet, create one first!');
+        }
       });
     return () => {
       isMounted = false;

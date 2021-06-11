@@ -23,7 +23,6 @@ const CategoryPage = ({ category }) => {
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
   const [listToDeleteId, setListToDeleteId] = useState(null);
   const [listToDeleteName, setListToDeleteName] = useState('');
-  console.log('category', category);
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
@@ -35,7 +34,7 @@ const CategoryPage = ({ category }) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [confirmationMessage]);
 
   const openListInput = () => {
     setListInputOpen(true);
