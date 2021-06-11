@@ -5,8 +5,10 @@ import axios from '../../api';
 
 import './styles.scss';
 
-const ListsContainer = ({ category, link }) => {
-  const [lists, setLists] = useState([]);
+const ListsContainer = ({
+  category, link, setLists, lists,
+}) => {
+  // const [lists, setLists] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {

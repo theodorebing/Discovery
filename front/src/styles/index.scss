@@ -125,8 +125,13 @@ button {
   font-family: vars.$main-font;
   color: rgb(125, 255, 125);
 
+  &__categories-page {
+    margin-top: 2rem; 
+  }
+
   &__category-page {
-    margin-top: 2rem;
+    text-align: center;
+    padding: 2.5rem 0 2.525rem;
   }
 
 }
