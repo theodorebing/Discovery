@@ -7,6 +7,7 @@ import './styles.scss';
 
 const ListsContainer = ({ category, link }) => {
   const [lists, setLists] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     let isMounted = true;
@@ -17,7 +18,7 @@ const ListsContainer = ({ category, link }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage('there are no lists yet, create one first!');
       });
     return () => {
       isMounted = false;
@@ -26,6 +27,9 @@ const ListsContainer = ({ category, link }) => {
 
   return (
     <div className="listsContainer">
+      {errorMessage && (
+        <p className="listsContainer-noListMessage">{errorMessage}</p>
+      )}
       {lists && lists.map((list) => (
         <List key={list.id} list={list} />
       ))}

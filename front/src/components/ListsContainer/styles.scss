@@ -3,6 +3,21 @@
 .listsContainer {
   display: grid;
   grid-auto-flow: column;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-snap-align: center;
+  overscroll-behavior-x: contain;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
   border-radius: 1px;
+  justify-items: center;
+
+  &-noListMessage {
+    text-align: center;
+    color: vars.$grey;
+  }
 }

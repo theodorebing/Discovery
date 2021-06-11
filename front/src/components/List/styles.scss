@@ -1,7 +1,9 @@
 @use 'src/styles/vars';
 
 .list {
-  width: 350px;
+  display: grid;
+  grid-auto-columns: 330px;
+  // width: 350px;
   margin-right: 1rem;
   height: max-content;
   // max-height: 66.6vh;
@@ -30,6 +32,11 @@
 
   &--scroll {
     overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
     max-height: 66.6vh;
     border-radius: vars.$radius;
   }
