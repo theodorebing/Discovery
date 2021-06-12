@@ -10,8 +10,9 @@ const qs = require('qs');
 const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessage }) => {
   const [newList, setNewList] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const toTitleCase = (str) => str.split().map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
   const onChangeNewList = (value) => {
-    setNewList(value.toUpperCase());
+    setNewList(toTitleCase(value));
   };
   const closeInput = () => {
     setListInputOpen(false);
