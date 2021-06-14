@@ -3,10 +3,8 @@
 .list {
   display: grid;
   grid-auto-columns: 330px;
-  // width: 350px;
   margin-right: 1rem;
   height: max-content;
-  // max-height: 66.6vh;
   padding: 0 10px 10px;
   background-color: vars.$black;
   border: solid 2px none;
@@ -16,10 +14,18 @@
   position: relative;
   z-index: 0;
 
+  &__link-input {
+
+    animation: fade .75s;
+    
+    & input {
+      margin: 0 0 0.5rem;
+      width:330px;
+    }
+
+  }
+
   &-header {
-    font-family: vars.$link-font;
-    text-align: center;
-    margin: 0.5rem 0;
     font-size: 1.1rem;
     text-transform: uppercase;
     background-color: #41414175;
@@ -28,6 +34,31 @@
     -webkit-background-clip: text;
       -moz-background-clip: text;
             background-clip: text;
+
+    &__div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+    }
+
+    &__input-opener {
+      color: vars.$grey;
+      font-size: 1.5rem;
+      margin: 0.3rem 0.2rem;
+      cursor: pointer;
+
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transition: all 0.3s ease 0s;
+
+      &--open {
+        transform: rotate(45deg);
+      }
+    }
   }
 
   &--scroll {
@@ -49,11 +80,4 @@
     margin: 0.5rem 0;
   }
 }
-
-
-// @media (min-height: 1000px) {
-//   .list {
-//     max-height: 426px;
-//   }
-// }
 

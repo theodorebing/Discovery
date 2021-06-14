@@ -59,7 +59,7 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
           value={password}
           name="password"
         />
-        <button type="submit">
+        <button type="submit" className="button">
           Sign in
         </button>
       </form>

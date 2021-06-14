@@ -15,7 +15,7 @@ const Logout = ({ handleLogout, closeLinkForm }) => {
   };
   return (
     <div className="logout-button">
-      <button type="button" onClick={deconnect}>
+      <button className="button" type="button" onClick={deconnect}>
         Déconnexion
       </button>
     </div>
