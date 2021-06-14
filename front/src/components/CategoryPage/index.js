@@ -9,10 +9,11 @@ import ListsContainer from '../../containers/ListsContainer';
 import Button from '../Button';
 import CreateNewListInput from '../CreateNewListInput';
 import Select from '../Select';
+import CategoriesList from '../CategoriesList';
 
 import axios from '../../api';
 
-const CategoryPage = ({ category }) => {
+const CategoryPage = ({ category, categories }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState([]);
@@ -94,7 +95,7 @@ const CategoryPage = ({ category }) => {
           <Loading />
         )}
         {!loading && listInputOpen && (
-          <div className="categories-div__action-input">
+          <div className="categories-div__action-input category-page__action">
             <CreateNewListInput
               categoryId={category.id.toString()}
               setConfirmationMessage={confirmationMessageFunction}
@@ -103,7 +104,7 @@ const CategoryPage = ({ category }) => {
           </div>
         )}
         {!loading && listSelectOpen && (
-        <div className="categories-div__action-input">
+        <div className="categories-div__action-input category-page__action">
           <form className="form-form newInput big-form">
             {errorMessage && (
             <p className="errorMessage">{errorMessage}</p>
@@ -124,18 +125,24 @@ const CategoryPage = ({ category }) => {
           </form>
         </div>
         )}
-        {!loading && category && !listInputOpen && !listSelectOpen && (
+        {!loading && category && (
         <>
-          <div className="category-page--fixed-components">
-            <div className="categories-div">
-              <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
-              <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+          {!listInputOpen && !listSelectOpen && (
+            <div className="category-page--fixed-components">
+              <div className="categories-div">
+                <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
+                <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+              </div>
             </div>
-          </div>
+          )}
+
           {showConfirmationMessage ? (
             <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
           ) : (
-            <h2 className="category-page__name">{category.name}</h2>
+            <>
+              <h2 className="category-page__name">{category.name}</h2>
+              {/* <CategoriesList categories={categories} className="category"/> */}
+            </>
           )}
           <div className="grid">
             <ListsContainer category={category} setLists={setLists} lists={lists} />

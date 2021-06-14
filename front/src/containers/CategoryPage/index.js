@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   const foundCategory = findCategoryById(state.categories.categories, categoryId);
   return {
     category: foundCategory,
+    categories: state.categories.categories,
   };
 };
 

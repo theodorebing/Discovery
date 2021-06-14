@@ -89,18 +89,6 @@ const Categories = ({ categories, getCategories }) => {
         {loading && (
           <Loading />
         )}
-        {!loading && !categoryInputOpen && !categorySelectOpen && (
-          <>
-            <div className="categories-div">
-              <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
-              <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
-            </div>
-            {showConfirmationMessage ? (
-              <p className="confirmationMessage confirmationMessage__categories-page">{confirmationMessage}</p>
-            ) : (<p className="categories__text">choose a category below</p>)}
-            <CategoriesList categories={categories} />
-          </>
-        )}
         {!loading && categoryInputOpen && (
           <div className="categories-div__action-input">
             <CreateNewCategoryInput
@@ -131,6 +119,20 @@ const Categories = ({ categories, getCategories }) => {
               <Button classname="linkForm__button newInput-close" onClick={cancelDeleteCategory} text="cancel" />
             </form>
           </div>
+        )}
+        {!loading && (
+          <>
+            {!categoryInputOpen && !categorySelectOpen && (
+              <div className="categories-div">
+                <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
+                <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
+              </div>
+            )}
+            {showConfirmationMessage ? (
+              <p className="confirmationMessage confirmationMessage__categories-page">{confirmationMessage}</p>
+            ) : (<p className="categories__text">choose a category below</p>)}
+            <CategoriesList categories={categories} />
+          </>
         )}
 
         <Logout />
