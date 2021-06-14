@@ -44,7 +44,7 @@ const CreateNewCategoryInput = ({ setCategoryInputOpen, setConfirmationMessage }
         name="category"
       />
       {/* <p onClick={closeInput} className="newInput-close">cancel</p> */}
-      <Button classname="linkForm__button newInput-close" onClick={closeInput} text="cancel" />
+      <Button classname="linkForm__button newInput-close" onClick={closeInput} text="return" />
     </form>
   );
 };

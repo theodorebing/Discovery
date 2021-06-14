@@ -131,7 +131,7 @@ const LinkForm = ({
     <div className="linkForm">
       <form action="" className="form-form" onSubmit={handleSubmitLink}>
         <Input
-          label="paste your link here and click enter"
+          label=""
           className="linkInput"
           onChange={onChangeLink}
           value={link}
@@ -198,9 +198,10 @@ const LinkForm = ({
             )}
             {listId && (
               <div className="linkForm-part2-div">
-                <button type="button" onClick={handleSubmitForm}>
+                <Button onClick={handleSubmitForm} classname="linkForm__button linkForm-part2-button" text="create" />
+                {/* <button type="button" onClick={handleSubmitForm} className="linkForm-part2-button">
                   create the link
-                </button>
+                </button> */}
               </div>
             )}
           <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />

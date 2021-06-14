@@ -123,7 +123,7 @@ const Categories = ({ categories, getCategories }) => {
               />
               {categorytToDeleteId && (
               <>
-                <p className="errorMessage errorMessage--delete-category">if you confirm deletion it will delete the category and all it's lists and links</p>
+                <p className="errorMessage errorMessage--delete-category">if you confirm deletion it will delete the category <br /> and all it's lists and links</p>
                 <Button classname="categories-div__action categories-div__action--little" onClick={confirmCategoryDeletion} text="confirm deletion" />
               </>
               )}

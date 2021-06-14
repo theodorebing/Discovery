@@ -1,6 +1,9 @@
 @use 'src/styles/vars';
 
 .header {
+  position: absolute;
+  top: 14px;
+  left: 10px;
   text-align: center;
 
   &-title {
@@ -13,6 +16,6 @@
     -webkit-background-clip: text;
       -moz-background-clip: text;
             background-clip: text;
-    margin: 4rem 0;
+    // margin: 2rem 0;
   }
 }

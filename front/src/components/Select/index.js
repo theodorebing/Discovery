@@ -18,7 +18,7 @@ const Select = ({
                   key={selectValue.id}
                   value={selectValue.id}
                 >
-                  {selectValue.name.toUpperCase()}
+                  {selectValue.name}
                 </option>
               ))}
           </>

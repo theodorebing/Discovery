@@ -31,7 +31,7 @@ body {
   }
 
   &-input{
-    margin-top: 0.5rem;
+    margin: 8px;
   }
 
   &-link {
@@ -63,7 +63,12 @@ select {
   text-align-last: center;
   font-family: vars.$main-font;
   background-color: #ddd;
+}
 
+.select {
+  &-label {
+    margin-top: 0.5rem;
+  }
 }
 
 input {
@@ -127,6 +132,7 @@ button {
 
   &__categories-page {
     margin-top: 2rem; 
+    padding: 0.2rem 0;
   }
 
   &__category-page {
