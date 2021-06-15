@@ -63,6 +63,8 @@
   }
 
   &--scroll {
+    display: grid;
+    row-gap: 0.5rem;
     overflow-x: scroll;
     &::-webkit-scrollbar {
       display: none;
