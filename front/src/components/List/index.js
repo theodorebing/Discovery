@@ -13,7 +13,9 @@ const List = ({ list }) => {
   const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [noLinksMessage, setNoLinksMessage] = useState('');
   const [inputOpen, setInputOpen] = useState(false);
+  const [linkDeleted, setLinkDeleted] = useState(false);
   const [validURL] = link();
 
   const openInput = () => {
@@ -57,13 +59,13 @@ const List = ({ list }) => {
       .then((result) => {
         if (result && result.data) {
           setLinks(result.data);
-          setErrorMessage('');
+          setNoLinksMessage('');
         }
       })
       .catch(() => {
-        setErrorMessage('there are no links yet, add one first!');
+        setNoLinksMessage('there are no links yet, add one first!');
       });
-  }, [list, url]);
+  }, [list, url, linkDeleted, errorMessage]);
 
   return (
     <div className="list">
@@ -86,11 +88,11 @@ const List = ({ list }) => {
         </form>
       )}
       <div className="list--scroll">
-        {!inputOpen && errorMessage && (
-        <p className="list-noLinkMessage">{errorMessage}</p>
+        {!inputOpen && noLinksMessage && (
+        <p className="list-noLinkMessage">{noLinksMessage}</p>
         )}
         {links && links.map((link) => (
-          <LinkBox key={link.id} link={link} />
+          <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} />
         ))}
       </div>
     </div>
