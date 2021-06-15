@@ -10,6 +10,7 @@ const qs = require('qs');
 
 const List = ({ list }) => {
   const [url, setUrl] = useState('');
+  const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [inputOpen, setInputOpen] = useState(false);
@@ -25,24 +26,30 @@ const List = ({ list }) => {
 
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
-    if (validURL(url)) {
-      setErrorMessage('');
-      axios.post('links',
-        qs.stringify({ url, list_id: list.id }),
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-        .then((result) => {
-          if (result) {
-            setInputOpen(false);
-            setUrl('');
-          }
-        })
-        .catch(() => {
-          setErrorMessage('There is a problem with your link');
-        });
-    }
-    else {
-      setErrorMessage('please use a valid link');
-    }
+    setInputLoading(true);
+    setTimeout(() => {
+      if (validURL(url)) {
+        setErrorMessage('');
+        axios.post('links',
+          qs.stringify({ url, list_id: list.id }),
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+          .then((result) => {
+            if (result) {
+              setInputOpen(false);
+              setUrl('');
+            }
+          })
+          .catch(() => {
+            setErrorMessage('There is a problem with your link');
+          });
+      }
+      else {
+        setErrorMessage('please use a valid link');
+      }
+    }, 3000);
+    setTimeout(() => {
+      setInputLoading(false);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -65,10 +72,10 @@ const List = ({ list }) => {
         <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
       </div>
       {inputOpen && (
-        <form action="" className="form-form" onSubmit={handleSubmitLink}>
+        <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
           <Input
             label=""
-            className="linkInput list__link-input"
+            className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading })}
             onChange={onChangeUrl}
             value={url}
             name="link"

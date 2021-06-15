@@ -1,5 +1,34 @@
 @use 'src/styles/vars';
 
+@keyframes openInput {
+  0% {
+    transform: scaleY(0);
+    transform-origin: 0 0;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: 100% 0;
+  }
+}
+
+@keyframes fadeInput {
+  0% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: .9;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+
 .list {
   display: grid;
   grid-auto-columns: 330px;
@@ -14,14 +43,22 @@
   position: relative;
   z-index: 0;
 
+  &__input--open {
+    animation: openInput .1s;
+  }
+
   &__link-input {
 
-    animation: fade .75s;
+    animation: fadeInput .75s;
     
     & input {
       transition: height 2s 1s;
       margin: 0 0 0.5rem;
       width:330px;
+    }
+
+    &--loading {
+      animation: loading .666s infinite alternate;
     }
 
   }
