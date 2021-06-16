@@ -31,7 +31,7 @@ const List = ({ list }) => {
   };
 
   const openHeaderInput = () => {
-    setHeaderInputOpened(true);
+    setHeaderInputOpened(!headerInputOpened);
   };
 
   const onChangeListName = (value) => {
@@ -104,22 +104,22 @@ const List = ({ list }) => {
   return (
     <div className="list">
       <div className="list-header__div" onClick={openHeaderInput}>
-        {!headerInputOpened && (
+        {!headerInputOpened ? (
           <h3 className="list-header">{listName}</h3>
-        )}
-        {headerInputOpened && (
-        <div className="list__name-input--div">
-          <form action="" onSubmit={handleSubmitNewListName}>
-            <Input
-              label=""
-              className="list__name-input"
-              onChange={onChangeListName}
-              value={listName}
-              name="list"
-              autocomplete="off"
-            />
-          </form>
-        </div>
+        ) : (
+          <div className="list__name-input--div">
+            <form action="" onSubmit={handleSubmitNewListName}>
+              <Input
+                label=""
+                className="list__name-input"
+                onChange={onChangeListName}
+                value={listName}
+                name="list"
+                autocomplete="off"
+              />
+            </form>
+            <div className="list__name-input--close" onClick={openHeaderInput}>X</div>
+          </div>
         )}
         <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
       </div>

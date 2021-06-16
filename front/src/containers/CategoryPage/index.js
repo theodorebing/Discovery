@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import CategoryPage from 'src/components/CategoryPage';
 import { withRouter } from 'react-router-dom';
 import { findCategoryById } from 'src/selectors';
+import { getCategories } from 'src/actions/categories';
 
 const mapStateToProps = (state, ownProps) => {
   // Ici match est dans les props du container car withRouter lui donne directement
@@ -14,8 +15,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch) => ({
+  getCategories: () => dispatch(getCategories()),
 });
 
 export default withRouter(

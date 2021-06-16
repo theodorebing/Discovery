@@ -9,11 +9,13 @@ import ListsContainer from '../../containers/ListsContainer';
 import Button from '../Button';
 import CreateNewListInput from '../CreateNewListInput';
 import Select from '../Select';
-import CategoriesList from '../CategoriesList';
+import Input from '../Input';
 
 import axios from '../../api';
 
-const CategoryPage = ({ category, categories }) => {
+const qs = require('qs');
+
+const CategoryPage = ({ category, getCategories }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState([]);
@@ -24,6 +26,35 @@ const CategoryPage = ({ category, categories }) => {
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
   const [listToDeleteId, setListToDeleteId] = useState(null);
   const [listToDeleteName, setListToDeleteName] = useState('');
+  const [changeCategoryNameInputOpened, setChangeCategoryNameInput] = useState(false);
+  const [categoryNameErrorMessage, setCategoryNameErrorMessage] = useState('');
+  const [categoryName, setCategoryName] = useState(category.name);
+  const onChangeCategoryName = (value) => {
+    setCategoryName(value);
+  };
+
+  const handleSubmitNewCategoryName = (evt) => {
+    evt.preventDefault();
+    if (categoryName.length > 0) {
+      axios.patch(`categories/${category.id}`,
+        qs.stringify({ name: categoryName }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .then((result) => {
+          if (result) {
+            setCategoryNameErrorMessage('');
+            setChangeCategoryNameInput(false);
+            getCategories();
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
+    else {
+      setCategoryNameErrorMessage('must be at least 1 character');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
@@ -47,9 +78,7 @@ const CategoryPage = ({ category, categories }) => {
 
   const confirmationMessageFunction = (value) => {
     setConfirmationMessage(value);
-    // setTimeout(() => {
     setShowConfirmationMessage(true);
-    // }, 1000);
     setTimeout(() => {
       setShowConfirmationMessage(false);
     }, 4000);
@@ -82,6 +111,11 @@ const CategoryPage = ({ category, categories }) => {
   const cancelDeleteList = () => {
     setListToDeleteId(null);
     setListSelectOpen(false);
+  };
+
+  const openChangeCategoryNameInput = () => {
+    setCategoryName(category.name);
+    setChangeCategoryNameInput(!changeCategoryNameInputOpened);
   };
 
   return (
@@ -136,13 +170,28 @@ const CategoryPage = ({ category, categories }) => {
             </div>
           )}
 
-          {showConfirmationMessage ? (
+          {showConfirmationMessage && (
             <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
-          ) : (
+          )}
+          {!showConfirmationMessage && !changeCategoryNameInputOpened && (
             <>
-              <h2 className="category-page__name">{category.name}</h2>
-              {/* <CategoriesList categories={categories} className="category"/> */}
+              <h2 className="category-page__name" onClick={openChangeCategoryNameInput}>{category.name}</h2>
             </>
+          )}
+          {changeCategoryNameInputOpened && (
+            <div className="category-page__name-input--div">
+              <form action="" onSubmit={handleSubmitNewCategoryName}>
+                <Input
+                  label=""
+                  className="category-page__name-input"
+                  onChange={onChangeCategoryName}
+                  value={categoryName}
+                  name="category"
+                  autocomplete="off"
+                />
+              </form>
+              <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
+            </div>
           )}
           <div className="grid">
             <ListsContainer category={category} setLists={setLists} lists={lists} />

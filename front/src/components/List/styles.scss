@@ -133,8 +133,17 @@
     cursor: text;
 
     &--div {
-      display: block;
+      display: flex;
       height: 21px;
+    }
+
+    &--close {
+      color: vars.$darkgrey;
+      font-family: vars.$main-font;
+      font-size: 0.8rem;
+      margin-left: 10px;
+      margin-top: 5px;
+      cursor: pointer;
     }
 
     // &--error {
