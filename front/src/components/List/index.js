@@ -103,9 +103,9 @@ const List = ({ list }) => {
 
   return (
     <div className="list">
-      <div className="list-header__div" onClick={openHeaderInput}>
+      <div className="list-header__div">
         {!headerInputOpened ? (
-          <h3 className="list-header">{listName}</h3>
+          <h3 className="list-header" onClick={openHeaderInput}>{listName}</h3>
         ) : (
           <div className="list__name-input--div">
             <form action="" onSubmit={handleSubmitNewListName}>
