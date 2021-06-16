@@ -56,7 +56,7 @@ const CategoryPage = ({ category, categories }) => {
   };
   const listSelected = (evt) => {
     const name = evt.target.options[evt.target.selectedIndex].text;
-    setListToDeleteName(name.toUpperCase());
+    setListToDeleteName(name);
     setListToDeleteId(evt.target.value);
   };
 

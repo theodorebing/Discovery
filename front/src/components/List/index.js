@@ -63,6 +63,7 @@ const List = ({ list }) => {
         }
       })
       .catch(() => {
+        setLinks([]);
         setNoLinksMessage('there are no links yet, add one first!');
       });
   }, [list, url, linkDeleted, errorMessage]);
@@ -77,7 +78,7 @@ const List = ({ list }) => {
         <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
           <Input
             label=""
-            className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading })}
+            className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
             onChange={onChangeUrl}
             value={url}
             name="link"

@@ -71,7 +71,10 @@ module.exports = {
             const links = await Link.findAll({
                 where: {
                     list_id: id, member_id: request.session.userid
-                }
+                },
+                order: [
+                    ['created_at', 'ASC']
+                ]
             });
             if (!links[0]) {
                 return response.status(404).json({
