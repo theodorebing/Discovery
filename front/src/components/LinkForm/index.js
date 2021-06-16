@@ -12,9 +12,9 @@ import './styles.scss';
 const qs = require('qs');
 
 const LinkForm = ({
-  onChangeLink, openLinkForm, closeLinkForm, linkFormOpened, link,
+  onChangeLink, openLinkForm, closeLinkForm, linkFormOpened, link, categories, setCategories, getCategories,
 }) => {
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
@@ -76,19 +76,16 @@ const LinkForm = ({
       });
   };
 
-  const getListsFromSelectedCategory = async () => {
-    await (
-      axios.get(`categories/${categoryId}/lists`)
-        .then((result) => {
-          if (result && result.data) {
-            setLists(result.data);
-            return result;
-          }
-        })
-        .catch(() => {
-          setLists([]);
-        })
-    );
+  const getListsFromSelectedCategory = () => {
+    axios.get(`categories/${categoryId}/lists`)
+      .then((result) => {
+        if (result && result.data) {
+          setLists(result.data);
+        }
+      })
+      .catch(() => {
+        setLists([]);
+      });
   };
 
   const categorySelected = (evt) => {
@@ -101,19 +98,16 @@ const LinkForm = ({
   };
 
   useEffect(() => {
-    axios.get('categories')
-      .then((result) => {
-        if (result && result.data) {
-          setCategories(result.data);
-        }
-      })
-      .catch(() => {
-        setCategories([]);
-      });
+    getCategories();
     if (categoryId) {
       getListsFromSelectedCategory();
     }
-  }, [categoryId, categoryInputOpen, listId, listInputOpen]);
+  }, [
+    categoryId,
+    categoryInputOpen,
+    listId,
+    listInputOpen,
+  ]);
 
   const openCategoryInput = () => {
     setCategoryInputOpen(true);

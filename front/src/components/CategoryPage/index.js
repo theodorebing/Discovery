@@ -37,7 +37,7 @@ const CategoryPage = ({ category, getCategories }) => {
     evt.preventDefault();
     if (categoryName.length > 0) {
       axios.patch(`categories/${category.id}`,
-        qs.stringify({ name: categoryName }),
+        qs.stringify({ name: categoryName.toUpperCase() }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
         .then((result) => {
           if (result) {

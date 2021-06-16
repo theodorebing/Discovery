@@ -72,7 +72,7 @@ const Categories = ({ categories, getCategories }) => {
 
   useEffect(() => {
     setLoading(true);
-    getCategories();
+    // getCategories();
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 1000);
