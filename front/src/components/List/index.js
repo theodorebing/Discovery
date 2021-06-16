@@ -13,9 +13,13 @@ const List = ({ list }) => {
   const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
   const [inputOpen, setInputOpen] = useState(false);
   const [linkDeleted, setLinkDeleted] = useState(false);
+  const [headerInputOpened, setHeaderInputOpened] = useState(false);
+  const [listName, setListName] = useState(list.name);
+
   const [validURL] = link();
 
   const openInput = () => {
@@ -24,6 +28,35 @@ const List = ({ list }) => {
 
   const onChangeUrl = (value) => {
     setUrl(value);
+  };
+
+  const openHeaderInput = () => {
+    setHeaderInputOpened(true);
+  };
+
+  const onChangeListName = (value) => {
+    setListName(value);
+  };
+
+  const handleSubmitNewListName = (evt) => {
+    evt.preventDefault();
+    if (listName.length > 0) {
+      axios.patch(`lists/${list.id}`,
+        qs.stringify({ name: listName, category_id: list.category_id }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .then((result) => {
+          if (result) {
+            setListNameErrorMessage('');
+            setHeaderInputOpened(false);
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
+    else {
+      setListNameErrorMessage('must be at least 1 character');
+    }
   };
 
   const handleSubmitLink = (evt) => {
@@ -70,11 +103,28 @@ const List = ({ list }) => {
 
   return (
     <div className="list">
-      <div className="list-header__div">
-        <h3 className="list-header">{list.name}</h3>
+      <div className="list-header__div" onClick={openHeaderInput}>
+        {!headerInputOpened && (
+          <h3 className="list-header">{listName}</h3>
+        )}
+        {headerInputOpened && (
+        <div className="list__name-input--div">
+          <form action="" onSubmit={handleSubmitNewListName}>
+            <Input
+              label=""
+              className="list__name-input"
+              onChange={onChangeListName}
+              value={listName}
+              name="list"
+              autocomplete="off"
+            />
+          </form>
+        </div>
+        )}
         <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
       </div>
       {inputOpen && (
+
         <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
           <Input
             label=""
@@ -87,8 +137,12 @@ const List = ({ list }) => {
           <p className="errorMessage linkForm__message">{errorMessage}</p>
           )}
         </form>
+
       )}
       <div className="list--scroll">
+        {listNameErrorMessage && (
+          <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
+        )}
         {!inputOpen && noLinksMessage && (
         <p className="list-noLinkMessage">{noLinksMessage}</p>
         )}

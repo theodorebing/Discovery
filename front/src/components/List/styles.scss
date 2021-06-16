@@ -78,12 +78,17 @@
     -webkit-background-clip: text;
       -moz-background-clip: text;
             background-clip: text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 2px;
 
     &__div {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 30px;
+
     }
 
     &__input-opener {
@@ -105,6 +110,37 @@
         transform: rotate(45deg);
       }
     }
+  }
+
+  &__name-input {
+    position: relative;
+    left: 0.5px;
+    top: 1px;
+    font-size: 1.1rem;
+    font-family: vars.$main-font;
+    font-weight: 100;
+    color: vars.$white;
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    width: 250px;
+    border: none; 
+    border-radius: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+    cursor: text;
+
+    &--div {
+      display: block;
+      height: 21px;
+    }
+
+    // &--error {
+    //   position: relative;
+    //   top: -35px;
+    // }
   }
 
   &--scroll {
