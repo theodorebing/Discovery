@@ -37,7 +37,7 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
   };
 
   return (
-    <div className="form">
+    <div className="form form__index">
       <div className="message-div">
         <p className="message-text formMessage">please enter your connection informations to be linked</p>
       </div>

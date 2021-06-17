@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from '../../api';
 import Page from '../Page';
 import Input from '../Input';
+import Button from '../Button';
 
 const qs = require('qs');
 
@@ -38,17 +39,14 @@ const SignUp = () => {
   };
   return (
     <Page>
-      <div className="form">
-        <div className="message-div">
-          <p className="message-text formMessage">you must fill in each field to complete subscription</p>
-        </div>
-        {errorMessage && (
-          <div className="message-div">
-            <p className="message-text errorMessage">{errorMessage}</p>
-          </div>
-        )}
+      <div className="form form__index">
         {!confirmationMessage ? (
           <>
+            <div className="message-div">
+              <p className="message-text formMessage">you must fill in each field to complete subscription</p>
+              {errorMessage
+              && <p className="message-text errorMessage">{errorMessage}</p>}
+            </div>
             <form action="" className="form-form signup-form" onSubmit={handleSubmitSubscription}>
               <Input
                 label="name"
@@ -80,7 +78,7 @@ const SignUp = () => {
               <p className="message-text confirmationMessage">{confirmationMessage}</p>
             </div>
 
-            <Link to="/" className="form-link link"><button type="button">Go to sign in page!</button></Link>
+            <Link to="/" className="form-link link"><Button text="Go to sign in page!" /></Link>
           </>
         )}
       </div>

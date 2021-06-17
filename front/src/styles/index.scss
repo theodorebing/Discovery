@@ -18,6 +18,11 @@ body {
   align-items: center;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
 
+  &__index {
+    width: 532px;
+    margin-top: 10vh;
+  }
+
   &-form {
     // width: 50%;
     // height: 50%;

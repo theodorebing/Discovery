@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './styles.scss';
-import AppHeader from 'src/components/AppHeader';
+import AppHeader from 'src/containers/AppHeader';
 
 const Page = ({ children }) => (
   <main className="page">

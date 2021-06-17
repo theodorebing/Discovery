@@ -6,6 +6,11 @@
   left: 10px;
   text-align: center;
 
+    &--index {
+        position: static;
+        margin-top: 10px;
+    }
+
   &-title {
     font-family: vars.$main-font;
     font-size: 2rem;
@@ -16,6 +21,5 @@
     -webkit-background-clip: text;
       -moz-background-clip: text;
             background-clip: text;
-    // margin: 2rem 0;
   }
 }
