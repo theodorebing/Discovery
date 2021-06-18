@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Page from '../Page';
+import Page from '../../containers/Page';
 import './styles.scss';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';

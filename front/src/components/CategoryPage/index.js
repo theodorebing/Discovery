@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Page from 'src/components/Page';
 import { useHistory } from 'react-router-dom';
+import Page from '../../containers/Page';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';

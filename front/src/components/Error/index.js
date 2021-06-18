@@ -2,7 +2,7 @@ import React from 'react';
 
 import Logout from '../Logout';
 import Content from '../Content';
-import Page from '../Page';
+import Page from '../../containers/Page';
 
 const Error = () => (
   <Page>

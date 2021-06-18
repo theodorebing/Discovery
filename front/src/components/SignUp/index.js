@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api';
-import Page from '../Page';
+import Page from '../../containers/Page';
 import Input from '../Input';
 import Button from '../Button';
 

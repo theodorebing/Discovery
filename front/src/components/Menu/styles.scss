@@ -1,0 +1,20 @@
+.menu {
+  &__icon {
+    position: absolute;
+    top: 18px;  
+    left: 10px;
+    width: 23px;
+    height: 28px;
+    filter: invert(99%) opacity(0.99);
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+
+    &--opened {
+      transform: rotate(90deg);
+      width: 20px;
+      left: 11.2px;
+      // height: 30px;
+      // top: 16px; 
+    }
+  }
+}
