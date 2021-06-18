@@ -25,16 +25,17 @@ const App = ({
   const history = useHistory();
   useEffect(() => {
     setLoading(true);
-    axios.get('account')
-      .then(() => {
-        closeLinkForm();
-        setIsLogged();
-        // getCategories();
-      })
-      .catch(() => {
-        closeLinkForm();
-        history.push('/');
-      });
+    if (!isLogged) {
+      axios.get('account')
+        .then(() => {
+          closeLinkForm();
+          setIsLogged();
+        })
+        .catch(() => {
+          closeLinkForm();
+          history.push('/');
+        });
+    }
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 2000);

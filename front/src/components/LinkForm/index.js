@@ -12,9 +12,8 @@ import './styles.scss';
 const qs = require('qs');
 
 const LinkForm = ({
-  onChangeLink, openLinkForm, closeLinkForm, linkFormOpened, link, categories, setCategories, getCategories,
+  onChangeLink, openLinkForm, closeLinkForm, linkFormOpened, link, categories, getCategories,
 }) => {
-  // const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [lists, setLists] = useState([]);
   const [listId, setListId] = useState(null);
@@ -22,6 +21,7 @@ const LinkForm = ({
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [listInputOpen, setListInputOpen] = useState(false);
+  const [urlIsValid, setUrlIsValid] = useState(false);
 
   const url = link;
 
@@ -38,11 +38,21 @@ const LinkForm = ({
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
     if (validURL(url)) {
+      setUrlIsValid(true);
       openLinkForm();
       setErrorMessage('');
     }
     else {
+      setUrlIsValid(false);
       setErrorMessage('please use a valid link');
+      closeLinkForm();
+    }
+  };
+
+  const handleOnChangeLink = (value) => {
+    setUrlIsValid(false);
+    onChangeLink(value);
+    if (linkFormOpened) {
       closeLinkForm();
     }
   };
@@ -127,9 +137,10 @@ const LinkForm = ({
         <Input
           label=""
           className="linkInput"
-          onChange={onChangeLink}
+          onChange={handleOnChangeLink}
           value={link}
           name="link"
+          type="search"
         />
         {errorMessage && !linkFormOpened && (
         <p className="errorMessage linkForm__message">{errorMessage}</p>
