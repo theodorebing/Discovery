@@ -135,7 +135,7 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
           </>
         )}
 
-        <Logout />
+        {/* <Logout /> */}
       </div>
     </Page>
   );

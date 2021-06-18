@@ -10,7 +10,7 @@ const Error = () => (
       title="404 not found"
       text="your are not linked to anything existing, try again"
     />
-    <Logout />
+    {/* <Logout /> */}
   </Page>
 );
 

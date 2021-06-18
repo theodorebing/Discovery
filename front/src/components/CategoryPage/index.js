@@ -199,7 +199,7 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
         </>
         )}
 
-        <Logout />
+        {/* <Logout /> */}
       </div>
     </Page>
   );
