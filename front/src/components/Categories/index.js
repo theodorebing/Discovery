@@ -11,7 +11,7 @@ import Button from '../Button';
 
 import axios from '../../api';
 
-const Categories = ({ categories, getCategories }) => {
+const Categories = ({ categories, getCategories, linkFormOpened }) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [categorySelectOpen, setCategorySelectOpen] = useState(false);
   const [categorytToDeleteId, setCategorytToDeleteId] = useState(null);
@@ -89,7 +89,7 @@ const Categories = ({ categories, getCategories }) => {
         {loading && (
           <Loading />
         )}
-        {!loading && categoryInputOpen && (
+        {!loading && categoryInputOpen && !linkFormOpened && (
           <div className="categories-div__action-input">
             <CreateNewCategoryInput
               setCategoryInputOpen={setCategoryInputOpen}
@@ -97,7 +97,7 @@ const Categories = ({ categories, getCategories }) => {
             />
           </div>
         )}
-        {!loading && categorySelectOpen && (
+        {!loading && categorySelectOpen && !linkFormOpened && (
           <div className="categories-div__action-input">
             <form className="form-form newInput big-form">
               {errorMessage && (
@@ -122,7 +122,7 @@ const Categories = ({ categories, getCategories }) => {
         )}
         {!loading && (
           <>
-            {!categoryInputOpen && !categorySelectOpen && (
+            {!categoryInputOpen && !categorySelectOpen && !linkFormOpened && (
               <div className="categories-div">
                 <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
                 <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />

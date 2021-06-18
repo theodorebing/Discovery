@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     category: foundCategory,
     categories: state.categories.categories,
+    linkFormOpened: state.link.linkFormOpened,
   };
 };
 

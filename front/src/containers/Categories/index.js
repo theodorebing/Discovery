@@ -4,6 +4,7 @@ import { getCategories } from 'src/actions/categories';
 
 const mapStateToProps = (state) => ({
   categories: state.categories.categories,
+  linkFormOpened: state.link.linkFormOpened,
 });
 
 const mapDispatchToProps = (dispatch) => ({

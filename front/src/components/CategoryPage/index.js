@@ -15,7 +15,7 @@ import axios from '../../api';
 
 const qs = require('qs');
 
-const CategoryPage = ({ category, getCategories }) => {
+const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState([]);
@@ -128,7 +128,7 @@ const CategoryPage = ({ category, getCategories }) => {
         {loading && (
           <Loading />
         )}
-        {!loading && listInputOpen && (
+        {!loading && listInputOpen && !linkFormOpened && (
           <div className="categories-div__action-input category-page__action">
             <CreateNewListInput
               categoryId={category.id.toString()}
@@ -137,7 +137,7 @@ const CategoryPage = ({ category, getCategories }) => {
             />
           </div>
         )}
-        {!loading && listSelectOpen && (
+        {!loading && listSelectOpen && !linkFormOpened && (
         <div className="categories-div__action-input category-page__action">
           <form className="form-form newInput big-form">
             {errorMessage && (
@@ -161,7 +161,7 @@ const CategoryPage = ({ category, getCategories }) => {
         )}
         {!loading && category && (
         <>
-          {!listInputOpen && !listSelectOpen && (
+          {!listInputOpen && !listSelectOpen && !linkFormOpened && (
             <div className="category-page--fixed-components">
               <div className="categories-div">
                 <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
