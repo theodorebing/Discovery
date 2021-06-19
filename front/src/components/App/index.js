@@ -16,6 +16,7 @@ import SignUp from '../SignUp';
 import CategoryPage from '../../containers/CategoryPage';
 import Error from '../Error';
 import Loading from '../Loading';
+import Profile from '../Profile';
 
 // == Composant
 const App = ({
@@ -58,7 +59,7 @@ const App = ({
           <Route path="/" exact>
             <Index />
           </Route>
-          <Route path="/signup">
+          <Route path="/signup" exact>
             <SignUp />
           </Route>
           <Route path={['/error', '*']} exact>
@@ -70,8 +71,11 @@ const App = ({
           <Route path={['/', '/categories']} exact>
             <Categories />
           </Route>
-          <Route path="/category/:categoryId">
+          <Route path="/category/:categoryId" exact>
             <CategoryPage />
+          </Route>
+          <Route path="/profile" exact>
+            <Profile />
           </Route>
           <Route path={['/error', '*']} exact>
             <Error />
