@@ -65,23 +65,25 @@ const List = ({ list }) => {
     setTimeout(() => {
       if (validURL(url)) {
         setErrorMessage('');
-        axios.post('links',
-          qs.stringify({ url, list_id: list.id }),
-          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-          .then((result) => {
-            if (result) {
-              setInputOpen(false);
-              setUrl('');
-            }
-          })
-          .catch(() => {
-            setErrorMessage('There is a problem with your link');
-          });
+        setTimeout(() => {
+          axios.post('links',
+            qs.stringify({ url, list_id: list.id }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+            .then((result) => {
+              if (result) {
+                setInputOpen(false);
+                setUrl('');
+              }
+            })
+            .catch(() => {
+              setErrorMessage('There is a problem with your link');
+            });
+        }, 1000);
       }
       else {
         setErrorMessage('please use a valid link');
       }
-    }, 3000);
+    }, 3500);
     setTimeout(() => {
       setInputLoading(false);
     }, 5000);

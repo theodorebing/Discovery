@@ -50,12 +50,15 @@
       transform: rotate(90deg);
     }
   }
-
+  height: 80px;
   visibility: hidden;
   position: absolute;
   top: 50px;
   left: 10px;
   transition: all 0.3s ease 0s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 
   &--open {
     visibility: visible;
@@ -64,5 +67,14 @@
 
   &--close {
     animation: closeMenu .4s;
+  }
+
+  &-link {
+    color: vars.$grey;
+    font-family: vars.$main-font;
+
+    &:hover {
+      color: vars.$white;
+    }
   }
 }

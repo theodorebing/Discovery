@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import menu from '../../assets/menu.png';
 import Logout from '../../containers/Logout';
 
@@ -16,6 +17,8 @@ const Menu = () => {
     <>
       <img src={menu} alt="menu" className={classNames('menu__icon', { 'menu__icon--opened': menuOpen })} onClick={openMenu} />
       <div className={classNames('menu', { 'menu--open': menuOpen, 'menu--close': !menuOpen })}>
+        <NavLink to="/" className="menu-link">Categories</NavLink>
+        <NavLink to="/profile" className="menu-link">Profile</NavLink>
         <Logout />
       </div>
     </>

@@ -8,4 +8,7 @@
   color: vars.$grey;
   font-family: vars.$main-font;
   cursor: pointer;
+    &:hover {
+      color: vars.$white;
+    }
 }
