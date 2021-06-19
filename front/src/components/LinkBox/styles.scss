@@ -1,5 +1,14 @@
 @use 'src/styles/vars';
 
+@keyframes fadedLink {
+  0% {
+    opacity: .9;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+
 .link-box {
 
   display: flex;
@@ -8,13 +17,47 @@
   border: solid 2px none;
   border-radius: vars.$radius;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
-  margin-bottom: 0.5rem;
+  // margin-bottom: 0.5rem;
+  transition: width 0.3s ease 0s;
 
   &:hover {
     box-shadow: inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);
     // background-color: rgba(255, 255, 255, 0.007);
     background: radial-gradient(rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.116));
+  }
 
+  &__a {
+    border-radius: vars.$radius 0 0 vars.$radius;
+  }
+
+  &__delete {
+    position: relative;
+    z-index: 10;
+    color: vars.$darkgrey;
+    font-family: vars.$main-font;
+    // font-size: 2.5rem;
+    width: 20px;
+    height: 90px;
+    border: solid 2px none;
+    border-radius: 0 vars.$radius vars.$radius 0;
+    background-color: transparent;
+    box-shadow: inset -2px 0px 5px 0px rgba(107, 107, 107, 0.295);
+    // background: linear-gradient(to right, transparent, vars.$black 33%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    // & p {
+    //   position: relative;
+    //   right: 1px;
+    //   transform: rotate(45deg);
+    // }
+
+    &:hover {
+      color: red;
+      // background-color: rgba(94, 0, 0, 0.219);
+      background: linear-gradient(to right, transparent 5%, rgba(94, 0, 0, 0.459) 70%);
+    }
   }
 
   &__image {
@@ -34,13 +77,14 @@
   }
 
   &__text {
-        position: relative;
+    position: relative;
     z-index: -2;
-    width: 240px;
-    padding: 0.5rem 0;
+    width: 220px;
+    margin-left: 90px;
+    padding: 0.5rem 0 0;
     color: vars.$grey;
-    border-radius: 0 vars.$radius vars.$radius 0;
-    box-shadow: inset 2px 0 3px 0px rgb(107, 107, 107), inset 0px 0 0 0 rgb(107, 107, 107);
+    // border-radius: 0 vars.$radius vars.$radius 0;
+    box-shadow: inset 2px 0 3px 0px rgba(107, 107, 107, 0.459);
     // &:hover {
     //   box-shadow: inset 2px 0 3px 0 rgb(58, 58, 58);
     // }
@@ -50,7 +94,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      overflow: hidden;
       padding: 0 0.8rem 0.5rem;
       font-size: 0.8rem;
       &--title {
@@ -74,4 +117,9 @@
       }
     }
   }
+
+  &--loading {
+    animation: fadedLink .5s infinite alternate;
+  }
+
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Page from '../Page';
+import Page from '../../containers/Page';
 import './styles.scss';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
@@ -11,7 +11,7 @@ import Button from '../Button';
 
 import axios from '../../api';
 
-const Categories = ({ categories, getCategories }) => {
+const Categories = ({ categories, getCategories, linkFormOpened }) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [categorySelectOpen, setCategorySelectOpen] = useState(false);
   const [categorytToDeleteId, setCategorytToDeleteId] = useState(null);
@@ -89,19 +89,7 @@ const Categories = ({ categories, getCategories }) => {
         {loading && (
           <Loading />
         )}
-        {!loading && !categoryInputOpen && !categorySelectOpen && (
-          <>
-            <div className="categories-div">
-              <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
-              <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
-            </div>
-            {showConfirmationMessage ? (
-              <p className="confirmationMessage confirmationMessage__categories-page">{confirmationMessage}</p>
-            ) : (<p className="categories__text">choose a category below</p>)}
-            <CategoriesList categories={categories} />
-          </>
-        )}
-        {!loading && categoryInputOpen && (
+        {!loading && categoryInputOpen && !linkFormOpened && (
           <div className="categories-div__action-input">
             <CreateNewCategoryInput
               setCategoryInputOpen={setCategoryInputOpen}
@@ -109,7 +97,7 @@ const Categories = ({ categories, getCategories }) => {
             />
           </div>
         )}
-        {!loading && categorySelectOpen && (
+        {!loading && categorySelectOpen && !linkFormOpened && (
           <div className="categories-div__action-input">
             <form className="form-form newInput big-form">
               {errorMessage && (
@@ -123,7 +111,7 @@ const Categories = ({ categories, getCategories }) => {
               />
               {categorytToDeleteId && (
               <>
-                <p className="errorMessage errorMessage--delete-category">if you confirm deletion it will delete the category and all it's lists and links</p>
+                <p className="errorMessage errorMessage--delete-category">if you confirm deletion it will delete the category <br /> and all it's lists and links</p>
                 <Button classname="categories-div__action categories-div__action--little" onClick={confirmCategoryDeletion} text="confirm deletion" />
               </>
               )}
@@ -132,8 +120,22 @@ const Categories = ({ categories, getCategories }) => {
             </form>
           </div>
         )}
+        {!loading && (
+          <>
+            {!categoryInputOpen && !categorySelectOpen && !linkFormOpened && (
+              <div className="categories-div">
+                <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
+                <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
+              </div>
+            )}
+            {showConfirmationMessage ? (
+              <p className="confirmationMessage confirmationMessage__categories-page">{confirmationMessage}</p>
+            ) : (<p className="categories__text">choose a category below</p>)}
+            <CategoriesList categories={categories} />
+          </>
+        )}
 
-        <Logout />
+        {/* <Logout /> */}
       </div>
     </Page>
   );

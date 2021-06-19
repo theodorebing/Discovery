@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Page from 'src/components/Page';
 import { useHistory } from 'react-router-dom';
+import Page from '../../containers/Page';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
@@ -9,10 +9,13 @@ import ListsContainer from '../../containers/ListsContainer';
 import Button from '../Button';
 import CreateNewListInput from '../CreateNewListInput';
 import Select from '../Select';
+import Input from '../Input';
 
 import axios from '../../api';
 
-const CategoryPage = ({ category }) => {
+const qs = require('qs');
+
+const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState([]);
@@ -23,6 +26,35 @@ const CategoryPage = ({ category }) => {
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
   const [listToDeleteId, setListToDeleteId] = useState(null);
   const [listToDeleteName, setListToDeleteName] = useState('');
+  const [changeCategoryNameInputOpened, setChangeCategoryNameInput] = useState(false);
+  const [categoryNameErrorMessage, setCategoryNameErrorMessage] = useState('');
+  const [categoryName, setCategoryName] = useState(category.name);
+  const onChangeCategoryName = (value) => {
+    setCategoryName(value);
+  };
+
+  const handleSubmitNewCategoryName = (evt) => {
+    evt.preventDefault();
+    if (categoryName.length > 0) {
+      axios.patch(`categories/${category.id}`,
+        qs.stringify({ name: categoryName.toUpperCase() }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .then((result) => {
+          if (result) {
+            setCategoryNameErrorMessage('');
+            setChangeCategoryNameInput(false);
+            getCategories();
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
+    else {
+      setCategoryNameErrorMessage('must be at least 1 character');
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
@@ -46,16 +78,14 @@ const CategoryPage = ({ category }) => {
 
   const confirmationMessageFunction = (value) => {
     setConfirmationMessage(value);
-    // setTimeout(() => {
     setShowConfirmationMessage(true);
-    // }, 1000);
     setTimeout(() => {
       setShowConfirmationMessage(false);
     }, 4000);
   };
   const listSelected = (evt) => {
     const name = evt.target.options[evt.target.selectedIndex].text;
-    setListToDeleteName(name.toUpperCase());
+    setListToDeleteName(name);
     setListToDeleteId(evt.target.value);
   };
 
@@ -83,6 +113,11 @@ const CategoryPage = ({ category }) => {
     setListSelectOpen(false);
   };
 
+  const openChangeCategoryNameInput = () => {
+    setCategoryName(category.name);
+    setChangeCategoryNameInput(!changeCategoryNameInputOpened);
+  };
+
   return (
     <Page>
       <div className="category-page">
@@ -93,8 +128,8 @@ const CategoryPage = ({ category }) => {
         {loading && (
           <Loading />
         )}
-        {!loading && listInputOpen && (
-          <div className="categories-div__action-input">
+        {!loading && listInputOpen && !linkFormOpened && (
+          <div className="categories-div__action-input category-page__action">
             <CreateNewListInput
               categoryId={category.id.toString()}
               setConfirmationMessage={confirmationMessageFunction}
@@ -102,8 +137,8 @@ const CategoryPage = ({ category }) => {
             />
           </div>
         )}
-        {!loading && listSelectOpen && (
-        <div className="categories-div__action-input">
+        {!loading && listSelectOpen && !linkFormOpened && (
+        <div className="categories-div__action-input category-page__action">
           <form className="form-form newInput big-form">
             {errorMessage && (
             <p className="errorMessage">{errorMessage}</p>
@@ -124,18 +159,39 @@ const CategoryPage = ({ category }) => {
           </form>
         </div>
         )}
-        {!loading && category && !listInputOpen && !listSelectOpen && (
+        {!loading && category && (
         <>
-          <div className="category-page--fixed-components">
-            <div className="categories-div">
-              <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
-              <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+          {!listInputOpen && !listSelectOpen && !linkFormOpened && (
+            <div className="category-page--fixed-components">
+              <div className="categories-div">
+                <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
+                <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
+              </div>
             </div>
-          </div>
-          {showConfirmationMessage ? (
+          )}
+
+          {showConfirmationMessage && (
             <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
-          ) : (
-            <h2 className="category-page__name">{category.name}</h2>
+          )}
+          {!showConfirmationMessage && !changeCategoryNameInputOpened && (
+            <>
+              <h2 className="category-page__name" onClick={openChangeCategoryNameInput}>{category.name}</h2>
+            </>
+          )}
+          {changeCategoryNameInputOpened && (
+            <div className="category-page__name-input--div">
+              <form action="" onSubmit={handleSubmitNewCategoryName}>
+                <Input
+                  label=""
+                  className="category-page__name-input"
+                  onChange={onChangeCategoryName}
+                  value={categoryName}
+                  name="category"
+                  autocomplete="off"
+                />
+              </form>
+              <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
+            </div>
           )}
           <div className="grid">
             <ListsContainer category={category} setLists={setLists} lists={lists} />
@@ -143,7 +199,7 @@ const CategoryPage = ({ category }) => {
         </>
         )}
 
-        <Logout />
+        {/* <Logout /> */}
       </div>
     </Page>
   );

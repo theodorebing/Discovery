@@ -1,7 +1,15 @@
 @use 'src/styles/vars';
 
 .header {
+  position: absolute;
+  top: 14px;
+  left: 45px;
   text-align: center;
+
+    &--index {
+        position: static;
+        margin-top: 10px;
+    }
 
   &-title {
     font-family: vars.$main-font;
@@ -13,6 +21,5 @@
     -webkit-background-clip: text;
       -moz-background-clip: text;
             background-clip: text;
-    margin: 4rem 0;
   }
 }

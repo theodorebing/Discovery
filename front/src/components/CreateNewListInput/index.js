@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../api';
 import Input from '../Input';
-
+import Button from '../Button';
 import './styles.scss';
 
 const qs = require('qs');
@@ -43,7 +43,8 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
         value={newList}
         name="list"
       />
-      <p onClick={closeInput} className="newInput-close">close</p>
+      <Button classname="linkForm__button newInput-close" onClick={closeInput} text="return" />
+      {/* <p onClick={closeInput} className="newInput-close">close</p> */}
     </form>
   );
 };

@@ -1,0 +1,17 @@
+@use 'src/styles/vars';
+
+.profile {
+  &__header {
+    font-family: vars.$link-font;
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    text-transform: uppercase;
+    background-color: #41414175;
+    color: transparent;
+    text-shadow: 1px 1px 1px rgb(90, 90, 90);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+  }
+}

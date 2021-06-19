@@ -37,7 +37,7 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
   };
 
   return (
-    <div className="form">
+    <div className="form form__index">
       <div className="message-div">
         <p className="message-text formMessage">please enter your connection informations to be linked</p>
       </div>
@@ -59,7 +59,7 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
           value={password}
           name="password"
         />
-        <button type="submit">
+        <button type="submit" className="button">
           Sign in
         </button>
       </form>

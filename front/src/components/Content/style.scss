@@ -1,9 +1,10 @@
 @use 'src/styles/vars';
 
 .content {
-
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   color: vars.$grey;
   font-family: vars.$main-font;
@@ -12,6 +13,6 @@
   }
 
   &-text {
-    
+    margin-top: 1em;
   }
 }

@@ -1,5 +1,14 @@
+@use 'src/styles/vars';
+
+
 .logout-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  // position: absolute;
+  // top: 50px;
+  // left: 10px;
+  color: vars.$grey;
+  font-family: vars.$main-font;
+  cursor: pointer;
+    &:hover {
+      color: vars.$white;
+    }
 }
