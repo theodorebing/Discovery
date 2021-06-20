@@ -1,0 +1,11 @@
+@use 'src/styles/vars';
+
+.profile {
+  width: 532px;
+  color: white;
+  align-items: flex-start;
+
+  &__container {
+    margin: 66.6px;
+  }
+}
