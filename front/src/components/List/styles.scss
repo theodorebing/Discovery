@@ -81,7 +81,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-top: 2px;
+    padding: 5px 5px 5px 0;
+    // padding-right: 5px;
 
     &__div {
       display: flex;
@@ -115,7 +116,7 @@
   &__name-input {
     position: relative;
     left: 0.5px;
-    top: 1px;
+    top: 0.5px;
     font-size: 1.1rem;
     font-family: vars.$main-font;
     font-weight: 100;
