@@ -42,21 +42,16 @@
     border-radius: 0 vars.$radius vars.$radius 0;
     background-color: transparent;
     box-shadow: inset -2px 0px 5px 0px rgba(107, 107, 107, 0.295);
-    // background: linear-gradient(to right, transparent, vars.$black 33%);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    // & p {
-    //   position: relative;
-    //   right: 1px;
-    //   transform: rotate(45deg);
-    // }
 
     &:hover {
       color: red;
-      // background-color: rgba(94, 0, 0, 0.219);
-      background: linear-gradient(to right, transparent 5%, rgba(94, 0, 0, 0.459) 70%);
+      font-weight: 500;
+      background-color: rgba(94, 0, 0, 0.219);
+      // background: linear-gradient(to right, transparent 5%, rgba(94, 0, 0, 0.459) 70%);
     }
   }
 

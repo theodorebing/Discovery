@@ -24,6 +24,7 @@ const List = ({ list }) => {
 
   const openInput = () => {
     setInputOpen(!inputOpen);
+    setHeaderInputOpened(false);
   };
 
   const onChangeUrl = (value) => {
@@ -32,6 +33,7 @@ const List = ({ list }) => {
 
   const openHeaderInput = () => {
     setHeaderInputOpened(!headerInputOpened);
+    setInputOpen(false);
   };
 
   const onChangeListName = (value) => {
@@ -125,7 +127,7 @@ const List = ({ list }) => {
         )}
         <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
       </div>
-      {inputOpen && (
+      {inputOpen && !headerInputOpened && (
 
         <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
           <Input
