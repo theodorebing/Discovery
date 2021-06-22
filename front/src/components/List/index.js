@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { Draggable } from 'react-beautiful-dnd';
+
 import axios from '../../api';
 import './styles.scss';
 import LinkBox from '../LinkBox';
@@ -8,7 +10,7 @@ import link from '../../selectors/link';
 
 const qs = require('qs');
 
-const List = ({ list }) => {
+const List = ({ list, index }) => {
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
@@ -106,55 +108,65 @@ const List = ({ list }) => {
   }, [list, url, linkDeleted, errorMessage]);
 
   return (
-    <div className="list">
-      <div className="list-header__div">
-        {!headerInputOpened ? (
-          <h3 className="list-header" onClick={openHeaderInput}>{listName}</h3>
-        ) : (
-          <div className="list__name-input--div">
-            <form action="" onSubmit={handleSubmitNewListName}>
-              <Input
-                label=""
-                className="list__name-input"
-                onChange={onChangeListName}
-                value={listName}
-                name="list"
-                autocomplete="off"
-              />
-            </form>
-            <div className="list__name-input--close" onClick={openHeaderInput}>X</div>
+    <Draggable draggableId={list.id.toString()} index={index}>
+      {(provided) => (
+        <div
+          className="list"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+
+          <div className="list-header__div">
+            {!headerInputOpened ? (
+              <h3 className="list-header" onClick={openHeaderInput}>{listName}</h3>
+            ) : (
+              <div className="list__name-input--div">
+                <form action="" onSubmit={handleSubmitNewListName}>
+                  <Input
+                    label=""
+                    className="list__name-input"
+                    onChange={onChangeListName}
+                    value={listName}
+                    name="list"
+                    autocomplete="off"
+                  />
+                </form>
+                <div className="list__name-input--close" onClick={openHeaderInput}>X</div>
+              </div>
+            )}
+            <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
           </div>
-        )}
-        <button type="button" className={classNames('list-header__input-opener', { 'list-header__input-opener--open': inputOpen })} onClick={openInput}>+</button>
-      </div>
-      {inputOpen && !headerInputOpened && (
+          {inputOpen && !headerInputOpened && (
 
-        <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
-          <Input
-            label=""
-            className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
-            onChange={onChangeUrl}
-            value={url}
-            name="link"
-          />
-          {errorMessage && (
-          <p className="errorMessage linkForm__message">{errorMessage}</p>
+          <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
+            <Input
+              label=""
+              className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
+              onChange={onChangeUrl}
+              value={url}
+              name="link"
+            />
+            {errorMessage && (
+            <p className="errorMessage linkForm__message">{errorMessage}</p>
+            )}
+          </form>
+
           )}
-        </form>
-
+          <div className="list--scroll">
+            {listNameErrorMessage && (
+            <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
+            )}
+            {!inputOpen && noLinksMessage && (
+            <p className="list-noLinkMessage">{noLinksMessage}</p>
+            )}
+            {links && links.map((link) => (
+              <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} />
+            ))}
+          </div>
+        </div>
       )}
-      <div className="list--scroll">
-        {listNameErrorMessage && (
-          <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
-        )}
-        {!inputOpen && noLinksMessage && (
-        <p className="list-noLinkMessage">{noLinksMessage}</p>
-        )}
-        {links && links.map((link) => (
-          <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} />
-        ))}
-      </div>
-    </div>
+    </Draggable>
   );
 };
 export default List;

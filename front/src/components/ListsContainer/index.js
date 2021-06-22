@@ -34,8 +34,8 @@ const ListsContainer = ({
       {errorMessage && (
         <p className="listsContainer-noListMessage">{errorMessage}</p>
       )}
-      {lists && lists.map((list) => (
-        <List key={list.id} list={list} />
+      {lists && lists.map((list, index) => (
+        <List key={list.id} list={list} index={index} />
       ))}
     </div>
   );

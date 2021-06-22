@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Page from '../../containers/Page';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
@@ -193,9 +194,16 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
               <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
             </div>
           )}
-          <div className="grid">
-            <ListsContainer category={category} setLists={setLists} lists={lists} />
-          </div>
+          <DragDropContext>
+            <Droppable droppableId="list">
+              {(provided) => (
+                <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
+                  <ListsContainer category={category} setLists={setLists} lists={lists} />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </>
         )}
 
