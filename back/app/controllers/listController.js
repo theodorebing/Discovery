@@ -9,6 +9,11 @@ module.exports = {
         let findIfCategoryExists = await Category.findOne({
             where: {member_id : request.session.userid, id : categoryId}
         });
+        const findHighestPosition = await List.findAndCountAll({
+            where: {member_id : request.session.userid, category_id : categoryId}
+        });
+        console.log(findHighestPosition);
+        console.log(findHighestPosition.count);
         if (!findIfCategoryExists) {
                 return response.status(400).json({
                     error: `A user can only create a list to one of his existing categories`
@@ -29,7 +34,7 @@ module.exports = {
         try {
             const list = await List.create({
                 name: data.name, 
-                position: data.position, 
+                position: (findHighestPosition.count++), 
                 category_id: categoryId, 
                 member_id: userId});
             response.json(list);
