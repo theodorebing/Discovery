@@ -6,7 +6,7 @@ import axios from '../../api';
 import './styles.scss';
 
 const ListsContainer = ({
-  category, link, setLists, lists,
+  category, link, setLists, lists, placeholder,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -34,9 +34,10 @@ const ListsContainer = ({
       {errorMessage && (
         <p className="listsContainer-noListMessage">{errorMessage}</p>
       )}
-      {lists && lists.map((list) => (
-        <List key={list.id} list={list} />
+      {lists && lists.map((list, index) => (
+        <List key={list.id} list={list} index={index} />
       ))}
+      {placeholder}
     </div>
   );
 };

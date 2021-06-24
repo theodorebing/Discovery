@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Page from '../../containers/Page';
 import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
@@ -29,6 +30,7 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
   const [changeCategoryNameInputOpened, setChangeCategoryNameInput] = useState(false);
   const [categoryNameErrorMessage, setCategoryNameErrorMessage] = useState('');
   const [categoryName, setCategoryName] = useState(category.name);
+
   const onChangeCategoryName = (value) => {
     setCategoryName(value);
   };
@@ -118,6 +120,20 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
     setChangeCategoryNameInput(!changeCategoryNameInputOpened);
   };
 
+  function handleOnDragEnd(result) {
+    const items = Array.from(lists);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    items.map((item, index) => (
+      axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
+        })
+    ));
+    setLists(items);
+  }
+
   return (
     <Page>
       <div className="category-page">
@@ -193,9 +209,21 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
               <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
             </div>
           )}
-          <div className="grid">
-            <ListsContainer category={category} setLists={setLists} lists={lists} />
-          </div>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="list" direction="horizontal">
+              {(provided) => (
+                <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
+                  <ListsContainer
+                    category={category}
+                    setLists={setLists}
+                    lists={lists}
+                    placeholder={provided.placeholder}
+                  />
+                  {/* {provided.placeholder} */}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </>
         )}
 
