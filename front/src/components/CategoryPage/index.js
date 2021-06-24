@@ -121,27 +121,17 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
   };
 
   function handleOnDragEnd(result) {
-    console.log(result);
-    console.log('result.draggableId', result.draggableId);
     const items = Array.from(lists);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
+    items.map((item, index) => (
+      axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
+        })
+    ));
     setLists(items);
-    const listId = parseInt(result.draggableId, 10);
-    console.log('listId', listId);
-    console.log('result.destination.index', result.destination.index);
-
-    axios.patch(`lists/${listId}`, qs.stringify({ position: result.destination.index, category_id: items[0].category_id }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-      .then((res) => {
-        if (res) {
-          console.log(res);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   return (
