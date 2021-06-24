@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Page from '../../containers/Page';
-import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
 import Loading from '../Loading';
@@ -219,15 +218,12 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
                     lists={lists}
                     placeholder={provided.placeholder}
                   />
-                  {/* {provided.placeholder} */}
                 </div>
               )}
             </Droppable>
           </DragDropContext>
         </>
         )}
-
-        {/* <Logout /> */}
       </div>
     </Page>
   );

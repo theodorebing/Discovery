@@ -204,9 +204,6 @@ const LinkForm = ({
             {listId && (
               <div className="linkForm-part2-div">
                 <Button onClick={handleSubmitForm} classname="linkForm__button linkForm-part2-button" text="create" />
-                {/* <button type="button" onClick={handleSubmitForm} className="linkForm-part2-button">
-                  create the link
-                </button> */}
               </div>
             )}
           <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />

@@ -12,8 +12,6 @@ module.exports = {
         const findHighestPosition = await List.findAndCountAll({
             where: {member_id : request.session.userid, category_id : categoryId}
         });
-        console.log(findHighestPosition);
-        console.log(findHighestPosition.count);
         if (!findIfCategoryExists) {
                 return response.status(400).json({
                     error: `A user can only create a list to one of his existing categories`

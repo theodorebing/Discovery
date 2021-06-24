@@ -11,8 +11,6 @@ import link from '../../selectors/link';
 const qs = require('qs');
 
 const List = ({ list, index }) => {
-  console.log('list', list);
-
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
