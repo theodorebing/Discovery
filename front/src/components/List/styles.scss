@@ -159,13 +159,15 @@
   &--scroll {
     display: grid;
     row-gap: 0.5rem;
-    overflow-x: scroll;
+    // overflow-x: scroll;
+    overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     max-height: 66.6vh;
+    // min-height: 90px;
     border-radius: vars.$radius;
   }
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
-
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 import axios from '../../api';
 import './styles.scss';
 import LinkBox from '../LinkBox';
@@ -107,6 +106,36 @@ const List = ({ list, index }) => {
       });
   }, [list, url, linkDeleted, errorMessage]);
 
+  function handleOnDragEnd(result) {
+    const { source, destination } = result;
+    // dropped outside the list
+    if (!destination) {
+      return;
+    }
+    const sInd = source.droppableId;
+    const dInd = destination.droppableId;
+    console.log('result', result);
+    if (sInd === dInd) {
+      const items = Array.from(links);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
+      items.map((item, index) => (
+        axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+          .then((result) => {
+            console.log('result', result);
+          })
+          .catch((error) => {
+            setErrorMessage(error.response.data.error);
+          })
+      ));
+      setLinks(items);
+    }
+    else {
+      console.log('result', result);
+    }
+  }
+
   return (
     <Draggable draggableId={list.id.toString()} index={index}>
       {(provided) => (
@@ -114,10 +143,11 @@ const List = ({ list, index }) => {
           className="list"
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
-
-          <div className="list-header__div">
+          <div
+            className="list-header__div"
+            {...provided.dragHandleProps}
+          >
             {!headerInputOpened ? (
               <h3 className="list-header" onClick={openHeaderInput}>{listName}</h3>
             ) : (
@@ -139,31 +169,38 @@ const List = ({ list, index }) => {
           </div>
           {inputOpen && !headerInputOpened && (
 
-          <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
-            <Input
-              label=""
-              className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
-              onChange={onChangeUrl}
-              value={url}
-              name="link"
-            />
-            {errorMessage && (
-            <p className="errorMessage linkForm__message">{errorMessage}</p>
-            )}
-          </form>
+            <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
+              <Input
+                label=""
+                className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
+                onChange={onChangeUrl}
+                value={url}
+                name="link"
+              />
+              {errorMessage && (
+              <p className="errorMessage linkForm__message">{errorMessage}</p>
+              )}
+            </form>
 
           )}
-          <div className="list--scroll">
-            {listNameErrorMessage && (
-            <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
-            )}
-            {!inputOpen && noLinksMessage && (
-            <p className="list-noLinkMessage">{noLinksMessage}</p>
-            )}
-            {links && links.map((link) => (
-              <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} />
-            ))}
-          </div>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId={list.id.toString()}>
+              {(provided) => (
+                <div className="list--scroll" ref={provided.innerRef} {...provided.droppableProps}>
+                  {listNameErrorMessage && (
+                    <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
+                  )}
+                  {!inputOpen && noLinksMessage && (
+                    <p className="list-noLinkMessage">{noLinksMessage}</p>
+                  )}
+                  {links && links.map((link, index) => (
+                    <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
       )}
     </Draggable>
