@@ -9,9 +9,6 @@ const Input = ({
   };
   const inputId = `input-${name}`;
   let typeValue = name;
-  console.log('type', type);
-  console.log('name', name);
-  console.log('typeValue', typeValue);
   if (type === 'search') {
     typeValue = type;
   }
