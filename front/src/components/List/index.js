@@ -98,7 +98,7 @@ const List = ({
 
   useEffect(() => {
     let isMounted = true;
-    console.log('list', list);
+    // console.log('lists', lists);
     if (isMounted) {
       if (list.links[0]) {
         setLinks(list.links);
@@ -116,6 +116,8 @@ const List = ({
 
   function handleOnDragEndLinks(result) {
     const { source, destination } = result;
+    console.log('source', source);
+    console.log('destination', destination);
     if (!destination) {
       return;
     }
@@ -128,6 +130,8 @@ const List = ({
     const sInd = source.droppableId;
     const dInd = destination.droppableId;
     console.log('result', result);
+    console.log('sInd', sInd);
+    console.log('dInd', dInd);
     if (sInd === dInd) {
       const items = Array.from(links);
       const [reorderedItem] = items.splice(result.source.index, 1);
@@ -136,7 +140,7 @@ const List = ({
         axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
           .then((result) => {
-            console.log('result', result);
+            // console.log('result', result);
             getLists();
           })
           .catch((error) => {
@@ -145,12 +149,12 @@ const List = ({
       ));
       setLinks(items);
     }
-
+    // else {
     const start = lists[source.droppableId];
     console.log('start', start);
-    const finish = lists.find((e) => e.id === [destination.droppableId]);
+    const finish = lists[destination.droppableId];
     console.log('finish', finish);
-    console.log('result', result);
+    // console.log('result', result);
     const startLinks = Array.from(start.links);
     startLinks.splice(source.index, 1);
     const newStart = {
@@ -174,6 +178,7 @@ const List = ({
       },
     };
     setLinks(newState);
+    // }
   }
 
   return (
@@ -224,7 +229,7 @@ const List = ({
 
           )}
           <DragDropContext onDragEnd={handleOnDragEndLinks}>
-            <Droppable droppableId={list.id.toString()} direction="vertical">
+            <Droppable droppableId={list.position.toString()} direction="vertical">
               {(prov) => (
                 <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
                   {listNameErrorMessage && (
