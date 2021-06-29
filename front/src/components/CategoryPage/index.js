@@ -119,19 +119,88 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
     setChangeCategoryNameInput(!changeCategoryNameInputOpened);
   };
 
-  function handleOnDragEnd(result) {
-    const items = Array.from(lists);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    items.map((item, index) => (
-      axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-        .catch((error) => {
-          setErrorMessage(error.response.data.error);
-        })
-    ));
-    setLists(items);
+  function handleOnDragEnd(result, links, setLinks) {
+    const { source, destination } = result;
+
+    // dnd for lists
+    if (source.droppableId === 'container') {
+      const items = Array.from(lists);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
+      items.map((item, index) => (
+        axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+          .catch((error) => {
+            setErrorMessage(error.response.data.error);
+          })
+      ));
+      setLists(items);
+    }
+    // else {
+    //   // dnd for links
+    //   // dropped outside the list
+    //   if (!destination) {
+    //     return;
+    //   }
+    //   // same place
+    //   if (
+    //     destination.droppableId === source.droppableId
+    //     && destination.index === source.index
+    //   ) {
+    //     return;
+    //   }
+    //   const sInd = source.droppableId;
+    //   const dInd = destination.droppableId;
+    //   // move in the same list
+    //   if (sInd === dInd) {
+    //     const items = Array.from(links);
+    //     const [reorderedItem] = items.splice(result.source.index, 1);
+    //     items.splice(result.destination.index, 0, reorderedItem);
+    //     items.map((item, index) => (
+    //       axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+    //         { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //         .then((result) => {
+    //           console.log('result', result);
+    //         })
+    //         .catch((error) => {
+    //           setErrorMessage(error.response.data.error);
+    //         })
+    //     ));
+    //     setLinks(items);
+    //   }
+    // }
   }
+  // function handleOnDragEnd(result) {
+
+  //     else {
+  //       const start = list[source.droppableId];
+  //       const finish = list[destination.droppableId];
+  //       console.log('result', result);
+  //       const startLinksIds = Array.from(list.links.id);
+  //       startLinksIds.splice(source.index, 1);
+  //       const newStart = {
+  //         ...start,
+  //         taskIds: startTaskIds,
+  //       };
+
+  //       const finishTaskIds = Array.from(finish.taskIds);
+  //       finishTaskIds.splice(destination.index, 0, draggableId);
+  //       const newFinish = {
+  //         ...finish,
+  //         taskIds: finishTaskIds,
+  //       };
+
+  //       const newState = {
+  //         ...this.state,
+  //         columns: {
+  //           ...this.state.columns,
+  //           [newStart.id]: newStart,
+  //           [newFinish.id]: newFinish,
+  //         },
+  //       };
+  //       setLinks(items);
+  //     }
+  //   }
 
   return (
     <Page>
@@ -209,7 +278,7 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
             </div>
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="list" direction="horizontal">
+            <Droppable droppableId="container" direction="horizontal">
               {(provided) => (
                 <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
                   <ListsContainer
@@ -217,6 +286,7 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
                     setLists={setLists}
                     lists={lists}
                     placeholder={provided.placeholder}
+                    handleOnDragEnd={handleOnDragEnd}
                   />
                 </div>
               )}

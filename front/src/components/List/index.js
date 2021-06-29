@@ -9,7 +9,9 @@ import link from '../../selectors/link';
 
 const qs = require('qs');
 
-const List = ({ list, index }) => {
+const List = ({
+  list, index,
+}) => {
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
   const [links, setLinks] = useState([]);
@@ -112,6 +114,12 @@ const List = ({ list, index }) => {
     if (!destination) {
       return;
     }
+    if (
+      destination.droppableId === source.droppableId
+      && destination.index === source.index
+    ) {
+      return;
+    }
     const sInd = source.droppableId;
     const dInd = destination.droppableId;
     console.log('result', result);
@@ -131,9 +139,34 @@ const List = ({ list, index }) => {
       ));
       setLinks(items);
     }
-    else {
-      console.log('result', result);
-    }
+    // else {
+    //   const start = list[source.droppableId];
+    //   const finish = list[destination.droppableId];
+    //   console.log('result', result);
+    //   const startLinksIds = Array.from(list.links.id);
+    //   startLinksIds.splice(source.index, 1);
+    //   const newStart = {
+    //     ...start,
+    //     taskIds: startTaskIds,
+    //   };
+
+    //   const finishTaskIds = Array.from(finish.taskIds);
+    //   finishTaskIds.splice(destination.index, 0, draggableId);
+    //   const newFinish = {
+    //     ...finish,
+    //     taskIds: finishTaskIds,
+    //   };
+
+  //   const newState = {
+  //     ...this.state,
+  //     columns: {
+  //       ...this.state.columns,
+  //       [newStart.id]: newStart,
+  //       [newFinish.id]: newFinish,
+  //     },
+  //   };
+  //   setLinks(items);
+  // }
   }
 
   return (
@@ -184,17 +217,22 @@ const List = ({ list, index }) => {
 
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId={list.id.toString()}>
+            <Droppable droppableId={(`list${list.id.toString()}`)}>
               {(provided) => (
                 <div className="list--scroll" ref={provided.innerRef} {...provided.droppableProps}>
                   {listNameErrorMessage && (
-                    <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
+                  <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
                   )}
                   {!inputOpen && noLinksMessage && (
-                    <p className="list-noLinkMessage">{noLinksMessage}</p>
+                  <p className="list-noLinkMessage">{noLinksMessage}</p>
                   )}
                   {links && links.map((link, index) => (
-                    <LinkBox key={link.id} link={link} setLinkDeleted={setLinkDeleted} index={index} />
+                    <LinkBox
+                      key={link.id}
+                      link={link}
+                      setLinkDeleted={setLinkDeleted}
+                      index={index}
+                    />
                   ))}
                   {provided.placeholder}
                 </div>
