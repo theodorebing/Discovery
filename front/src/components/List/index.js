@@ -10,11 +10,11 @@ import link from '../../selectors/link';
 const qs = require('qs');
 
 const List = ({
-  list, index,
+  list, listIndex, getLists, lists,
 }) => {
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState(list.links);
   const [errorMessage, setErrorMessage] = useState('');
   const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
@@ -78,6 +78,8 @@ const List = ({
               if (result) {
                 setInputOpen(false);
                 setUrl('');
+                getLists();
+                setLinks(list.links);
               }
             })
             .catch(() => {
@@ -95,22 +97,25 @@ const List = ({
   };
 
   useEffect(() => {
-    axios.get(`lists/${list.id}/links`)
-      .then((result) => {
-        if (result && result.data) {
-          setLinks(result.data);
-          setNoLinksMessage('');
-        }
-      })
-      .catch(() => {
+    let isMounted = true;
+    console.log('list', list);
+    if (isMounted) {
+      if (list.links[0]) {
+        setLinks(list.links);
+        setNoLinksMessage('');
+      }
+      else {
         setLinks([]);
         setNoLinksMessage('there are no links yet, add one first!');
-      });
+      }
+    }
+    return () => {
+      isMounted = false;
+    };
   }, [list, url, linkDeleted, errorMessage]);
 
-  function handleOnDragEnd(result) {
+  function handleOnDragEndLinks(result) {
     const { source, destination } = result;
-    // dropped outside the list
     if (!destination) {
       return;
     }
@@ -132,6 +137,7 @@ const List = ({
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
           .then((result) => {
             console.log('result', result);
+            getLists();
           })
           .catch((error) => {
             setErrorMessage(error.response.data.error);
@@ -139,38 +145,39 @@ const List = ({
       ));
       setLinks(items);
     }
-    // else {
-    //   const start = list[source.droppableId];
-    //   const finish = list[destination.droppableId];
-    //   console.log('result', result);
-    //   const startLinksIds = Array.from(list.links.id);
-    //   startLinksIds.splice(source.index, 1);
-    //   const newStart = {
-    //     ...start,
-    //     taskIds: startTaskIds,
-    //   };
 
-    //   const finishTaskIds = Array.from(finish.taskIds);
-    //   finishTaskIds.splice(destination.index, 0, draggableId);
-    //   const newFinish = {
-    //     ...finish,
-    //     taskIds: finishTaskIds,
-    //   };
+    const start = lists[source.droppableId];
+    console.log('start', start);
+    const finish = lists.find((e) => e.id === [destination.droppableId]);
+    console.log('finish', finish);
+    console.log('result', result);
+    const startLinks = Array.from(start.links);
+    startLinks.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      links: startLinks,
+    };
 
-  //   const newState = {
-  //     ...this.state,
-  //     columns: {
-  //       ...this.state.columns,
-  //       [newStart.id]: newStart,
-  //       [newFinish.id]: newFinish,
-  //     },
-  //   };
-  //   setLinks(items);
-  // }
+    const finishLinks = Array.from(finish.links);
+    finishLinks.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      links: finishLinks,
+    };
+
+    const newState = {
+      ...list,
+      links: {
+        ...links,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+    setLinks(newState);
   }
 
   return (
-    <Draggable draggableId={list.id.toString()} index={index}>
+    <Draggable draggableId={list.id.toString()} index={listIndex}>
       {(provided) => (
         <div
           className="list"
@@ -216,10 +223,10 @@ const List = ({
             </form>
 
           )}
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId={(`list${list.id.toString()}`)}>
-              {(provided) => (
-                <div className="list--scroll" ref={provided.innerRef} {...provided.droppableProps}>
+          <DragDropContext onDragEnd={handleOnDragEndLinks}>
+            <Droppable droppableId={list.id.toString()} direction="vertical">
+              {(prov) => (
+                <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
                   {listNameErrorMessage && (
                   <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
                   )}
@@ -232,9 +239,10 @@ const List = ({
                       link={link}
                       setLinkDeleted={setLinkDeleted}
                       index={index}
+                      getLists={getLists}
                     />
                   ))}
-                  {provided.placeholder}
+                  {prov.placeholder}
                 </div>
               )}
             </Droppable>

@@ -6,7 +6,9 @@ import './styles.scss';
 
 const dayjs = require('dayjs');
 
-const LinkBox = ({ link, setLinkDeleted, index }) => {
+const LinkBox = ({
+  link, setLinkDeleted, index, getLists,
+}) => {
   const [linkLoading, setLinkLoading] = useState(false);
 
   const deleteLink = () => {
@@ -15,6 +17,7 @@ const LinkBox = ({ link, setLinkDeleted, index }) => {
       axios.delete(`links/${link.id}`)
         .then((result) => {
           setLinkDeleted(true);
+          getLists();
           console.log(result);
         })
         .catch((error) => {
@@ -29,7 +32,7 @@ const LinkBox = ({ link, setLinkDeleted, index }) => {
 
   return (
 
-    <Draggable draggableId={link.id.toString()} index={index}>
+    <Draggable draggableId={`link${link.id.toString()}`} index={index}>
       {(provided) => (
         <div
           className={classNames('link-box', { 'link-box--loading': linkLoading })}

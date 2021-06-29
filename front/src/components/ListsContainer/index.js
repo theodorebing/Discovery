@@ -10,20 +10,24 @@ const ListsContainer = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    let isMounted = true;
+  const getLists = () => {
     axios.get(`categories/${category.id}/lists`)
       .then((result) => {
-        if (isMounted && result && result.data) {
+        if (result && result.data) {
           setLists(result.data);
         }
       })
       .catch((error) => {
-        if (isMounted) {
-          setLists([]);
-          setErrorMessage('there are no lists yet, create one first!');
-        }
+        setLists([]);
+        setErrorMessage('there are no lists yet, create one first!');
       });
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      getLists();
+    }
     return () => {
       isMounted = false;
     };
@@ -35,7 +39,7 @@ const ListsContainer = ({
         <p className="listsContainer-noListMessage">{errorMessage}</p>
       )}
       {lists && lists.map((list, index) => (
-        <List key={list.id} list={list} index={index} />
+        <List key={list.id} list={list} listIndex={index} getLists={getLists} lists={lists} />
       ))}
       {placeholder}
     </div>

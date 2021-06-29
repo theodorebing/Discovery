@@ -15,7 +15,9 @@ import axios from '../../api';
 
 const qs = require('qs');
 
-const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
+const CategoryPage = ({
+  category, getCategories, linkFormOpened,
+}) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState([]);
@@ -119,11 +121,11 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
     setChangeCategoryNameInput(!changeCategoryNameInputOpened);
   };
 
-  function handleOnDragEnd(result, links, setLinks) {
+  function handleOnDragEnd(result) {
     const { source, destination } = result;
 
     // dnd for lists
-    if (source.droppableId === 'container') {
+    if (source.droppableId === 'container' && destination.droppableId === 'container') {
       const items = Array.from(lists);
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
@@ -136,7 +138,7 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
       ));
       setLists(items);
     }
-    // else {
+    // if (source.droppableId.includes('list')) {
     //   // dnd for links
     //   // dropped outside the list
     //   if (!destination) {
@@ -151,23 +153,37 @@ const CategoryPage = ({ category, getCategories, linkFormOpened }) => {
     //   }
     //   const sInd = source.droppableId;
     //   const dInd = destination.droppableId;
-    //   // move in the same list
-    //   if (sInd === dInd) {
-    //     const items = Array.from(links);
-    //     const [reorderedItem] = items.splice(result.source.index, 1);
-    //     items.splice(result.destination.index, 0, reorderedItem);
-    //     items.map((item, index) => (
-    //       axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-    //         { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //         .then((result) => {
-    //           console.log('result', result);
-    //         })
-    //         .catch((error) => {
-    //           setErrorMessage(error.response.data.error);
-    //         })
-    //     ));
-    //     setLinks(items);
-    //   }
+    // move in the same list
+    // if (sInd === dInd) {
+    //   const items = Array.from(list.links);
+    //   const [reorderedItem] = items.splice(result.source.index, 1);
+    //   items.splice(result.destination.index, 0, reorderedItem);
+    //   items.map((item, index) => (
+    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //       .then((result) => {
+    //         console.log('result', result);
+    //       })
+    //       .catch((error) => {
+    //         setErrorMessage(error.response.data.error);
+    //       })
+    //   ));
+    //   setLinks(items);
+    //   // const items = Array.from(lists);
+    //   // const [reorderedItem] = items.splice(result.source.index, 1);
+    //   // items.splice(result.destination.index, 0, reorderedItem);
+    //   // items.map((item, index) => (
+    //   //   axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+    //   //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //   //     .then((result) => {
+    //   //       console.log('result', result);
+    //   //     })
+    //   //     .catch((error) => {
+    //   //       setErrorMessage(error.response.data.error);
+    //   //     })
+    //   // ));
+    //   // setLinks(items);
+    // }
     // }
   }
   // function handleOnDragEnd(result) {
