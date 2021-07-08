@@ -182,7 +182,7 @@ const List = ({
   }
 
   return (
-    <Draggable draggableId={list.id.toString()} index={listIndex}>
+    <Draggable draggableId={list.id.toString()} index={listIndex} type="task">
       {(provided) => (
         <div
           className="list"
@@ -228,30 +228,30 @@ const List = ({
             </form>
 
           )}
-          <DragDropContext onDragEnd={handleOnDragEndLinks}>
-            <Droppable droppableId={list.position.toString()} direction="vertical">
-              {(prov) => (
-                <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
-                  {listNameErrorMessage && (
+          {/* <DragDropContext onDragEnd={handleOnDragEndLinks}> */}
+          <Droppable droppableId={list.position.toString()} direction="vertical">
+            {(prov) => (
+              <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
+                {listNameErrorMessage && (
                   <p className="errorMessage linkForm__message list__name-input--error">{listNameErrorMessage}</p>
-                  )}
-                  {!inputOpen && noLinksMessage && (
+                )}
+                {!inputOpen && noLinksMessage && (
                   <p className="list-noLinkMessage">{noLinksMessage}</p>
-                  )}
-                  {links && links.map((link, index) => (
-                    <LinkBox
-                      key={link.id}
-                      link={link}
-                      setLinkDeleted={setLinkDeleted}
-                      index={index}
-                      getLists={getLists}
-                    />
-                  ))}
-                  {prov.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                )}
+                {links && links.map((link, index) => (
+                  <LinkBox
+                    key={link.id}
+                    link={link}
+                    setLinkDeleted={setLinkDeleted}
+                    index={index}
+                    getLists={getLists}
+                  />
+                ))}
+                {prov.placeholder}
+              </div>
+            )}
+          </Droppable>
+          {/* </DragDropContext> */}
         </div>
       )}
     </Draggable>

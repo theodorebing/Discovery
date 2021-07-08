@@ -122,13 +122,27 @@ const CategoryPage = ({
   };
 
   function handleOnDragEnd(result) {
-    const { source, destination } = result;
+    const {
+      source, destination, type, draggableId,
+    } = result;
+
+    console.log('lists', lists);
+
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId
+      && destination.index === source.index
+    ) {
+      return;
+    }
 
     // dnd for lists
-    if (source.droppableId === 'container' && destination.droppableId === 'container') {
+    if (type === 'column') {
       const items = Array.from(lists);
-      const [reorderedItem] = items.splice(result.source.index, 1);
-      items.splice(result.destination.index, 0, reorderedItem);
+      const [reorderedItem] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, reorderedItem);
       items.map((item, index) => (
         axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
@@ -138,6 +152,104 @@ const CategoryPage = ({
       ));
       setLists(items);
     }
+
+    // dnd for links
+
+    const home = lists[source.droppableId];
+    const foreign = lists[destination.droppableId];
+    console.log('home', home);
+    console.log('foreign', foreign);
+    if (home === foreign) {
+      const newLinks = Array.from(home.links);
+      console.log('newLinks 1', newLinks);
+      const [reorderedNewLinks] = newLinks.splice(source.index, 1);
+      newLinks.splice(destination.index, 0, reorderedNewLinks);
+
+      console.log('newLinks 2', newLinks);
+
+      const newHome = {
+        ...home,
+        links: newLinks,
+      };
+
+      let newLists = {
+        ...lists,
+        [newHome.position]: newHome,
+      };
+
+      newLists = Object.values(newLists);
+
+      console.log('newHome', newHome);
+      console.log('newHome.id', newHome.id);
+      console.log('newLists', newLists);
+
+      setLists(newLists);
+
+      // const [reorderedItem] = items.splice(result.source.index, 1);
+    //   items.splice(result.destination.index, 0, reorderedItem);
+    //   items.map((item, index) => (
+    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //       .then((result) => {
+    //         // console.log('result', result);
+    //         getLists();
+    //       })
+    //       .catch((error) => {
+    //         setErrorMessage(error.response.data.error);
+    //       })
+    //   ));
+    //   setLinks(items);
+    // }
+    }
+
+    // moving from one list to another
+    // const homeTaskIds = Array.from(home.taskIds);
+    // homeTaskIds.splice(source.index, 1);
+    // const newHome = {
+    //   ...home,
+    //   taskIds: homeTaskIds,
+    // };
+
+    // const foreignTaskIds = Array.from(foreign.taskIds);
+    // foreignTaskIds.splice(destination.index, 0, draggableId);
+    // const newForeign = {
+    //   ...foreign,
+    //   taskIds: foreignTaskIds,
+    // };
+
+    // const newState = {
+    //   ...this.state,
+    //   columns: {
+    //     ...this.state.columns,
+    //     [newHome.id]: newHome,
+    //     [newForeign.id]: newForeign,
+    //   },
+    // };
+    // this.setState(newState);
+
+    // const sInd = source.droppableId;
+    // const dInd = destination.droppableId;
+    // // console.log('result', result);
+    // // console.log('sInd', sInd);
+    // // console.log('dInd', dInd);
+    // if (sInd === dInd) {
+    //   const items = Array.from(links);
+    //   const [reorderedItem] = items.splice(result.source.index, 1);
+    //   items.splice(result.destination.index, 0, reorderedItem);
+    //   items.map((item, index) => (
+    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //       .then((result) => {
+    //         // console.log('result', result);
+    //         getLists();
+    //       })
+    //       .catch((error) => {
+    //         setErrorMessage(error.response.data.error);
+    //       })
+    //   ));
+    //   setLinks(items);
+    // }
+
     // if (source.droppableId.includes('list')) {
     //   // dnd for links
     //   // dropped outside the list
@@ -294,7 +406,7 @@ const CategoryPage = ({
             </div>
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="container" direction="horizontal">
+            <Droppable droppableId="container" direction="horizontal" type="column">
               {(provided) => (
                 <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
                   <ListsContainer
