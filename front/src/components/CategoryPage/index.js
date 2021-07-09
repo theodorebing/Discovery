@@ -184,39 +184,22 @@ const CategoryPage = ({
       console.log('newLists', newLists);
 
       setLists(newLists);
-      // }
-
-      // const [reorderedItem] = items.splice(result.source.index, 1);
-    //   items.splice(result.destination.index, 0, reorderedItem);
-    //   items.map((item, index) => (
-    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //       .then((result) => {
-    //         // console.log('result', result);
-    //         getLists();
-    //       })
-    //       .catch((error) => {
-    //         setErrorMessage(error.response.data.error);
-    //       })
-    //   ));
-    //   setLinks(items);
-    // }
     }
 
     // moving from one list to another
-    // const homeTaskIds = Array.from(home.taskIds);
-    // homeTaskIds.splice(source.index, 1);
-    // const newHome = {
-    //   ...home,
-    //   taskIds: homeTaskIds,
-    // };
+    const homeLinks = Array.from(home.links);
+    const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
+    const newHome = {
+      ...home,
+      links: homeLinks,
+    };
 
-    // const foreignTaskIds = Array.from(foreign.taskIds);
-    // foreignTaskIds.splice(destination.index, 0, draggableId);
-    // const newForeign = {
-    //   ...foreign,
-    //   taskIds: foreignTaskIds,
-    // };
+    const foreignLinks = Array.from(foreign.links);
+    foreignLinks.splice(destination.index, 0, reorderedHomeLinks);
+    const newForeign = {
+      ...foreign,
+      links: foreignLinks,
+    };
 
     // const newState = {
     //   ...this.state,
@@ -228,6 +211,15 @@ const CategoryPage = ({
     // };
     // this.setState(newState);
 
+    let newLists = {
+      ...lists,
+      [newHome.position]: newHome,
+      [newForeign.position]: newForeign,
+    };
+
+    newLists = Object.values(newLists);
+
+    setLists(newLists);
     // const sInd = source.droppableId;
     // const dInd = destination.droppableId;
     // // console.log('result', result);

@@ -240,7 +240,7 @@ const List = ({
                 )}
                 {links && links.map((link, index) => (
                   <LinkBox
-                    key={link.id}
+                    key={`${link.title}+${link.id}`}
                     link={link}
                     setLinkDeleted={setLinkDeleted}
                     index={index}
