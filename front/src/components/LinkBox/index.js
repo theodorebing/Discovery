@@ -32,7 +32,7 @@ const LinkBox = ({
 
   return (
 
-    <Draggable draggableId={link.id.toString()} index={index}>
+    <Draggable draggableId={`link${link.id.toString()}`} index={index}>
       {(provided) => (
         <div
           className={classNames('link-box', { 'link-box--loading': linkLoading })}

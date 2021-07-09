@@ -139,7 +139,7 @@ const CategoryPage = ({
     }
 
     // dnd for lists
-    if (type === 'column') {
+    if (type === 'listsContainer') {
       const items = Array.from(lists);
       const [reorderedItem] = items.splice(source.index, 1);
       items.splice(destination.index, 0, reorderedItem);
@@ -154,7 +154,7 @@ const CategoryPage = ({
     }
 
     // dnd for links
-
+    // if (type === 'list') {
     const home = lists[source.droppableId];
     const foreign = lists[destination.droppableId];
     console.log('home', home);
@@ -184,6 +184,7 @@ const CategoryPage = ({
       console.log('newLists', newLists);
 
       setLists(newLists);
+      // }
 
       // const [reorderedItem] = items.splice(result.source.index, 1);
     //   items.splice(result.destination.index, 0, reorderedItem);
@@ -406,7 +407,7 @@ const CategoryPage = ({
             </div>
           )}
           <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="container" direction="horizontal" type="column">
+            <Droppable droppableId="container" direction="horizontal" type="listsContainer">
               {(provided) => (
                 <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
                   <ListsContainer

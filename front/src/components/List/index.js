@@ -182,7 +182,7 @@ const List = ({
   }
 
   return (
-    <Draggable draggableId={list.id.toString()} index={listIndex} type="task">
+    <Draggable draggableId={list.id.toString()} index={listIndex} type="list">
       {(provided) => (
         <div
           className="list"
