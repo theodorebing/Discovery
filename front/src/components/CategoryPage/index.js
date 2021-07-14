@@ -164,178 +164,68 @@ const CategoryPage = ({
       ));
       setLists(items);
     }
+    else {
+      // dnd for links
+      const home = lists[source.droppableId];
+      const foreign = lists[destination.droppableId];
+      if (home === foreign) {
+        const newLinks = Array.from(home.links);
+        const [reorderedNewLink] = newLinks.splice(source.index, 1);
+        console.log('reorderedNewLinks', reorderedNewLink);
+        newLinks.splice(destination.index, 0, reorderedNewLink);
 
-    // dnd for links
-    const home = lists[source.droppableId];
-    const foreign = lists[destination.droppableId];
-    if (home === foreign) {
-      const newLinks = Array.from(home.links);
-      const [reorderedNewLinks] = newLinks.splice(source.index, 1);
-      newLinks.splice(destination.index, 0, reorderedNewLinks);
+        const newHome = {
+          ...home,
+          links: newLinks,
+        };
 
-      const newHome = {
-        ...home,
-        links: newLinks,
-      };
+        const newLists = {
+          ...lists,
+          [newHome.position]: newHome,
+        };
+        setLists(Object.values(newLists));
 
-      const newLists = {
-        ...lists,
-        [newHome.position]: newHome,
-      };
-
-      newLinks.map((item, index) => (
-        axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-          .then((result) => {
-            console.log('result', result);
-          })
-          .catch((error) => {
-            console.log('error', error);
+        newLinks.map((item, index) => (
+          axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+            .then((result) => {
+              console.log('result', result);
+            })
+            .catch((error) => {
+              console.log('error', error);
             // setErrorMessage(error.response.data.error);
-          })
-      ));
+            })
+        ));
+      }
 
-      setLists(Object.values(newLists));
+      // moving from one list to another
+      if (home !== foreign) {
+        const homeLinks = Array.from(home.links);
+        const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
+        const newHome = {
+          ...home,
+          links: homeLinks,
+        };
+
+        const foreignLinks = Array.from(foreign.links);
+        foreignLinks.splice(destination.index, 0, reorderedHomeLinks);
+        const newForeign = {
+          ...foreign,
+          links: foreignLinks,
+        };
+
+        let newLists = {
+          ...lists,
+          [newHome.position]: newHome,
+          [newForeign.position]: newForeign,
+        };
+
+        newLists = Object.values(newLists);
+
+        setLists(newLists);
+      }
     }
-
-    // moving from one list to another
-    if (home !== foreign) {
-      const homeLinks = Array.from(home.links);
-      const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
-      const newHome = {
-        ...home,
-        links: homeLinks,
-      };
-
-      const foreignLinks = Array.from(foreign.links);
-      foreignLinks.splice(destination.index, 0, reorderedHomeLinks);
-      const newForeign = {
-        ...foreign,
-        links: foreignLinks,
-      };
-
-      // const newState = {
-      //   ...this.state,
-      //   columns: {
-      //     ...this.state.columns,
-      //     [newHome.id]: newHome,
-      //     [newForeign.id]: newForeign,
-      //   },
-      // };
-      // this.setState(newState);
-
-      let newLists = {
-        ...lists,
-        [newHome.position]: newHome,
-        [newForeign.position]: newForeign,
-      };
-
-      newLists = Object.values(newLists);
-
-      setLists(newLists);
-    }
-    // const sInd = source.droppableId;
-    // const dInd = destination.droppableId;
-    // // console.log('result', result);
-    // // console.log('sInd', sInd);
-    // // console.log('dInd', dInd);
-    // if (sInd === dInd) {
-    //   const items = Array.from(links);
-    //   const [reorderedItem] = items.splice(result.source.index, 1);
-    //   items.splice(result.destination.index, 0, reorderedItem);
-    //   items.map((item, index) => (
-    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //       .then((result) => {
-    //         // console.log('result', result);
-    //         getLists();
-    //       })
-    //       .catch((error) => {
-    //         setErrorMessage(error.response.data.error);
-    //       })
-    //   ));
-    //   setLinks(items);
-    // }
-
-    // if (source.droppableId.includes('list')) {
-    //   // dnd for links
-    //   // dropped outside the list
-    //   if (!destination) {
-    //     return;
-    //   }
-    //   // same place
-    //   if (
-    //     destination.droppableId === source.droppableId
-    //     && destination.index === source.index
-    //   ) {
-    //     return;
-    //   }
-    //   const sInd = source.droppableId;
-    //   const dInd = destination.droppableId;
-    // move in the same list
-    // if (sInd === dInd) {
-    //   const items = Array.from(list.links);
-    //   const [reorderedItem] = items.splice(result.source.index, 1);
-    //   items.splice(result.destination.index, 0, reorderedItem);
-    //   items.map((item, index) => (
-    //     axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-    //       { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //       .then((result) => {
-    //         console.log('result', result);
-    //       })
-    //       .catch((error) => {
-    //         setErrorMessage(error.response.data.error);
-    //       })
-    //   ));
-    //   setLinks(items);
-    //   // const items = Array.from(lists);
-    //   // const [reorderedItem] = items.splice(result.source.index, 1);
-    //   // items.splice(result.destination.index, 0, reorderedItem);
-    //   // items.map((item, index) => (
-    //   //   axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-    //   //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //   //     .then((result) => {
-    //   //       console.log('result', result);
-    //   //     })
-    //   //     .catch((error) => {
-    //   //       setErrorMessage(error.response.data.error);
-    //   //     })
-    //   // ));
-    //   // setLinks(items);
-    // }
-    // }
   }
-  // function handleOnDragEnd(result) {
-
-  //     else {
-  //       const start = list[source.droppableId];
-  //       const finish = list[destination.droppableId];
-  //       console.log('result', result);
-  //       const startLinksIds = Array.from(list.links.id);
-  //       startLinksIds.splice(source.index, 1);
-  //       const newStart = {
-  //         ...start,
-  //         taskIds: startTaskIds,
-  //       };
-
-  //       const finishTaskIds = Array.from(finish.taskIds);
-  //       finishTaskIds.splice(destination.index, 0, draggableId);
-  //       const newFinish = {
-  //         ...finish,
-  //         taskIds: finishTaskIds,
-  //       };
-
-  //       const newState = {
-  //         ...this.state,
-  //         columns: {
-  //           ...this.state.columns,
-  //           [newStart.id]: newStart,
-  //           [newFinish.id]: newFinish,
-  //         },
-  //       };
-  //       setLinks(items);
-  //     }
-  //   }
 
   return (
     <Page>

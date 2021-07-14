@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 import classNames from 'classnames';
 import axios from '../../api';
 import './styles.scss';
 
 const dayjs = require('dayjs');
+
+const Container = styled.div`
+  background-color: ${(props) => (props.isDragging ? '#222' : 'transparent')};
+  z-index: ${(props) => (props.isDragging ? '100' : 'inherit')};
+`;
 
 const LinkBox = ({
   link, setLinkDeleted, index, getLists,
@@ -33,12 +39,13 @@ const LinkBox = ({
   return (
 
     <Draggable draggableId={`link${link.id.toString()}`} index={index}>
-      {(provided) => (
-        <div
+      {(provided, snapshot) => (
+        <Container
           className={classNames('link-box', { 'link-box--loading': linkLoading })}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          isDragging={snapshot.isDragging}
         >
           <a href={link.url} target="_blank" rel="noreferrer" className="link-box__a">
             <div className="link-box__div-image">
@@ -62,7 +69,7 @@ const LinkBox = ({
           <div className="link-box__delete" onClick={deleteLink}>
             <p>x</p>
           </div>
-        </div>
+        </Container>
       )}
     </Draggable>
 

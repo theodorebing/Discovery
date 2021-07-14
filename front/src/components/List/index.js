@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 import axios from '../../api';
 import './styles.scss';
 import LinkBox from '../LinkBox';
 import Input from '../Input';
 import link from '../../selectors/link';
+
+const ListContainer = styled.div`
+  background-color: ${(props) => (props.isDragging ? '#222' : '#1a1a1a')};
+`;
 
 const qs = require('qs');
 
@@ -98,7 +103,6 @@ const List = ({
 
   useEffect(() => {
     let isMounted = true;
-    // console.log('lists', lists);
     if (isMounted) {
       if (list.links[0]) {
         setLinks(list.links);
@@ -116,11 +120,12 @@ const List = ({
 
   return (
     <Draggable draggableId={list.id.toString()} index={listIndex} type="list">
-      {(provided) => (
-        <div
+      {(provided, snapshot) => (
+        <ListContainer
           className="list"
           ref={provided.innerRef}
           {...provided.draggableProps}
+          isDragging={snapshot.isDragging}
         >
           <div
             className="list-header__div"
@@ -183,7 +188,7 @@ const List = ({
               </div>
             )}
           </Droppable>
-        </div>
+        </ListContainer>
       )}
     </Draggable>
   );
