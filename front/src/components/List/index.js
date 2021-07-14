@@ -114,73 +114,6 @@ const List = ({
     };
   }, [list, url, linkDeleted, errorMessage]);
 
-  function handleOnDragEndLinks(result) {
-    const { source, destination } = result;
-    console.log('source', source);
-    console.log('destination', destination);
-    if (!destination) {
-      return;
-    }
-    if (
-      destination.droppableId === source.droppableId
-      && destination.index === source.index
-    ) {
-      return;
-    }
-    const sInd = source.droppableId;
-    const dInd = destination.droppableId;
-    console.log('result', result);
-    console.log('sInd', sInd);
-    console.log('dInd', dInd);
-    if (sInd === dInd) {
-      const items = Array.from(links);
-      const [reorderedItem] = items.splice(result.source.index, 1);
-      items.splice(result.destination.index, 0, reorderedItem);
-      items.map((item, index) => (
-        axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
-          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-          .then((result) => {
-            // console.log('result', result);
-            getLists();
-          })
-          .catch((error) => {
-            setErrorMessage(error.response.data.error);
-          })
-      ));
-      setLinks(items);
-    }
-    // else {
-    const start = lists[source.droppableId];
-    console.log('start', start);
-    const finish = lists[destination.droppableId];
-    console.log('finish', finish);
-    // console.log('result', result);
-    const startLinks = Array.from(start.links);
-    startLinks.splice(source.index, 1);
-    const newStart = {
-      ...start,
-      links: startLinks,
-    };
-
-    const finishLinks = Array.from(finish.links);
-    finishLinks.splice(destination.index, 0, draggableId);
-    const newFinish = {
-      ...finish,
-      links: finishLinks,
-    };
-
-    const newState = {
-      ...list,
-      links: {
-        ...links,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
-      },
-    };
-    setLinks(newState);
-    // }
-  }
-
   return (
     <Draggable draggableId={list.id.toString()} index={listIndex} type="list">
       {(provided) => (
@@ -228,7 +161,6 @@ const List = ({
             </form>
 
           )}
-          {/* <DragDropContext onDragEnd={handleOnDragEndLinks}> */}
           <Droppable droppableId={list.position.toString()} direction="vertical">
             {(prov) => (
               <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
@@ -251,7 +183,6 @@ const List = ({
               </div>
             )}
           </Droppable>
-          {/* </DragDropContext> */}
         </div>
       )}
     </Draggable>

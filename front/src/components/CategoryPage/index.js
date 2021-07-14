@@ -31,6 +31,20 @@ const CategoryPage = ({
   const [changeCategoryNameInputOpened, setChangeCategoryNameInput] = useState(false);
   const [categoryNameErrorMessage, setCategoryNameErrorMessage] = useState('');
   const [categoryName, setCategoryName] = useState(category.name);
+  const [listErrorMessage, setListErrorMessage] = useState('');
+
+  const getLists = () => {
+    axios.get(`categories/${category.id}/lists`)
+      .then((result) => {
+        if (result && result.data) {
+          setLists(result.data);
+        }
+      })
+      .catch((error) => {
+        setLists([]);
+        setListErrorMessage('there are no lists yet, create one first!');
+      });
+  };
 
   const onChangeCategoryName = (value) => {
     setCategoryName(value);
@@ -123,10 +137,8 @@ const CategoryPage = ({
 
   function handleOnDragEnd(result) {
     const {
-      source, destination, type, draggableId,
+      source, destination, type,
     } = result;
-
-    console.log('lists', lists);
 
     if (!destination) {
       return;
@@ -154,72 +166,74 @@ const CategoryPage = ({
     }
 
     // dnd for links
-    // if (type === 'list') {
     const home = lists[source.droppableId];
     const foreign = lists[destination.droppableId];
-    console.log('home', home);
-    console.log('foreign', foreign);
     if (home === foreign) {
       const newLinks = Array.from(home.links);
-      console.log('newLinks 1', newLinks);
       const [reorderedNewLinks] = newLinks.splice(source.index, 1);
       newLinks.splice(destination.index, 0, reorderedNewLinks);
-
-      console.log('newLinks 2', newLinks);
 
       const newHome = {
         ...home,
         links: newLinks,
       };
 
-      let newLists = {
+      const newLists = {
         ...lists,
         [newHome.position]: newHome,
       };
 
-      newLists = Object.values(newLists);
+      newLinks.map((item, index) => (
+        axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+          .then((result) => {
+            console.log('result', result);
+          })
+          .catch((error) => {
+            console.log('error', error);
+            // setErrorMessage(error.response.data.error);
+          })
+      ));
 
-      console.log('newHome', newHome);
-      console.log('newHome.id', newHome.id);
-      console.log('newLists', newLists);
-
-      setLists(newLists);
+      setLists(Object.values(newLists));
     }
 
     // moving from one list to another
-    const homeLinks = Array.from(home.links);
-    const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
-    const newHome = {
-      ...home,
-      links: homeLinks,
-    };
+    if (home !== foreign) {
+      const homeLinks = Array.from(home.links);
+      const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
+      const newHome = {
+        ...home,
+        links: homeLinks,
+      };
 
-    const foreignLinks = Array.from(foreign.links);
-    foreignLinks.splice(destination.index, 0, reorderedHomeLinks);
-    const newForeign = {
-      ...foreign,
-      links: foreignLinks,
-    };
+      const foreignLinks = Array.from(foreign.links);
+      foreignLinks.splice(destination.index, 0, reorderedHomeLinks);
+      const newForeign = {
+        ...foreign,
+        links: foreignLinks,
+      };
 
-    // const newState = {
-    //   ...this.state,
-    //   columns: {
-    //     ...this.state.columns,
-    //     [newHome.id]: newHome,
-    //     [newForeign.id]: newForeign,
-    //   },
-    // };
-    // this.setState(newState);
+      // const newState = {
+      //   ...this.state,
+      //   columns: {
+      //     ...this.state.columns,
+      //     [newHome.id]: newHome,
+      //     [newForeign.id]: newForeign,
+      //   },
+      // };
+      // this.setState(newState);
 
-    let newLists = {
-      ...lists,
-      [newHome.position]: newHome,
-      [newForeign.position]: newForeign,
-    };
+      let newLists = {
+        ...lists,
+        [newHome.position]: newHome,
+        [newForeign.position]: newForeign,
+      };
 
-    newLists = Object.values(newLists);
+      newLists = Object.values(newLists);
 
-    setLists(newLists);
+      setLists(newLists);
+    }
     // const sInd = source.droppableId;
     // const dInd = destination.droppableId;
     // // console.log('result', result);
@@ -408,6 +422,8 @@ const CategoryPage = ({
                     lists={lists}
                     placeholder={provided.placeholder}
                     handleOnDragEnd={handleOnDragEnd}
+                    listErrorMessage={listErrorMessage}
+                    getLists={getLists}
                   />
                 </div>
               )}
