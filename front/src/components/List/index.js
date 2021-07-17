@@ -6,7 +6,7 @@ import axios from '../../api';
 import './styles.scss';
 import LinkBox from '../LinkBox';
 import Input from '../Input';
-import link from '../../selectors/link';
+import linkSelector from '../../selectors/link';
 
 const ListContainer = styled.div`
   background-color: ${(props) => (props.isDragging ? '#222' : '#1a1a1a')};
@@ -28,7 +28,7 @@ const List = ({
   const [headerInputOpened, setHeaderInputOpened] = useState(false);
   const [listName, setListName] = useState(list.name);
 
-  const [validURL] = link();
+  const [validURL] = linkSelector();
 
   const openInput = () => {
     setInputOpen(!inputOpen);
@@ -166,7 +166,10 @@ const List = ({
             </form>
 
           )}
-          <Droppable droppableId={list.position.toString()} direction="vertical">
+          <Droppable
+            droppableId={list.position.toString()}
+            direction="vertical"
+          >
             {(prov) => (
               <div className="list--scroll" ref={prov.innerRef} {...prov.droppableProps}>
                 {listNameErrorMessage && (

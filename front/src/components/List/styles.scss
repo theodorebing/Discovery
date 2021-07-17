@@ -40,8 +40,6 @@
   border-radius: vars.$radius;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
   margin-bottom: 1rem;
-  position: relative;
-  z-index: 0;
 
   &__input--open {
     animation: openInput .1s;

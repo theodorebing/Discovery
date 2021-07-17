@@ -8,8 +8,7 @@ import './styles.scss';
 const dayjs = require('dayjs');
 
 const Container = styled.div`
-  background-color: ${(props) => (props.isDragging ? '#222' : 'transparent')};
-  z-index: ${(props) => (props.isDragging ? '100' : 'inherit')};
+  background-color: ${(props) => (props.isDragging ? '#222' : 'inherit')};
 `;
 
 const LinkBox = ({
