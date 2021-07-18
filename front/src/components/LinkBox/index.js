@@ -9,6 +9,13 @@ const dayjs = require('dayjs');
 
 const Container = styled.div`
   background-color: ${(props) => (props.isDragging ? '#222' : 'inherit')};
+  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inherit')};
+  ${'' /* background: ${(props) => (props.isDragging ? 'radial-gradient(rgba(0, 0, 0) 50%, rgba(100, 100, 100));' : 'inherit')}; */}
+  ${'' /* background: ${(props) => (props.isDragging ? 'radial-gradient(rgba(0, 0, 0) 50%, rgba(100, 100, 100))' : 'inherit')}; */}
+`;
+
+const A = styled.a`
+  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inherit')};
 `;
 
 const LinkBox = ({
@@ -46,7 +53,7 @@ const LinkBox = ({
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          <a href={link.url} target="_blank" rel="noreferrer" className="link-box__a">
+          <A isDragging={snapshot.isDragging} href={link.url} target="_blank" rel="noreferrer" className="link-box__a">
             <div className="link-box__div-image">
               <img src={link.image} alt={link.title} className="link-box__image" />
             </div>
@@ -64,7 +71,7 @@ const LinkBox = ({
                 {dayjs(link.updated_at).format('DD-MMM-YYYY H:mm')}
               </p>
             </div>
-          </a>
+          </A>
           <div className="link-box__delete" onClick={deleteLink}>
             <p>x</p>
           </div>
