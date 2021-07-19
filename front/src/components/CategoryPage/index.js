@@ -74,11 +74,15 @@ const CategoryPage = ({
 
   useEffect(() => {
     setLoading(true);
+    console.log('categorypage');
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 1000);
     if (category === undefined) {
       history.push('/error');
+    }
+    else {
+      getLists();
     }
     return () => {
       clearTimeout(timeout);
@@ -135,7 +139,7 @@ const CategoryPage = ({
     setChangeCategoryNameInput(!changeCategoryNameInputOpened);
   };
 
-  function handleOnDragEnd(result) {
+  const handleOnDragEnd = async (result) => {
     const {
       source, destination, type,
     } = result;
@@ -168,10 +172,10 @@ const CategoryPage = ({
       // dnd for links
       const home = lists[source.droppableId];
       const foreign = lists[destination.droppableId];
+      // move inside same list
       if (home === foreign) {
         const newLinks = Array.from(home.links);
         const [reorderedNewLink] = newLinks.splice(source.index, 1);
-        console.log('reorderedNewLinks', reorderedNewLink);
         newLinks.splice(destination.index, 0, reorderedNewLink);
 
         const newHome = {
@@ -183,19 +187,22 @@ const CategoryPage = ({
           ...lists,
           [newHome.position]: newHome,
         };
-        setLists(Object.values(newLists));
+
+        const newListsArray = Object.values(newLists);
 
         newLinks.map((item, index) => (
           axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-            .then((result) => {
-              console.log('result', result);
-            })
+            // .then((result) => {
+            //   console.log('result', result);
+            //   // getLists();
+            // })
             .catch((error) => {
               console.log('error', error);
             // setErrorMessage(error.response.data.error);
             })
         ));
+        setLists(newListsArray);
       }
 
       // moving from one list to another
@@ -225,7 +232,7 @@ const CategoryPage = ({
         setLists(newLists);
       }
     }
-  }
+  };
 
   return (
     <Page>
