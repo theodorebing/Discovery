@@ -15,11 +15,12 @@ const ListContainer = styled.div`
 const qs = require('qs');
 
 const List = ({
-  list, listIndex, getLists, lists,
+  list, listIndex, getLists,
 }) => {
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
-  const [links, setLinks] = useState([]);
+  // const [links, setLinks] = useState(list.links);
+  const { links } = list;
   const [errorMessage, setErrorMessage] = useState('');
   const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
@@ -84,7 +85,7 @@ const List = ({
                 setInputOpen(false);
                 setUrl('');
                 getLists();
-                setLinks(list.links);
+                // setLinks(list.links);
               }
             })
             .catch(() => {
@@ -105,11 +106,11 @@ const List = ({
     let isMounted = true;
     if (isMounted) {
       if (list.links[0]) {
-        setLinks(list.links);
+        // setLinks(list.links);
         setNoLinksMessage('');
       }
       else {
-        setLinks([]);
+        // setLinks([]);
         setNoLinksMessage('there are no links yet, add one first!');
       }
     }

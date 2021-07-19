@@ -8,14 +8,14 @@ import './styles.scss';
 const dayjs = require('dayjs');
 
 const Container = styled.div`
-  background-color: ${(props) => (props.isDragging ? '#222' : 'inherit')};
-  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inherit')};
+  background-color: ${(props) => (props.isDragging ? '#222' : 'transparent')};
+  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);')};
   ${'' /* background: ${(props) => (props.isDragging ? 'radial-gradient(rgba(0, 0, 0) 50%, rgba(100, 100, 100));' : 'inherit')}; */}
   ${'' /* background: ${(props) => (props.isDragging ? 'radial-gradient(rgba(0, 0, 0) 50%, rgba(100, 100, 100))' : 'inherit')}; */}
 `;
 
 const A = styled.a`
-  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inherit')};
+  box-shadow: ${(props) => (props.isDragging ? 'inset 3px 3px 5px rgb(90, 90, 90), inset -1px -1px 5px rgb(107, 107, 107);' : 'inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);')};
 `;
 
 const LinkBox = ({

@@ -43,6 +43,7 @@
     // z-index: 0;
     color: vars.$darkgrey;
     font-family: vars.$main-font;
+    font-size: 1rem;
     width: 20px;
     height: 90px;
     border: solid 2px none;
@@ -53,10 +54,11 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    padding-right: 2px; 
 
     &:hover {
       color: red;
-      font-weight: 500;
+      font-weight: 100;
       background-color: rgba(94, 0, 0, 0.219);
     }
   }

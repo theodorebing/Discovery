@@ -41,6 +41,7 @@ const CategoryPage = ({
         }
       })
       .catch((error) => {
+        console.log('error', error);
         setLists([]);
         setListErrorMessage('there are no lists yet, create one first!');
       });
@@ -199,7 +200,7 @@ const CategoryPage = ({
             // })
             .catch((error) => {
               console.log('error', error);
-            // setErrorMessage(error.response.data.error);
+              setErrorMessage('the links position were not saved due to an error');
             })
         ));
         setLists(newListsArray);
@@ -207,6 +208,8 @@ const CategoryPage = ({
 
       // moving from one list to another
       if (home !== foreign) {
+        console.log('home', home);
+        console.log('foreign', foreign);
         const homeLinks = Array.from(home.links);
         const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
         const newHome = {
@@ -226,6 +229,26 @@ const CategoryPage = ({
           [newHome.position]: newHome,
           [newForeign.position]: newForeign,
         };
+        homeLinks.map((item, index) => (
+          axios.patch(`links/${item.id}`, qs.stringify({ position: index, list_id: home.id }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+            .catch((error) => {
+              console.log('error', error);
+              setErrorMessage('the links position were not saved due to an error');
+            })
+          // console.log('item homelinks', item)
+          // console.log('index homelinks', index, 'item homelinks', item)
+
+        ));
+        foreignLinks.map((item, index) => (
+          axios.patch(`links/${item.id}`, qs.stringify({ position: index, list_id: foreign.id }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+            .catch((error) => {
+              console.log('error', error);
+              setErrorMessage('the links position were not saved due to an error');
+            })
+          // console.log('index foreignlinks', index, 'item foreign', item)
+        ));
 
         newLists = Object.values(newLists);
 
