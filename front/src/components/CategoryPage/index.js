@@ -38,6 +38,7 @@ const CategoryPage = ({
       .then((result) => {
         if (result && result.data) {
           setLists(result.data);
+          setListErrorMessage('');
         }
       })
       .catch((error) => {
@@ -97,6 +98,7 @@ const CategoryPage = ({
   };
 
   const confirmationMessageFunction = (value) => {
+    getLists();
     setConfirmationMessage(value);
     setShowConfirmationMessage(true);
     setTimeout(() => {
