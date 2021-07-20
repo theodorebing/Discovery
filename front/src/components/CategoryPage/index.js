@@ -82,9 +82,7 @@ const CategoryPage = ({
     if (category === undefined) {
       history.push('/error');
     }
-    else {
-      getLists();
-    }
+    getLists();
     return () => {
       clearTimeout(timeout);
     };
