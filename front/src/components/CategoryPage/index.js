@@ -76,7 +76,6 @@ const CategoryPage = ({
 
   useEffect(() => {
     setLoading(true);
-    console.log('categorypage');
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 1000);
