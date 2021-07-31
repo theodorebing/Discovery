@@ -332,23 +332,23 @@ const CategoryPage = ({
               <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
             </div>
           )}
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="container" direction="horizontal" type="listsContainer">
-              {(provided) => (
-                <div className="grid" ref={provided.innerRef} {...provided.droppableProps}>
-                  <ListsContainer
-                    category={category}
-                    setLists={setLists}
-                    lists={lists}
-                    placeholder={provided.placeholder}
-                    handleOnDragEnd={handleOnDragEnd}
-                    listErrorMessage={listErrorMessage}
-                    getLists={getLists}
-                  />
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          {/* <DragDropContext onDragEnd={handleOnDragEnd}> */}
+            {/* <Droppable droppableId="container" direction="horizontal" type="listsContainer">
+              {(provided) => ( */}
+          <div className="grid">
+            <ListsContainer
+              category={category}
+              setLists={setLists}
+              lists={lists}
+                // placeholder={provided.placeholder}
+              handleOnDragEnd={handleOnDragEnd}
+              listErrorMessage={listErrorMessage}
+              getLists={getLists}
+            />
+          </div>
+            {/* )}
+            </Droppable> */}
+          {/* </DragDropContext> */}
         </>
         )}
       </div>
