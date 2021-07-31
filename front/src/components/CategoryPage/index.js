@@ -191,19 +191,20 @@ const CategoryPage = ({
 
         const newListsArray = Object.values(newLists);
 
+        setLists(newListsArray);
         newLinks.map((item, index) => (
           axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-            // .then((result) => {
-            //   console.log('result', result);
-            //   // getLists();
-            // })
+            .then((result) => {
+              // console.log('result', result);
+              getLists();
+            })
             .catch((error) => {
               console.log('error', error);
               setErrorMessage('the links position were not saved due to an error');
             })
         ));
-        setLists(newListsArray);
+        // getLists();
       }
 
       // moving from one list to another
@@ -229,6 +230,10 @@ const CategoryPage = ({
           [newHome.position]: newHome,
           [newForeign.position]: newForeign,
         };
+
+        newLists = Object.values(newLists);
+
+        setLists(newLists);
         homeLinks.map((item, index) => (
           axios.patch(`links/${item.id}`, qs.stringify({ position: index, list_id: home.id }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
@@ -243,16 +248,16 @@ const CategoryPage = ({
         foreignLinks.map((item, index) => (
           axios.patch(`links/${item.id}`, qs.stringify({ position: index, list_id: foreign.id }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+            .then(() => {
+              getLists();
+            })
             .catch((error) => {
               console.log('error', error);
               setErrorMessage('the links position were not saved due to an error');
             })
           // console.log('index foreignlinks', index, 'item foreign', item)
         ));
-
-        newLists = Object.values(newLists);
-
-        setLists(newLists);
+        // getLists();
       }
     }
   };

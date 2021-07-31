@@ -68,7 +68,7 @@ const LinkBox = ({
                 {link.site_name}
               </p>
               <p className="link-box__text-p link-box__text-p--date">
-                {dayjs(link.updated_at).format('DD-MMM-YYYY H:mm')}
+                {dayjs(link.created_at).format('D MMMM YY - H:mm')}
               </p>
             </div>
           </A>
