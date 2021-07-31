@@ -159,6 +159,7 @@ const CategoryPage = ({
       const items = Array.from(lists);
       const [reorderedItem] = items.splice(source.index, 1);
       items.splice(destination.index, 0, reorderedItem);
+      setLists(items);
       items.map((item, index) => (
         axios.patch(`lists/${item.id}`, qs.stringify({ position: index, category_id: item.category_id }),
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
@@ -166,7 +167,7 @@ const CategoryPage = ({
             setErrorMessage(error.response.data.error);
           })
       ));
-      setLists(items);
+      getLists();
     }
     else {
       // dnd for links
