@@ -3,7 +3,7 @@
 .listsContainer {
   display: grid;
   grid-auto-flow: column;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-snap-align: center;

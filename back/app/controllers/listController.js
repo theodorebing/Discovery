@@ -54,7 +54,8 @@ module.exports = {
                     association: 'links'
                 }, 
                 order: [
-                    ['position', 'ASC']
+                    ['position', 'ASC'],
+                    [['links', 'position', 'ASC']]
                 ]
             });       
 

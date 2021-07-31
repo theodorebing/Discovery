@@ -10,6 +10,9 @@ module.exports = {
         const findIfListExists = await List.findOne({
             where: {member_id : request.session.userid, id : data.list_id}
         });
+        const findHighestPosition = await Link.findAndCountAll({
+            where: {member_id : request.session.userid, list_id : data.list_id}
+        });
         const getLinkPreviewDatas = async () => {  
 
             try {          
@@ -46,6 +49,7 @@ module.exports = {
                     description: datas.description,
                     image: datas.image,
                     site_name: datas.site_name,
+                    position: (findHighestPosition.count++),
                     list_id: data.list_id,
                     member_id: userId
                 });
@@ -73,7 +77,7 @@ module.exports = {
                     list_id: id, member_id: request.session.userid
                 },
                 order: [
-                    ['created_at', 'ASC']
+                    ['position', 'ASC']
                 ]
             });
             if (!links[0]) {
