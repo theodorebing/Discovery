@@ -24,6 +24,7 @@ const Input = ({
         className={`${className} form-input`}
         placeholder={name}
         onChange={handleChange}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
         autoComplete={autocomplete}
       />
@@ -38,11 +39,13 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   autocomplete: PropTypes.string,
   className: PropTypes.string,
+  type: PropTypes.string,
 };
 
 Input.defaultProps = {
   className: '',
   autocomplete: '',
+  type: '',
 };
 
 export default Input;
