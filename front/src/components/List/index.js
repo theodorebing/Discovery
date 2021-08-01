@@ -160,6 +160,8 @@ const List = ({
                 onChange={onChangeUrl}
                 value={url}
                 name="link"
+                type="search"
+
               />
               {errorMessage && (
               <p className="errorMessage linkForm__message">{errorMessage}</p>

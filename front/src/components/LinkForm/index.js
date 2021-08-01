@@ -21,7 +21,6 @@ const LinkForm = ({
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [listInputOpen, setListInputOpen] = useState(false);
-  const [urlIsValid, setUrlIsValid] = useState(false);
 
   const url = link;
 
@@ -38,19 +37,16 @@ const LinkForm = ({
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
     if (validURL(url)) {
-      setUrlIsValid(true);
       openLinkForm();
       setErrorMessage('');
     }
     else {
-      setUrlIsValid(false);
       setErrorMessage('please use a valid link');
       closeLinkForm();
     }
   };
 
   const handleOnChangeLink = (value) => {
-    setUrlIsValid(false);
     onChangeLink(value);
     if (linkFormOpened) {
       closeLinkForm();
@@ -219,6 +215,10 @@ LinkForm.propTypes = {
   closeLinkForm: PropTypes.func.isRequired,
   linkFormOpened: PropTypes.bool.isRequired,
   link: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })).isRequired,
+  getCategories: PropTypes.func.isRequired,
 };
 
 LinkForm.defaultProps = {

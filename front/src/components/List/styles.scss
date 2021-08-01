@@ -64,6 +64,10 @@
       margin-bottom: 0;
     }
 
+    &::-webkit-search-cancel-button {
+      margin: 0 0 0 0.5rem;
+    }
+
   }
 
   &-header {
@@ -109,7 +113,7 @@
       &--open {
         font-size: 2.4rem;
         margin: 0;
-        margin-right: 2.6px;
+        margin-right: 2.4px;
         transform: rotate(45deg);
       }
     }

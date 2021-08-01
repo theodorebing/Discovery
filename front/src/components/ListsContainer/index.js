@@ -11,6 +11,9 @@ const ListsContainer = ({
     <Droppable droppableId="container" direction="horizontal" type="listsContainer">
       {(provided) => (
         <div className="listsContainer" ref={provided.innerRef} {...provided.droppableProps}>
+          <div className="listsContainer-empty" />
+          <div className="listsContainer-empty" />
+
           {listErrorMessage && (
           <p className="listsContainer-noListMessage">{listErrorMessage}</p>
           )}
@@ -18,6 +21,7 @@ const ListsContainer = ({
             <List key={list.id} list={list} listIndex={index} getLists={getLists} lists={lists} />
           ))}
           {provided.placeholder}
+          <div className="listsContainer-empty" />
         </div>
       )}
     </Droppable>
