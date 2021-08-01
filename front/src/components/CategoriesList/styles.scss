@@ -44,27 +44,27 @@
     }
   }
 
-  // &--fade {
+  &--fade {
 
-  //   position: relative;
-  //   &:before {
+    position: relative;
+    &:before {
       
-  //     content: "";
-  //     position: absolute;
-  //     top: 0;
-  //     right: 0;
-  //     width: 100%;
-  //     height: 4rem;
-  //     background: linear-gradient(to top, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
-  //   }
-  //   &:after {
-  //     content: "";
-  //     position: absolute;
-  //     bottom: 0;
-  //     right: 0;
-  //     width: 100%;
-  //     height: 4rem;
-  //     background: linear-gradient(to bottom, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
-  //   }
-  // }
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 4rem;
+      background: linear-gradient(to top, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 4rem;
+      background: linear-gradient(to bottom, rgba(250, 250, 250, 0), rgb(0, 0, 0) 62%);
+    }
+  }
 }
