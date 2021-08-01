@@ -14,4 +14,13 @@
       -moz-background-clip: text;
             background-clip: text;
   }
+
+  &__name {
+    color: vars.$darkgrey;
+  }
+
+  &__errorMessage {
+    color: vars.$darkgrey;
+    text-align: center;
+  }
 }
