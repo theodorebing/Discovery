@@ -26,14 +26,25 @@ const List = ({
   const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
   const [inputOpen, setInputOpen] = useState(false);
+  const [closedInput, setClosedInput] = useState(false);
   const [linkDeleted, setLinkDeleted] = useState(false);
   const [headerInputOpened, setHeaderInputOpened] = useState(false);
   const [listName, setListName] = useState(list.name);
-
   const [validURL] = linkSelector();
 
   const openInput = () => {
-    setInputOpen(!inputOpen);
+    if (!inputOpen) {
+      setClosedInput(false);
+    }
+    if (!closedInput) {
+      setInputOpen(!inputOpen);
+    }
+    setHeaderInputOpened(false);
+  };
+
+  const closeInput = () => {
+    setInputOpen(false);
+    setClosedInput(true);
     setHeaderInputOpened(false);
   };
 
@@ -157,15 +168,17 @@ const List = ({
           {inputOpen && !headerInputOpened && (
 
             <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
-              <Input
-                label=""
-                className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
-                onChange={onChangeUrl}
-                value={url}
-                name="link"
-                type="search"
+              <OutsideCloser propFunction={closeInput}>
+                <Input
+                  label=""
+                  className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
+                  onChange={onChangeUrl}
+                  value={url}
+                  name="link"
+                  type="search"
+                />
+              </OutsideCloser>
 
-              />
               {errorMessage && (
               <p className="errorMessage linkForm__message">{errorMessage}</p>
               )}
