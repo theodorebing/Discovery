@@ -7,6 +7,7 @@ import './styles.scss';
 import LinkBox from '../LinkBox';
 import Input from '../Input';
 import linkSelector from '../../selectors/link';
+import OutsideCloser from '../OutsideCloser';
 
 const ListContainer = styled.div`
   background-color: ${(props) => (props.isDragging ? '#222' : '#1a1a1a')};
@@ -137,14 +138,16 @@ const List = ({
             ) : (
               <div className="list__name-input--div">
                 <form action="" onSubmit={handleSubmitNewListName}>
-                  <Input
-                    label=""
-                    className="list__name-input"
-                    onChange={onChangeListName}
-                    value={listName}
-                    name="list"
-                    autocomplete="off"
-                  />
+                  <OutsideCloser propFunction={openHeaderInput}>
+                    <Input
+                      label=""
+                      className="list__name-input"
+                      onChange={onChangeListName}
+                      value={listName}
+                      name="list"
+                      autocomplete="off"
+                    />
+                  </OutsideCloser>
                 </form>
                 <div className="list__name-input--close" onClick={openHeaderInput}>X</div>
               </div>
