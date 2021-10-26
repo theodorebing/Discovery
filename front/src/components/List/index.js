@@ -7,6 +7,7 @@ import './styles.scss';
 import LinkBox from '../LinkBox';
 import Input from '../Input';
 import linkSelector from '../../selectors/link';
+import OutsideCloser from '../OutsideCloser';
 
 const ListContainer = styled.div`
   background-color: ${(props) => (props.isDragging ? '#222' : '#1a1a1a')};
@@ -25,14 +26,25 @@ const List = ({
   const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
   const [inputOpen, setInputOpen] = useState(false);
+  const [closedInput, setClosedInput] = useState(false);
   const [linkDeleted, setLinkDeleted] = useState(false);
   const [headerInputOpened, setHeaderInputOpened] = useState(false);
   const [listName, setListName] = useState(list.name);
-
   const [validURL] = linkSelector();
 
   const openInput = () => {
-    setInputOpen(!inputOpen);
+    if (!inputOpen) {
+      setClosedInput(false);
+    }
+    if (!closedInput) {
+      setInputOpen(!inputOpen);
+    }
+    setHeaderInputOpened(false);
+  };
+
+  const closeInput = () => {
+    setInputOpen(false);
+    setClosedInput(true);
     setHeaderInputOpened(false);
   };
 
@@ -137,14 +149,16 @@ const List = ({
             ) : (
               <div className="list__name-input--div">
                 <form action="" onSubmit={handleSubmitNewListName}>
-                  <Input
-                    label=""
-                    className="list__name-input"
-                    onChange={onChangeListName}
-                    value={listName}
-                    name="list"
-                    autocomplete="off"
-                  />
+                  <OutsideCloser propFunction={openHeaderInput}>
+                    <Input
+                      label=""
+                      className="list__name-input"
+                      onChange={onChangeListName}
+                      value={listName}
+                      name="list"
+                      autocomplete="off"
+                    />
+                  </OutsideCloser>
                 </form>
                 <div className="list__name-input--close" onClick={openHeaderInput}>X</div>
               </div>
@@ -154,15 +168,17 @@ const List = ({
           {inputOpen && !headerInputOpened && (
 
             <form action="" className="form-form list__input--open" onSubmit={handleSubmitLink}>
-              <Input
-                label=""
-                className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
-                onChange={onChangeUrl}
-                value={url}
-                name="link"
-                type="search"
+              <OutsideCloser propFunction={closeInput}>
+                <Input
+                  label=""
+                  className={classNames('linkInput list__link-input', { 'list__link-input--loading': inputLoading, 'list__link-input--no-links': !links.length })}
+                  onChange={onChangeUrl}
+                  value={url}
+                  name="link"
+                  type="search"
+                />
+              </OutsideCloser>
 
-              />
               {errorMessage && (
               <p className="errorMessage linkForm__message">{errorMessage}</p>
               )}

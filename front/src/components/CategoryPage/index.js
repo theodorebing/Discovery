@@ -10,7 +10,7 @@ import Button from '../Button';
 import CreateNewListInput from '../CreateNewListInput';
 import Select from '../Select';
 import Input from '../Input';
-
+import OutsideCloser from '../OutsideCloser';
 import axios from '../../api';
 
 const qs = require('qs');
@@ -325,14 +325,16 @@ const CategoryPage = ({
           {changeCategoryNameInputOpened && (
             <div className="category-page__name-input--div">
               <form action="" onSubmit={handleSubmitNewCategoryName}>
-                <Input
-                  label=""
-                  className="category-page__name-input"
-                  onChange={onChangeCategoryName}
-                  value={categoryName}
-                  name="category"
-                  autocomplete="off"
-                />
+                <OutsideCloser propFunction={openChangeCategoryNameInput}>
+                  <Input
+                    label=""
+                    className="category-page__name-input"
+                    onChange={onChangeCategoryName}
+                    value={categoryName}
+                    name="category"
+                    autocomplete="off"
+                  />
+                </OutsideCloser>
               </form>
               <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
             </div>
