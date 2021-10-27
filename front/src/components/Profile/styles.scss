@@ -14,4 +14,54 @@
       -moz-background-clip: text;
             background-clip: text;
   }
+
+  &__name {
+    color: vars.$darkgrey;
+    margin-left: 2rem;
+    margin-top: 13.5px;
+    margin-bottom: 13.5px;
+    color: vars.$white;
+  }
+
+  &__label {
+    color: vars.$placeholder;
+  }
+
+  &__form-box {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__img-modifier {
+    width: 20px;
+    height: 20px;
+    filter: invert(25%);  
+    cursor: pointer;
+  }
+
+  &__line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-sub {
+      width: 15%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+  }
+
+  &__input-margin {
+    margin-left: 1.2rem;
+  }
+
+  &__errorMessage {
+    color: vars.$darkgrey;
+    text-align: center;
+  }
 }

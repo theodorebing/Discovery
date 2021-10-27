@@ -339,9 +339,6 @@ const CategoryPage = ({
               <div className="category-page__name-input--close" onClick={openChangeCategoryNameInput}>X</div>
             </div>
           )}
-          {/* <DragDropContext onDragEnd={handleOnDragEnd}> */}
-            {/* <Droppable droppableId="container" direction="horizontal" type="listsContainer">
-              {(provided) => ( */}
           <div className="grid">
             <ListsContainer
               category={category}
@@ -353,9 +350,6 @@ const CategoryPage = ({
               getLists={getLists}
             />
           </div>
-            {/* )}
-            </Droppable> */}
-          {/* </DragDropContext> */}
         </>
         )}
       </div>
