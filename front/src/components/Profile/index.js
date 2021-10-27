@@ -38,15 +38,6 @@ const Profile = () => {
 
   useEffect(() => {
     getAccount();
-    // axios.get('account')
-    //   .then((response) => {
-    //     setUser(response.data);
-    //     setName(response.data.name);
-    //     setEmail(response.data.email);
-    //   })
-    //   .catch((error) => {
-    //     setErrorMessage(error);
-    //   });
   }, []);
 
   const openNameForm = () => {
