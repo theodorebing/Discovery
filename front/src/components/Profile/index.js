@@ -22,16 +22,31 @@ const Profile = () => {
   const [openNameInput, setOpenNameInput] = useState(false);
   const [openEmailInput, setOpenEmailInput] = useState(false);
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-  useEffect(() => {
+  const getAccount = () => {
     axios.get('account')
       .then((response) => {
         setUser(response.data);
         setName(response.data.name);
+        setEmail(response.data.email);
       })
       .catch((error) => {
         setErrorMessage(error);
       });
+  };
+
+  useEffect(() => {
+    getAccount();
+    // axios.get('account')
+    //   .then((response) => {
+    //     setUser(response.data);
+    //     setName(response.data.name);
+    //     setEmail(response.data.email);
+    //   })
+    //   .catch((error) => {
+    //     setErrorMessage(error);
+    //   });
   }, []);
 
   const openNameForm = () => {
@@ -70,6 +85,34 @@ const Profile = () => {
 
   const closeEmailForm = () => {
     setOpenEmailInput(false);
+    setEmail(user.email);
+  };
+
+  const onChangeEmail = (value) => {
+    setEmail(value);
+  };
+
+  const confirmEmailChange = (evt) => {
+    evt.preventDefault();
+    if (email !== user.email) {
+      axios.patch('account', qs.stringify({ email }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .then((result) => {
+          if (result) {
+            setEmail(result.data.email);
+            setOpenEmailInput(false);
+          }
+        })
+        .catch((err) => {
+          if (err) {
+            console.log('err', err.response);
+          }
+        });
+    }
+    else {
+      setOpenEmailInput(false);
+    }
+    getAccount();
   };
 
   return (
@@ -108,8 +151,27 @@ const Profile = () => {
             </span>
             <li className="profile__label">email</li>
             <span className="profile__line">
-              <h3 className="profile__name">{user.email}</h3>
-              <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openEmailForm} />
+              {!openEmailInput ? (
+                <>
+                  <h3 className="profile__name">{email}</h3>
+                  <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openEmailForm} />
+                </>
+              ) : (
+                <form action="" className="profile__line" onSubmit={confirmEmailChange}>
+                  <div className="profile__input-margin">
+                    <Input
+                      label=""
+                      onChange={onChangeEmail}
+                      value={email}
+                      name="email"
+                    />
+                  </div>
+                  <div className="profile__line-sub">
+                    <img src={cross} alt="cancel" className="profile__img-modifier" onClick={closeEmailForm} />
+                    <img src={coche} alt="coche" className="profile__img-modifier" onClick={confirmEmailChange} />
+                  </div>
+                </form>
+              )}
             </span>
             <li className="profile__label">date user was created</li>
             <h3 className="profile__name">{now(user.created_at)}</h3>
