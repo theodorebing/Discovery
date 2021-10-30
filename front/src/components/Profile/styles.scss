@@ -15,6 +15,10 @@
             background-clip: text;
   }
 
+  &__form {
+    height: 400px; 
+  }
+
   &__name {
     color: vars.$darkgrey;
     margin-left: 2rem;
@@ -54,6 +58,10 @@
       justify-content: space-between;
     }
 
+  }
+
+  &__button {
+    margin: 1rem 2rem;
   }
 
   &__input-margin {

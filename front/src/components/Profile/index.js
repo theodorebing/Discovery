@@ -6,6 +6,7 @@ import './styles.scss';
 import Page from '../../containers/Page';
 import LinkForm from '../../containers/LinkForm';
 import Input from '../Input';
+import Button from '../Button';
 
 import modifier from '../../assets/modifier.png';
 import cross from '../../assets/cross.png';
@@ -113,7 +114,7 @@ const Profile = () => {
 
         <h2 className="profile__header">PROFILE</h2>
         {!errorMessage && user && (
-        <div className="form form__index">
+        <div className="form form__index profile__form">
           {/* <div className="profile__form-box"> */}
           <ul className="profile__form-box">
             <li className="profile__label">name</li>
@@ -164,6 +165,10 @@ const Profile = () => {
                 </form>
               )}
             </span>
+
+            <li className="profile__label">password</li>
+            <Button classname="profile__button" text="Change password" />
+
             <li className="profile__label">date user was created</li>
             <h3 className="profile__name">{now(user.created_at)}</h3>
             <li className="profile__label">last update</li>
