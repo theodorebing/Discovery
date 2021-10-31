@@ -24,6 +24,10 @@ const Profile = () => {
   const [openEmailInput, setOpenEmailInput] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [openPasswordForm, setOpenPasswordForm] = useState(false);
+  const [firstPreviousPassword, setFirstPreviousPassword] = useState('');
+  const [secondPreviousPassword, setSecondPreviousPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   const getAccount = () => {
     axios.get('account')
@@ -107,6 +111,26 @@ const Profile = () => {
     getAccount();
   };
 
+  const passwordForm = () => {
+    setOpenPasswordForm(!openPasswordForm);
+  };
+
+  const confirmPasswordChange = (evt) => {
+    evt.preventDefault();
+  };
+
+  const onChangeFirstPassword = (value) => {
+    setFirstPreviousPassword(value);
+  };
+
+  const onChangeSecondPassword = (value) => {
+    setSecondPreviousPassword(value);
+  };
+
+  const onChangeNewPassword = (value) => {
+    setNewPassword(value);
+  };
+
   return (
     <Page>
       <div className="profile">
@@ -117,62 +141,100 @@ const Profile = () => {
         <div className="form form__index profile__form">
           {/* <div className="profile__form-box"> */}
           <ul className="profile__form-box">
-            <li className="profile__label">name</li>
-            <span className="profile__line">
-              {!openNameInput ? (
-                <>
-                  <h3 className="profile__name">{name}</h3>
-                  <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openNameForm} />
-                </>
-              ) : (
-                <form action="" className="profile__line" onSubmit={confirmNameChange}>
-                  <div className="profile__input-margin">
-                    <Input
-                      label=""
-                      onChange={onChangeName}
-                      value={name}
-                      name="name"
-                    />
-                  </div>
-                  <div className="profile__line-sub">
-                    <img src={cross} alt="cancel" className="profile__img-modifier" onClick={closeNameForm} />
-                    <img src={coche} alt="coche" className="profile__img-modifier" onClick={confirmNameChange} />
-                  </div>
-                </form>
-              )}
-            </span>
-            <li className="profile__label">email</li>
-            <span className="profile__line">
-              {!openEmailInput ? (
-                <>
-                  <h3 className="profile__name">{email}</h3>
-                  <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openEmailForm} />
-                </>
-              ) : (
-                <form action="" className="profile__line" onSubmit={confirmEmailChange}>
-                  <div className="profile__input-margin">
-                    <Input
-                      label=""
-                      onChange={onChangeEmail}
-                      value={email}
-                      name="email"
-                    />
-                  </div>
-                  <div className="profile__line-sub">
-                    <img src={cross} alt="cancel" className="profile__img-modifier" onClick={closeEmailForm} />
-                    <img src={coche} alt="coche" className="profile__img-modifier" onClick={confirmEmailChange} />
-                  </div>
-                </form>
-              )}
-            </span>
+            {!openPasswordForm ? (
+              <>
+                <li className="profile__label">name</li>
+                <span className="profile__line">
+                  {!openNameInput ? (
+                    <>
+                      <h3 className="profile__name">{name}</h3>
+                      <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openNameForm} />
+                    </>
+                  ) : (
+                    <form action="" className="profile__line" onSubmit={confirmNameChange}>
+                      <div className="profile__input-margin">
+                        <Input
+                          label=""
+                          onChange={onChangeName}
+                          value={name}
+                          name="name"
+                        />
+                      </div>
+                      <div className="profile__line-sub">
+                        <img src={cross} alt="cancel" className="profile__img-modifier" onClick={closeNameForm} />
+                        <img src={coche} alt="coche" className="profile__img-modifier" onClick={confirmNameChange} />
+                      </div>
+                    </form>
+                  )}
+                </span>
+                <li className="profile__label">email</li>
+                <span className="profile__line">
+                  {!openEmailInput ? (
+                    <>
+                      <h3 className="profile__name">{email}</h3>
+                      <img src={modifier} alt="modifier" className="profile__img-modifier" onClick={openEmailForm} />
+                    </>
+                  ) : (
+                    <form action="" className="profile__line" onSubmit={confirmEmailChange}>
+                      <div className="profile__input-margin">
+                        <Input
+                          label=""
+                          onChange={onChangeEmail}
+                          value={email}
+                          name="email"
+                        />
+                      </div>
+                      <div className="profile__line-sub">
+                        <img src={cross} alt="cancel" className="profile__img-modifier" onClick={closeEmailForm} />
+                        <img src={coche} alt="coche" className="profile__img-modifier" onClick={confirmEmailChange} />
+                      </div>
+                    </form>
+                  )}
+                </span>
 
-            <li className="profile__label">password</li>
-            <Button classname="profile__button" text="Change password" />
+                <li className="profile__label">password</li>
+                <Button classname="profile__button" text="Change password" onClick={passwordForm} />
 
-            <li className="profile__label">date user was created</li>
-            <h3 className="profile__name">{now(user.created_at)}</h3>
-            <li className="profile__label">last update</li>
-            <h3 className="profile__name">{now(user.updated_at)}</h3>
+                <li className="profile__label">date user was created</li>
+                <h3 className="profile__name">{now(user.created_at)}</h3>
+                <li className="profile__label">last update</li>
+                <h3 className="profile__name">{now(user.updated_at)}</h3>
+              </>
+            ) : (
+              <form action="" onSubmit={confirmPasswordChange}>
+
+                <li className="profile__label">type previous password</li>
+                <div className="profile__input-margin">
+                  <Input
+                    label=""
+                    onChange={onChangeFirstPassword}
+                    value={firstPreviousPassword}
+                    name="previous password"
+                  />
+                </div>
+                <li className="profile__label">re-type previous password</li>
+                <div className="profile__input-margin">
+                  <Input
+                    label=""
+                    onChange={onChangeSecondPassword}
+                    value={secondPreviousPassword}
+                    name="previous password"
+                  />
+                </div>
+                <li className="profile__label">new password</li>
+                <div className="profile__input-margin">
+                  <Input
+                    label=""
+                    onChange={onChangeNewPassword}
+                    value={newPassword}
+                    name="new password"
+                  />
+                </div>
+                <Button classname="profile__button" text="return" onClick={passwordForm} />
+
+              </form>
+            )}
+
           </ul>
           {/* </div> */}
         </div>
