@@ -120,6 +120,7 @@ const Profile = () => {
     setFirstPreviousPassword('');
     setSecondPreviousPassword('');
     setNewPassword('');
+    setPasswordErrorMessage('');
   };
 
   const deletePasswordConfirmationMessage = () => {
@@ -274,7 +275,7 @@ const Profile = () => {
             ) : (
               <>
                 {passwordErrorMessage && (
-                <p className="errorMessage profile__passwordErrorMessage">{passwordErrorMessage}</p>
+                  <p className="errorMessage profile__passwordErrorMessage">{passwordErrorMessage}</p>
                 )}
                 <form action="" onSubmit={confirmPasswordChange}>
                   <li className="profile__label">type previous password</li>

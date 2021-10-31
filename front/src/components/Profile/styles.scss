@@ -85,12 +85,14 @@
   }
 
   &__passwordErrorMessage {
-    margin: 0 auto 1rem;
+    margin: -2rem auto 1rem;
   }
 
   &__confirmationMessage {
-    margin: auto;
-    position: absolute; 
-    top: 200px;
+    // margin: auto;
+    // position: absolute; 
+    // top: 200px;
+    margin: -2rem auto 1rem;
+
   }
 }
