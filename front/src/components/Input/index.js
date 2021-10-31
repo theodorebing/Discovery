@@ -9,7 +9,7 @@ const Input = ({
   };
   const inputId = `input-${name}`;
   let typeValue = name;
-  if (type === 'search') {
+  if ((type === 'search') || (type === 'password')) {
     typeValue = type;
   }
 

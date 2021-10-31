@@ -63,6 +63,16 @@
 
   &__button {
     margin: 1rem 2rem;
+
+    &-password {
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    &-little {
+      width: 30%;
+      margin: auto;
+    }
   }
 
   &__input-margin {
@@ -72,5 +82,15 @@
   &__errorMessage {
     color: vars.$darkgrey;
     text-align: center;
+  }
+
+  &__passwordErrorMessage {
+    margin: 0 auto 1rem;
+  }
+
+  &__confirmationMessage {
+    margin: auto;
+    position: absolute; 
+    top: 200px;
   }
 }

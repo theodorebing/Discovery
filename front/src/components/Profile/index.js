@@ -28,6 +28,10 @@ const Profile = () => {
   const [firstPreviousPassword, setFirstPreviousPassword] = useState('');
   const [secondPreviousPassword, setSecondPreviousPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [passwordConfirmationMessage, setPasswordConfirmationMessage] = useState('');
+
+  console.log('passwordErrorMessage', passwordErrorMessage);
 
   const getAccount = () => {
     axios.get('account')
@@ -113,10 +117,74 @@ const Profile = () => {
 
   const passwordForm = () => {
     setOpenPasswordForm(!openPasswordForm);
+    setFirstPreviousPassword('');
+    setSecondPreviousPassword('');
+    setNewPassword('');
+  };
+
+  const deletePasswordConfirmationMessage = () => {
+    setTimeout(() => {
+      setPasswordConfirmationMessage('');
+    }, 5000);
   };
 
   const confirmPasswordChange = (evt) => {
     evt.preventDefault();
+    console.log('confirmPasswordChange');
+
+    if (firstPreviousPassword !== secondPreviousPassword) {
+      setPasswordErrorMessage('previous passwords are not matching');
+    }
+    if (!firstPreviousPassword || !secondPreviousPassword || !newPassword) {
+      setPasswordErrorMessage('please fill in all fields accordingly');
+    }
+    if ((firstPreviousPassword === secondPreviousPassword) && newPassword) {
+      axios.post(
+        'connexion',
+        qs.stringify({ email, password: secondPreviousPassword }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } },
+      )
+        .then((result) => {
+          if (result) {
+            console.log('result', result);
+            axios.patch('account', qs.stringify({ password: newPassword }),
+              { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+              .then((res) => {
+                if (res) {
+                  passwordForm();
+                  setPasswordConfirmationMessage('password has been modified');
+                  deletePasswordConfirmationMessage();
+                }
+              })
+              .catch((err) => {
+                if (err) {
+                  console.log('err', err.response);
+                }
+              });
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+          setPasswordErrorMessage('previous password is not correct');
+
+          // setErrorMessage(error.response.data.error);
+        });
+    }
+    // if (email !== user.email) {
+    //   axios.patch('account', qs.stringify({ email }),
+    //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+    //     .then((result) => {
+    //       if (result) {
+    //         setEmail(result.data.email);
+    //         setOpenEmailInput(false);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       if (err) {
+    //         console.log('err', err.response);
+    //       }
+    //     });
+    // }
   };
 
   const onChangeFirstPassword = (value) => {
@@ -137,9 +205,12 @@ const Profile = () => {
         <LinkForm />
 
         <h2 className="profile__header">PROFILE</h2>
+
         {!errorMessage && user && (
         <div className="form form__index profile__form">
-          {/* <div className="profile__form-box"> */}
+          {passwordConfirmationMessage && (
+          <p className="confirmationMessage profile__confirmationMessage">{passwordConfirmationMessage}</p>
+          )}
           <ul className="profile__form-box">
             {!openPasswordForm ? (
               <>
@@ -201,42 +272,47 @@ const Profile = () => {
                 <h3 className="profile__name">{now(user.updated_at)}</h3>
               </>
             ) : (
-              <form action="" onSubmit={confirmPasswordChange}>
-
-                <li className="profile__label">type previous password</li>
-                <div className="profile__input-margin">
-                  <Input
-                    label=""
-                    onChange={onChangeFirstPassword}
-                    value={firstPreviousPassword}
-                    name="previous password"
-                  />
-                </div>
-                <li className="profile__label">re-type previous password</li>
-                <div className="profile__input-margin">
-                  <Input
-                    label=""
-                    onChange={onChangeSecondPassword}
-                    value={secondPreviousPassword}
-                    name="previous password"
-                  />
-                </div>
-                <li className="profile__label">new password</li>
-                <div className="profile__input-margin">
-                  <Input
-                    label=""
-                    onChange={onChangeNewPassword}
-                    value={newPassword}
-                    name="new password"
-                  />
-                </div>
-                <Button classname="profile__button" text="return" onClick={passwordForm} />
-
-              </form>
+              <>
+                {passwordErrorMessage && (
+                <p className="errorMessage profile__passwordErrorMessage">{passwordErrorMessage}</p>
+                )}
+                <form action="" onSubmit={confirmPasswordChange}>
+                  <li className="profile__label">type previous password</li>
+                  <div className="profile__input-margin">
+                    <Input
+                      label=""
+                      onChange={onChangeFirstPassword}
+                      value={firstPreviousPassword}
+                      name="previous password 1"
+                      type="password"
+                    />
+                  </div>
+                  <li className="profile__label">re-type previous password</li>
+                  <div className="profile__input-margin">
+                    <Input
+                      label=""
+                      onChange={onChangeSecondPassword}
+                      value={secondPreviousPassword}
+                      name="previous password 2"
+                      type="password"
+                    />
+                  </div>
+                  <li className="profile__label">new password</li>
+                  <div className="profile__input-margin">
+                    <Input
+                      label=""
+                      onChange={onChangeNewPassword}
+                      value={newPassword}
+                      name="new password"
+                      type="password"
+                    />
+                  </div>
+                  <button type="submit" className="button profile__button profile__button-password">validate new password</button>
+                </form>
+                <Button classname="profile__button profile__button-little" text="cancel" onClick={passwordForm} />
+              </>
             )}
-
           </ul>
-          {/* </div> */}
         </div>
         )}
         {errorMessage && (
