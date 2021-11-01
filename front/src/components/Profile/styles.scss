@@ -15,6 +15,11 @@
             background-clip: text;
   }
 
+  &__form {
+    height: auto; 
+    padding: 3rem 0;
+  }
+
   &__name {
     color: vars.$darkgrey;
     margin-left: 2rem;
@@ -56,6 +61,20 @@
 
   }
 
+  &__button {
+    margin: 1rem 2rem;
+
+    &-password {
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    &-little {
+      width: 30%;
+      margin: auto;
+    }
+  }
+
   &__input-margin {
     margin-left: 1.2rem;
   }
@@ -63,5 +82,17 @@
   &__errorMessage {
     color: vars.$darkgrey;
     text-align: center;
+  }
+
+  &__passwordErrorMessage {
+    margin: -2rem auto 1rem;
+  }
+
+  &__confirmationMessage {
+    // margin: auto;
+    // position: absolute; 
+    // top: 200px;
+    margin: -2rem auto 1rem;
+
   }
 }
