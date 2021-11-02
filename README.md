@@ -53,5 +53,6 @@ Pour le drag and drop, j’ai utilisé le package react-beautiful-dnd créé par
 <br>
 Pour finir, le nom de l’app, <strong>the link</strong>, est un hommage au groupe de metal français Gojira qui a été une énorme inspiration pour moi depuis leur album <em>the link</em> avec ses sons et paroles puissants, avec sa profonde connexion à l’esprit humain, la terre et les éléments naturels.
 
-
-https://github.com/theodorebing/Discovery/blob/main/the%20link%20demo.mp4
+<p align="center">
+  <img src="https://github.com/theodorebing/Discovery/blob/main/the%20link%20demo.gif" alt="animated" />
+</p>
