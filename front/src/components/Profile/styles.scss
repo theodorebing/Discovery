@@ -1,0 +1,98 @@
+@use 'src/styles/vars';
+
+.profile {
+  &__header {
+    font-family: vars.$link-font;
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    text-transform: uppercase;
+    background-color: #41414175;
+    color: transparent;
+    text-shadow: 1px 1px 1px rgb(90, 90, 90);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+  }
+
+  &__form {
+    height: auto; 
+    padding: 3rem 0;
+  }
+
+  &__name {
+    color: vars.$darkgrey;
+    margin-left: 2rem;
+    margin-top: 13.5px;
+    margin-bottom: 13.5px;
+    color: vars.$white;
+  }
+
+  &__label {
+    color: vars.$placeholder;
+  }
+
+  &__form-box {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__img-modifier {
+    width: 20px;
+    height: 20px;
+    filter: invert(25%);  
+    cursor: pointer;
+  }
+
+  &__line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-sub {
+      width: 15%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+  }
+
+  &__button {
+    margin: 1rem 2rem;
+
+    &-password {
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    &-little {
+      width: 30%;
+      margin: auto;
+    }
+  }
+
+  &__input-margin {
+    margin-left: 1.2rem;
+  }
+
+  &__errorMessage {
+    color: vars.$darkgrey;
+    text-align: center;
+  }
+
+  &__passwordErrorMessage {
+    margin: -2rem auto 1rem;
+  }
+
+  &__confirmationMessage {
+    // margin: auto;
+    // position: absolute; 
+    // top: 200px;
+    margin: -2rem auto 1rem;
+
+  }
+}

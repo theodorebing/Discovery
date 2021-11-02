@@ -1,0 +1,185 @@
+@use 'src/styles/vars';
+
+@keyframes openInput {
+  0% {
+    transform: scaleY(0);
+    transform-origin: 0 0;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: 100% 0;
+  }
+}
+
+@keyframes fadeInput {
+  0% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: .9;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+
+.list {
+  display: grid;
+  grid-auto-columns: 330px;
+  margin-right: 1rem;
+  height: max-content;
+  padding: 0 10px 10px;
+  background-color: vars.$black;
+  border: solid 2px none;
+  border-radius: vars.$radius;
+  box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+  margin-bottom: 1rem;
+
+  &__input--open {
+    animation: openInput .1s;
+  }
+
+  &__link-input {
+    width: 330px;
+    margin-bottom: 0.5rem;
+    animation: fadeInput .75s;
+    
+    & input {
+      transition: height 2s 1s;
+      margin: 0;
+      width:330px;
+    }
+
+    &--loading {
+      animation: loading .666s infinite alternate;
+    }
+
+    &--no-links {
+      margin-bottom: 0;
+    }
+
+    &::-webkit-search-cancel-button {
+      margin: 0 0 0 0.5rem;
+    }
+
+  }
+
+  &-header {
+    font-size: 1.1rem;
+    font-family: vars.$main-font;
+    font-weight: 100;
+    background-color: #41414175;
+    color: transparent;
+    text-shadow: 1px 1px 1px rgb(148, 148, 148);
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px 5px 5px 0;
+    // padding-right: 5px;
+    cursor: text;
+
+    &__div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+
+    }
+
+    &__input-opener {
+      color: vars.$grey;
+      font-size: 2.2rem;
+      font-family: vars.$main-font;
+      font-weight: 200;
+      margin: 0.3rem 0.2rem;
+      cursor: pointer;
+
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transition: all 0.3s ease 0s;
+
+      &--open {
+        font-size: 2.4rem;
+        margin: 0;
+        margin-right: 2.4px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &__name-input {
+    position: relative;
+    left: 0.5px;
+    top: 0.5px;
+    font-size: 1.1rem;
+    font-family: vars.$main-font;
+    font-weight: 100;
+    color: vars.$white;
+    -webkit-background-clip: text;
+      -moz-background-clip: text;
+            background-clip: text;
+    width: 250px;
+    border: none; 
+    border-radius: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+    cursor: text;
+
+    &--div {
+      display: flex;
+      height: 21px;
+    }
+
+    &--close {
+      color: vars.$darkgrey;
+      font-family: vars.$main-font;
+      font-size: 0.8rem;
+      margin-left: 10px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    // &--error {
+    //   position: relative;
+    //   top: -35px;
+    // }
+  }
+
+  &--scroll {
+    display: grid;
+    row-gap: 0.5rem;
+    // overflow-x: scroll;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    max-height: 66.6vh;
+    // min-height: 90px;
+    border-radius: vars.$radius;
+  }
+
+  &-noLinkMessage {
+    color: vars.$white;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 200;
+    margin: 0.5rem 0;
+  }
+}
+

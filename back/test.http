@@ -1,0 +1,139 @@
+@protocol= http
+@domainname= localhost
+@port= {{$dotenv PORT}}
+@baseUrl= {{protocol}}://{{domainname}}:{{port}}
+
+### Not available
+GET http://localhost:5050/404
+
+
+############ CONNEXION - SUBSCRIPTION ##############
+
+### Route POST /subscription -- CREATE USER
+POST {{baseUrl}}/subscription
+Content-Type: application/x-www-form-urlencoded
+
+name=Théodore Bing
+&email=theodorebing@gmail.com
+&password=secret
+
+
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=theodorebing@gmail.com
+&password=secret
+
+### Route GET /logout -- DISCONNECT
+GET {{baseUrl}}/logout
+
+### Route POST /connexion -- UNKNOWN USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+&password=secret1
+
+### Route POST /connexion -- MISSING LOGIN INFORMATION
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=test@gmail.com
+
+##################### ACCOUNT ######################
+
+### Route GET /account
+GET {{baseUrl}}/account
+
+### Route PATCH /account - UPDATE A USER
+PATCH {{baseUrl}}/account
+Content-Type: application/x-www-form-urlencoded
+
+name=Tarte en piont
+&email=theodorebing2@gmail.com
+&password=secret1
+
+### Route DELETE /account - DELETE A USER
+DELETE {{baseUrl}}/account
+
+############################## CATEGORIES #############################
+
+### Get all categories
+GET http://localhost:5050/categories
+
+### Create a category
+POST http://localhost:5050/categories
+Content-Type: application/x-www-form-urlencoded
+
+name=Recettes
+
+### Change a category
+PATCH http://localhost:5050/categories/12
+Content-Type: application/x-www-form-urlencoded
+
+name=Musique
+
+### Delete a category
+DELETE http://localhost:5050/categories/12
+
+
+############################## LISTS #############################
+
+### get all lists inside one category with their links
+GET http://localhost:5050/categories/12/lists
+
+### Create a list inside a category
+POST http://localhost:5050/lists
+Content-Type: application/x-www-form-urlencoded
+
+name=À écouter
+&category_id=2
+
+### Get one list with it's links
+GET http://localhost:5050/lists/1
+
+### Change a list
+PATCH http://localhost:5050/lists/10
+Content-Type: application/x-www-form-urlencoded
+
+position=2
+&category_id=12
+
+# name=J'aime pas
+
+### Delete a list
+DELETE http://localhost:5050/lists/7
+
+############################## LINKS #############################
+
+### Route POST /connexion -- EXISTING USER
+POST {{baseUrl}}/connexion
+Content-Type: application/x-www-form-urlencoded
+
+email=theodorebing@gmail.com
+&password=secret
+
+### Create a link inside a list
+POST http://localhost:5050/links
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/vLZTyke5dRagdxT57
+&list_id=17
+
+### Get all links from one list
+GET http://localhost:5050/lists/1/links
+
+### Get one link
+GET http://localhost:5050/links/3
+
+
+### change a link
+PATCH http://localhost:5050/links/5
+Content-Type: application/x-www-form-urlencoded
+
+url=https://deezer.page.link/eJVm3MQcZrDuN1GA7
+&position=1
+
+### delete a link
+DELETE http://localhost:5050/links/5

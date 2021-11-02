@@ -1,0 +1,63 @@
+@use 'src/styles/vars';
+
+.linkForm {
+
+  width: 532px;
+  background-color: vars.$black;
+  border: solid 2px none;
+  border-radius: vars.$radius;
+  box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+  // padding: 0.5rem;
+  margin-top: 10px;
+  // max-width: 532px;
+
+  &__message {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &-part2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // margin-top: 0.5rem;
+    }
+
+    &-create {
+      font-family: vars.$main-font;
+      color: vars.$grey;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    &-button {
+      margin-bottom: 0.5rem;
+    }
+
+  }
+
+  &__button {
+    width: 100px;
+    margin-bottom: 0.5rem;
+    font-family: vars.$main-font;
+    padding: 3px;
+    box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+  }
+}
+
+.linkInput {
+  width: 516px;
+  border-radius: 5px 5px 5px 5px ;
+  // margin: 5px;
+  &::-webkit-search-cancel-button {
+    margin: 0 0 0 0.5rem;
+    cursor: pointer;
+  }
+}
+

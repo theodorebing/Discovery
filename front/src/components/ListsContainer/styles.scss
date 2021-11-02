@@ -1,0 +1,49 @@
+@use 'src/styles/vars';
+
+.listsContainer {
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-snap-align: center;
+  overscroll-behavior-x: contain;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  border-radius: 1px;
+  justify-items: center;
+
+  &-noListMessage {
+    text-align: center;
+    color: vars.$grey;
+  }
+
+  &-empty {
+    width: 16px;
+  }
+
+ &:before {
+      
+      content: "";
+      position: absolute;
+      z-index: 100;
+      top: 132px;
+      right: 0;
+      width: 2rem;
+      height: 100%;
+      background: linear-gradient(to right, rgba(250, 250, 250, 0), rgb(15, 15, 15) 100%);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 100;
+      top: 132px;
+      left: 0;
+      width: 2rem;
+      height: 100%;
+      background: linear-gradient(to left, rgba(250, 250, 250, 0), rgb(15, 15, 15) 100%);
+    }
+}

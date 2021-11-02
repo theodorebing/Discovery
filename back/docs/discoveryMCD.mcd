@@ -1,0 +1,27 @@
+MEMBRE: nom d'utilisateur, email, mot de passe
+A, 11 CATEGORIE, 0N MEMBRE 
+CATEGORIE: nom
+POSSEDE, 11 LISTE, 0N CATEGORIE
+
+:
+LIEN: url, position
+APPARTIENT, 11 LIEN, 0N LISTE
+LISTE: nom, position
+
+
+
+
+
+
+
+
+
+///////////////////ANCIENNE VERSION///////////////////
+///CATEGORIE: nom
+///POSSEDE, 01 LISTE, 0N CATEGORIE
+///LISTE: nom, position
+
+///:
+///LIEN: url, position
+///APPARTIENT, 11 LIEN, 0N LISTE
+//////////////////////////////////////////////////////

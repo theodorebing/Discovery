@@ -1,0 +1,67 @@
+@use 'src/styles/vars';
+
+.categories {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__text {
+    font-family: vars.$main-font;
+    color: vars.$grey;
+    margin-top: 2rem;
+    padding: 0.2rem 0;
+  }
+
+  &-div{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 532px;
+
+    &__action{
+      color: vars.$grey;
+      font-family: vars.$main-font;
+      margin-top: 0.75rem;
+      cursor: pointer;
+      background-color: black;
+      border: solid 2px none;
+      border-radius: vars.$radius;
+      box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+      width: 260px;
+
+      &--little {
+
+      width: 150px;
+      background-color: #770000;
+
+      }
+
+      &-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        // min-height: 250px;
+        width: 100%;
+        max-width: 532px;
+        border: solid 2px none;
+        border-radius: vars.$radius;
+        box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+        margin-top: 0.75rem;
+        padding-top: 1rem;
+      }
+    }
+  }
+}
+
+.big-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // min-height: 230px;
+}
