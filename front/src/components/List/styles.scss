@@ -34,6 +34,7 @@
   grid-auto-columns: 330px;
   margin-right: 1rem;
   height: max-content;
+  // max-height: 66.6vh;
   padding: 0 10px 10px;
   background-color: vars.$black;
   border: solid 2px none;
@@ -169,7 +170,7 @@
     }
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    max-height: 66.6vh;
+    max-height: calc(100vh-266px) ;
     // min-height: 90px;
     border-radius: vars.$radius;
   }
