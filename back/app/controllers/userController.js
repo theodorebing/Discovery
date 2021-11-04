@@ -7,6 +7,7 @@ const userController = {
     subscribe : async (request, response, next) => {
 
         const theUserData = request.body;
+        const passwordRegEx = /^(?=.*[A-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W+)(?!.*[iIoO])\S{6,12}$/;
 
         // email validation 
         const isValidEmail = emailValidator.validate(theUserData.email);
@@ -18,10 +19,21 @@ const userController = {
             return;
         }
 
-        if (theUserData.password.length <5 ) {
+        if (theUserData.password.length <6 ) {
             response
                 .status(401)
-                .json({"error":"you must type a password with at list 5 charachters"});
+                .json({"error":"you must type a password with at least 6 charachters"});
+            return;
+        }
+
+
+        if (theUserData.password.match(passwordRegEx)) {
+            console.log('ok')
+        } else {
+            console.log('not ok')
+            response
+                .status(401)
+                .json({"error":`your password is not strong enough (at least 6 characters, and maximum 12, with 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character)`});
             return;
         }
 
