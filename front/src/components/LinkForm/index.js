@@ -143,7 +143,7 @@ const LinkForm = ({
         )}
       </form>
       {linkFormOpened && (
-        <form onSubmit={handleSubmitForm} className="linkForm-part2">
+        <div className="linkForm-part2">
           {errorMessage && (
             <p className="errorMessage">{errorMessage}</p>
           )}
@@ -199,11 +199,11 @@ const LinkForm = ({
             )}
             {listId && (
               <div className="linkForm-part2-div">
-                <Button type="submit" classname="linkForm__button linkForm-part2-button" text="create" />
+                <Button onClick={handleSubmitForm} classname="linkForm__button linkForm-part2-button" text="create" />
               </div>
             )}
           <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />
-        </form>
+        </div>
       )}
     </div>
   );
