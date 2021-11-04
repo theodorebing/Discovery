@@ -86,7 +86,11 @@ const CategoryPage = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, [confirmationMessage]);
+  }, []);
+
+  useEffect(() => {
+    getLists();
+  }, [confirmationMessage, linkFormOpened]);
 
   const openListInput = () => {
     setListInputOpen(true);
@@ -114,14 +118,14 @@ const CategoryPage = ({
     axios.delete(`lists/${listToDeleteId}`)
       .then((result) => {
         if (result && result.data) {
-          setLoading(true);
+          // setLoading(true);
           setListToDeleteId(null);
           confirmationMessageFunction(`category ${listToDeleteName} deleted`);
           setListSelectOpen(false);
-          setTimeout(() => {
-            setLoading(false);
-            setListToDeleteName('');
-          }, 1000);
+          // setTimeout(() => {
+          //   setLoading(false);
+          setListToDeleteName('');
+          // }, 1000);
         }
       })
       .catch((error) => {
