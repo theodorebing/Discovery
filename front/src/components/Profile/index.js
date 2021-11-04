@@ -31,8 +31,6 @@ const Profile = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [passwordConfirmationMessage, setPasswordConfirmationMessage] = useState('');
 
-  console.log('passwordErrorMessage', passwordErrorMessage);
-
   const getAccount = () => {
     axios.get('account')
       .then((response) => {
@@ -160,6 +158,7 @@ const Profile = () => {
               .catch((err) => {
                 if (err) {
                   console.log('err', err.response);
+                  setPasswordErrorMessage(err.response.data.error);
                 }
               });
           }
