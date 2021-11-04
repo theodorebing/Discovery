@@ -190,6 +190,16 @@ const userController = {
         // if update password: bcrypt
         if (patchUser.password) {
 
+            const passwordRegEx = /^(?=.*[A-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W+)(?!.*[iIoO])\S{6,12}$/;
+            if (patchUser.password.match(passwordRegEx)) {
+                console.log('ok')
+            } else {
+                response
+                    .status(401)
+                    .json({"error":`your password is not strong enough (at least 6 characters, and maximum 12, with 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character)`});
+                return;
+            }
+
             // create a hashed password
             const saltRounds = 10;
             patchUser.password = await new Promise((resolve, reject) => {
