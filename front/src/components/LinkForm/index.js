@@ -126,6 +126,7 @@ const LinkForm = ({
   const openCategoryInput = () => {
     setCategoryInputOpen(true);
     setCategoryId(null);
+    setListId(null);
     setConfirmationMessage('');
   };
 
@@ -208,12 +209,12 @@ const LinkForm = ({
               )}
             </>
             )}
-            {listId && (
+            {!categoryInputOpen && listId && (
               <div className="linkForm-part2-div">
                 <Button onClick={handleSubmitForm} classname="linkForm__button linkForm-part2-button" text="create" />
               </div>
             )}
-          <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />
+          <Button classname="linkForm__button linkForm__button-cancel" onClick={closeAndResetForm} text="cancel" />
         </div>
       )}
     </div>
