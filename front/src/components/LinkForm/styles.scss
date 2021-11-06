@@ -38,6 +38,8 @@
 
     &-button {
       margin-bottom: 0.5rem;
+      color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(134, 255, 134, 0.808);
     }
 
   }
@@ -48,6 +50,9 @@
     font-family: vars.$main-font;
     padding: 3px;
     box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+      &-cancel {
+        background-color: rgba(255, 0, 0, 0.507);
+      }
   }
 }
 
