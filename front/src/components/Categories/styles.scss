@@ -65,3 +65,24 @@
   justify-content: center;
   // min-height: 230px;
 }
+
+
+@media screen and (max-width: 900px) {
+
+  .categories {
+    &-div {
+      width: 80%;
+      &__action{
+        font-size: 0.8rem;
+        margin-top: 0.75rem;
+        width: 48%;
+
+        &-input {
+          width: 80%;
+          max-width: 80%;
+        }
+      }
+    }
+  }
+  
+}

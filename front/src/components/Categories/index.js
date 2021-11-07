@@ -124,7 +124,7 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
           <>
             {!categoryInputOpen && !categorySelectOpen && !linkFormOpened && (
               <div className="categories-div">
-                <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a new category +" />
+                <Button classname="categories-div__action" onClick={openCategoryInput} text="+ create a category +" />
                 <Button classname="categories-div__action" onClick={openCategorySelect} text="- delete a category -" />
               </div>
             )}
