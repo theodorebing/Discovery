@@ -312,7 +312,7 @@ const CategoryPage = ({
           {!listInputOpen && !listSelectOpen && !linkFormOpened && (
             <div className="category-page--fixed-components">
               <div className="categories-div">
-                <Button classname="categories-div__action" onClick={openListInput} text="+ create a new list +" />
+                <Button classname="categories-div__action" onClick={openListInput} text="+ create a list +" />
                 <Button classname="categories-div__action" onClick={openListSelect} text="- delete a list -" />
               </div>
             </div>

@@ -78,3 +78,15 @@
     }
   }
 }
+
+@media  screen and (max-width: 900px){
+  .menu {
+    width: 60%;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    &-link {
+      margin-right: 0.5rem;
+    }
+  }  
+}

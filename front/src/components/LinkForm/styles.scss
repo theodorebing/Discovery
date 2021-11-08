@@ -69,3 +69,20 @@
 .confirmationMessage-closed {
   margin: auto;
 }
+
+
+@media screen and (max-width: 900px) {
+
+  .linkForm {
+    // position: relative;
+    // top: 200px;
+    margin : 5rem auto 0;
+    width : 80%;
+  }
+
+  .linkInput {
+    width: 98%;
+    margin: 3px auto;
+  }
+
+}
