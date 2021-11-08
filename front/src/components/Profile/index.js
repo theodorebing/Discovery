@@ -318,6 +318,13 @@ const Profile = () => {
         {errorMessage && (
           <p className="profile__errorMessage">{errorMessage}</p>
         )}
+        <div className="profile__contact">
+          <p className="profile__contact-text">
+            If you have any concerns regarding the app or your profile information,
+            <br />
+            please contact me at contact@theodorebing.com
+          </p>
+        </div>
       </div>
     </Page>
   );
