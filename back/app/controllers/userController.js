@@ -38,15 +38,15 @@ const sendChangeEmail = async (previousClientEmail, clientName, clientEmail) => 
         from: '"the link app" <contact@theodorebing.com>', // sender address
         to: previousClientEmail, // list of recipients
         subject: "Your email address on the link!", // Subject line
-        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'.', // plain text body
-        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'.</b>', // html body
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
     });
     let email2 = await transporter.sendMail({
         from: '"the link app" <contact@theodorebing.com>', // sender address
         to: clientEmail, // list of recipients
         subject: "Your email address on the link!", // Subject line
-        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore', // plain text body
-        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore</b>', // html body
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
     });
 }
 
@@ -64,8 +64,8 @@ const sendChangePassword = async (clientEmail, clientName) => {
         from: '"the link app" <contact@theodorebing.com>', // sender address
         to: clientEmail, // list of recipients
         subject: "the link - password", // Subject line
-        text: 'Hello '+clientName+'! Your password has been changed.', // plain text body
-        html: '<b>Hello '+clientName+'! Your password has been changed.</b>', // html body
+        text: 'Hello '+clientName+'! Your password has been changed. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your password has been changed. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
     });
 }
 
