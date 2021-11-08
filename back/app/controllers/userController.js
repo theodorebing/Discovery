@@ -7,8 +7,6 @@ require('dotenv').config();
 
 const sendSignUpEmail = async (clientEmail, clientName) => {
 
-    console.log(clientEmail);
-
     let transporter = nodemailer.createTransport({
         host: "mail.privateemail.com",
         port: 465,//uses port 465 if secure is true.
@@ -27,8 +25,6 @@ const sendSignUpEmail = async (clientEmail, clientName) => {
 }
 
 const sendChangeEmail = async (previousClientEmail, clientName, clientEmail) => {
-
-    console.log('previousClientEmail', previousClientEmail, 'clientName', clientName, 'clientEmail', clientEmail);
 
     let transporter = nodemailer.createTransport({
         host: "mail.privateemail.com",
@@ -51,6 +47,25 @@ const sendChangeEmail = async (previousClientEmail, clientName, clientEmail) => 
         subject: "Your email address on the link!", // Subject line
         text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore', // plain text body
         html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore</b>', // html body
+    });
+}
+
+const sendChangePassword = async (clientEmail, clientName) => {
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.privateemail.com",
+        port: 465,//uses port 465 if secure is true.
+        secure: true,
+        auth: { user: process.env.mailUser, pass: process.env.mailPass },
+        // auth: { user: 'contact@theodorebing.com', pass: '6A,tJY/XYe4RYbw' },
+
+    });
+    let email = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: clientEmail, // list of recipients
+        subject: "the link - password", // Subject line
+        text: 'Hello '+clientName+'! Your password has been changed.', // plain text body
+        html: '<b>Hello '+clientName+'! Your password has been changed.</b>', // html body
     });
 }
 
@@ -291,6 +306,9 @@ const userController = {
                 response.json(sessionUserDatas);
                 if (patchUser.email) {
                     sendChangeEmail(previousEmail, sessionUserDatas.name, patchUser.email)
+                }
+                if (patchUser.password) {
+                    sendChangePassword(sessionUserDatas.email, sessionUserDatas.name)
                 }
             };
         } catch (error) {
