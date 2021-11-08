@@ -12,8 +12,6 @@ const sendSignUpEmail = async (clientEmail, clientName) => {
         port: 465,//uses port 465 if secure is true.
         secure: true,
         auth: { user: process.env.mailUser, pass: process.env.mailPass },
-        // auth: { user: 'contact@theodorebing.com', pass: '6A,tJY/XYe4RYbw' },
-
     });
     let email = await transporter.sendMail({
         from: '"the link app" <contact@theodorebing.com>', // sender address
