@@ -170,7 +170,7 @@
     }
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    max-height: calc(100vh-266px) ;
+    max-height: calc(100vh-250px) ;
     // min-height: 90px;
     border-radius: vars.$radius;
   }
@@ -184,3 +184,17 @@
   }
 }
 
+
+@media screen and (max-width: 900px) {
+
+  .list {
+
+    &--scroll {
+
+      max-height: calc(100vh-315px);
+
+    }
+
+  }
+
+}
