@@ -26,6 +26,34 @@ const sendSignUpEmail = async (clientEmail, clientName) => {
     });
 }
 
+const sendChangeEmail = async (previousClientEmail, clientName, clientEmail) => {
+
+    console.log('previousClientEmail', previousClientEmail, 'clientName', clientName, 'clientEmail', clientEmail);
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.privateemail.com",
+        port: 465,//uses port 465 if secure is true.
+        secure: true,
+        auth: { user: process.env.mailUser, pass: process.env.mailPass },
+        // auth: { user: 'contact@theodorebing.com', pass: '6A,tJY/XYe4RYbw' },
+
+    });
+    let email = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: previousClientEmail, // list of recipients
+        subject: "Your email address on the link!", // Subject line
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'.', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'.</b>', // html body
+    });
+    let email2 = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: clientEmail, // list of recipients
+        subject: "Your email address on the link!", // Subject line
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore</b>', // html body
+    });
+}
+
 const userController = {
 
     subscribe : async (request, response, next) => {
@@ -243,6 +271,7 @@ const userController = {
                 where : {id : request.session.userid}
             });
             const sessionUserDatas = sessionUser[0].dataValues;
+            const previousEmail = sessionUserDatas.email;
             console.log('sessionUser[0].dataValues.id', sessionUser[0].dataValues.id)
             if (sessionUserDatas.id===undefined) {
                 console.log('id undefined')
@@ -259,7 +288,10 @@ const userController = {
                 // const newUser = new User(sessionUserDatas);
                 
                 await User.update(sessionUserDatas, {where : {id : request.session.userid}}); 
-                response.json(sessionUserDatas); 
+                response.json(sessionUserDatas);
+                if (patchUser.email) {
+                    sendChangeEmail(previousEmail, sessionUserDatas.name, patchUser.email)
+                }
             };
         } catch (error) {
             console.log('catch error')
