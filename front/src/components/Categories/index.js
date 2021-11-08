@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Page from '../../containers/Page';
 import './styles.scss';
-import Logout from '../../containers/Logout';
 import LinkForm from '../../containers/LinkForm';
 import CategoriesList from '../CategoriesList';
 import CreateNewCategoryInput from '../CreateNewCategoryInput';
@@ -85,7 +85,6 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
     <Page>
       <div className="categories">
         <LinkForm />
-
         {loading && (
           <Loading />
         )}
@@ -115,7 +114,6 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
                 <Button classname="categories-div__action categories-div__action--little" onClick={confirmCategoryDeletion} text="confirm deletion" />
               </>
               )}
-              {/* <p onClick={cancelDeleteCategory} className="newInput-close">cancel</p> */}
               <Button classname="linkForm__button newInput-close" onClick={cancelDeleteCategory} text="cancel" />
             </form>
           </div>
@@ -138,4 +136,15 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
     </Page>
   );
 };
+
+Categories.propTypes = {
+  categories: PropTypes.array,
+  getCategories: PropTypes.func.isRequired,
+  linkFormOpened: PropTypes.bool.isRequired,
+};
+
+Categories.defaultProps = {
+  categories: [],
+};
+
 export default Categories;

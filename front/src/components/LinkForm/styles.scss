@@ -7,9 +7,7 @@
   border: solid 2px none;
   border-radius: vars.$radius;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
-  // padding: 0.5rem;
   margin-top: 10px;
-  // max-width: 532px;
 
   &__message {
     text-align: center;
@@ -25,7 +23,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      // margin-top: 0.5rem;
     }
 
     &-create {
@@ -59,7 +56,6 @@
 .linkInput {
   width: 516px;
   border-radius: 5px 5px 5px 5px ;
-  // margin: 5px;
   &::-webkit-search-cancel-button {
     margin: 0 0 0 0.5rem;
     cursor: pointer;
@@ -74,8 +70,6 @@
 @media screen and (max-width: 900px) {
 
   .linkForm {
-    // position: relative;
-    // top: 200px;
     margin : 5rem auto 0;
     width : 80%;
   }

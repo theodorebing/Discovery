@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import PropTypes from 'prop-types';
 import Page from '../../containers/Page';
 import LinkForm from '../../containers/LinkForm';
 import './styles.scss';
@@ -118,14 +118,10 @@ const CategoryPage = ({
     axios.delete(`lists/${listToDeleteId}`)
       .then((result) => {
         if (result && result.data) {
-          // setLoading(true);
           setListToDeleteId(null);
           confirmationMessageFunction(`category ${listToDeleteName} deleted`);
           setListSelectOpen(false);
-          // setTimeout(() => {
-          //   setLoading(false);
           setListToDeleteName('');
-          // }, 1000);
         }
       })
       .catch((error) => {
@@ -200,7 +196,6 @@ const CategoryPage = ({
           axios.patch(`links/${item.id}`, qs.stringify({ position: index }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
             .then((result) => {
-              // console.log('result', result);
               getLists();
             })
             .catch((error) => {
@@ -213,8 +208,6 @@ const CategoryPage = ({
 
       // moving from one list to another
       if (home !== foreign) {
-        console.log('home', home);
-        console.log('foreign', foreign);
         const homeLinks = Array.from(home.links);
         const [reorderedHomeLinks] = homeLinks.splice(source.index, 1);
         const newHome = {
@@ -245,9 +238,6 @@ const CategoryPage = ({
               console.log('error', error);
               setErrorMessage('the links position were not saved due to an error');
             })
-          // console.log('item homelinks', item)
-          // console.log('index homelinks', index, 'item homelinks', item)
-
         ));
         foreignLinks.map((item, index) => (
           axios.patch(`links/${item.id}`, qs.stringify({ position: index, list_id: foreign.id }),
@@ -259,9 +249,7 @@ const CategoryPage = ({
               console.log('error', error);
               setErrorMessage('the links position were not saved due to an error');
             })
-          // console.log('index foreignlinks', index, 'item foreign', item)
         ));
-        // getLists();
       }
     }
   };
@@ -272,7 +260,6 @@ const CategoryPage = ({
         <div className="category-page--fixed-components">
           <LinkForm />
         </div>
-
         {loading && (
           <Loading />
         )}
@@ -317,7 +304,6 @@ const CategoryPage = ({
               </div>
             </div>
           )}
-
           {showConfirmationMessage && (
             <p className="confirmationMessage confirmationMessage__category-page">{confirmationMessage}</p>
           )}
@@ -348,7 +334,6 @@ const CategoryPage = ({
               category={category}
               setLists={setLists}
               lists={lists}
-                // placeholder={provided.placeholder}
               handleOnDragEnd={handleOnDragEnd}
               listErrorMessage={listErrorMessage}
               getLists={getLists}
@@ -359,6 +344,16 @@ const CategoryPage = ({
       </div>
     </Page>
   );
+};
+
+CategoryPage.propTypes = {
+  category: PropTypes.object,
+  getCategories: PropTypes.func.isRequired,
+  linkFormOpened: PropTypes.bool.isRequired,
+};
+
+CategoryPage.defaultProps = {
+  category: {},
 };
 
 export default CategoryPage;

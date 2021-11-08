@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import './styles.scss';
 
 const CategoriesList = ({ categories, className }) => {
@@ -31,4 +31,15 @@ const CategoriesList = ({ categories, className }) => {
     </div>
   );
 };
+
+CategoriesList.propTypes = {
+  categories: PropTypes.array,
+  className: PropTypes.string,
+};
+
+CategoriesList.defaultProps = {
+  categories: [],
+  className: '',
+};
+
 export default CategoriesList;
