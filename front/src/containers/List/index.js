@@ -5,4 +5,7 @@ const mapStateToProps = (state) => ({
   link: state.link.link,
 });
 
-export default connect(mapStateToProps)(List);
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

@@ -5,4 +5,8 @@ const mapStateToProps = (state) => ({
   isLogged: state.auth.isLogged,
 });
 
-export default connect(mapStateToProps)(Page);
+const mapDispatchToProps = () => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page);

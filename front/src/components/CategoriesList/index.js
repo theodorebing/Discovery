@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 
 const CategoriesList = ({ categories, className }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);

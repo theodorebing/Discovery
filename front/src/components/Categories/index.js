@@ -19,7 +19,7 @@ const Categories = ({ categories, getCategories, linkFormOpened }) => {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const openCategoryInput = () => {
     setCategoryInputOpen(true);

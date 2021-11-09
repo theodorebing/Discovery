@@ -19,7 +19,7 @@ const CategoryPage = ({
   category, getCategories, linkFormOpened,
 }) => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState([]);
   const [listInputOpen, setListInputOpen] = useState(false);
   const [listSelectOpen, setListSelectOpen] = useState(false);
