@@ -9,7 +9,7 @@ import {
 } from 'react-redux';
 
 // == Import : local
-import store from 'src/store';
+import store from './store';
 // Components
 import App from './containers/App';
 
