@@ -89,6 +89,8 @@ const App = ({
 App.propTypes = {
   isLogged: PropTypes.bool.isRequired,
   setIsLogged: PropTypes.func.isRequired,
+  closeLinkForm: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {

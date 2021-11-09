@@ -13,7 +13,6 @@ const Error = () => (
         text="your are not linked to anything existing, try again"
       />
     </div>
-    {/* <Logout /> */}
   </Page>
 );
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
@@ -18,10 +19,9 @@ const qs = require('qs');
 const List = ({
   list, listIndex, getLists,
 }) => {
+  const { links } = list;
   const [url, setUrl] = useState('');
   const [inputLoading, setInputLoading] = useState(false);
-  // const [links, setLinks] = useState(list.links);
-  const { links } = list;
   const [errorMessage, setErrorMessage] = useState('');
   const [listNameErrorMessage, setListNameErrorMessage] = useState('');
   const [noLinksMessage, setNoLinksMessage] = useState('');
@@ -97,7 +97,6 @@ const List = ({
                 setInputOpen(false);
                 setUrl('');
                 getLists();
-                // setLinks(list.links);
               }
             })
             .catch(() => {
@@ -118,11 +117,9 @@ const List = ({
     let isMounted = true;
     if (isMounted) {
       if (list.links[0]) {
-        // setLinks(list.links);
         setNoLinksMessage('');
       }
       else {
-        // setLinks([]);
         setNoLinksMessage('there are no links yet, add one first!');
       }
     }
@@ -215,4 +212,16 @@ const List = ({
     </Draggable>
   );
 };
+
+List.propTypes = {
+  list: PropTypes.object,
+  listIndex: PropTypes.number,
+  getLists: PropTypes.func.isRequired,
+};
+
+List.defaultProps = {
+  list: {},
+  listIndex: null,
+};
+
 export default List;

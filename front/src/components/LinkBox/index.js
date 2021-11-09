@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import classNames from 'classnames';
@@ -43,7 +44,6 @@ const LinkBox = ({
   };
 
   return (
-
     <Draggable draggableId={`link${link.id.toString()}`} index={index}>
       {(provided, snapshot) => (
         <Container
@@ -78,7 +78,18 @@ const LinkBox = ({
         </Container>
       )}
     </Draggable>
-
   );
 };
+
+LinkBox.propTypes = {
+  link: PropTypes.object,
+  setLinkDeleted: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  getLists: PropTypes.func.isRequired,
+};
+
+LinkBox.defaultProps = {
+  link: {},
+};
+
 export default LinkBox;

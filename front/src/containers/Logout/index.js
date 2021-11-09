@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import Logout from 'src/components/Logout';
-import { logout } from 'src/actions/auth';
-import { closeLinkForm } from 'src/actions/link';
+import Logout from '../../components/Logout';
+import { logout } from '../../actions/auth';
+import { closeLinkForm } from '../../actions/link';
 
 const mapStateToProps = () => ({
 
