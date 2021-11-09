@@ -1,11 +1,8 @@
 import { connect } from 'react-redux';
-import ListsContainer from 'src/components/ListsContainer';
+import ListsContainer from '../../components/ListsContainer';
 
 const mapStateToProps = (state) => ({
   link: state.link.link,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListsContainer);
+export default connect(mapStateToProps)(ListsContainer);
