@@ -89,11 +89,7 @@
   }
 
   &__confirmationMessage {
-    // margin: auto;
-    // position: absolute; 
-    // top: 200px;
     margin: -2rem auto 1rem;
-
   }
 
   &__contact {
@@ -105,8 +101,6 @@
     width: 30vw;
     height: 20vh;
     &-text {
-      // margin: 2rem auto;
-      // width: 50%;
       color: vars.$grey;
       text-align: center;
     }

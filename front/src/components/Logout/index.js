@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'src/api';
+import PropTypes from 'prop-types';
+import axios from '../../api';
 import './styles.scss';
 
 const Logout = ({ handleLogout, closeLinkForm }) => {
@@ -21,4 +22,10 @@ const Logout = ({ handleLogout, closeLinkForm }) => {
     </div>
   );
 };
+
+Logout.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  closeLinkForm: PropTypes.func.isRequired,
+};
+
 export default Logout;

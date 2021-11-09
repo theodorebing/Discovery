@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import axios from 'src/api';
+import axios from '../../api';
 
 import Input from '../Input';
 
@@ -79,6 +80,11 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
       <Link to="/signup" className="form-link link">Sign up</Link>
     </div>
   );
+};
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  closeLinkForm: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

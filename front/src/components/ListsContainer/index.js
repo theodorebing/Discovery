@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import List from '../../containers/List';
 
 import './styles.scss';
 
 const ListsContainer = ({
-  link, lists, placeholder, listErrorMessage, getLists, handleOnDragEnd,
+  lists, listErrorMessage, getLists, handleOnDragEnd,
 }) => (
   <DragDropContext onDragEnd={handleOnDragEnd}>
     <Droppable droppableId="container" direction="horizontal" type="listsContainer">
@@ -27,6 +28,18 @@ const ListsContainer = ({
       )}
     </Droppable>
   </DragDropContext>
-
 );
+
+ListsContainer.propTypes = {
+  lists: PropTypes.array,
+  listErrorMessage: PropTypes.string,
+  getLists: PropTypes.func.isRequired,
+  handleOnDragEnd: PropTypes.func.isRequired,
+};
+
+ListsContainer.defaultProps = {
+  lists: [],
+  listErrorMessage: '',
+};
+
 export default ListsContainer;

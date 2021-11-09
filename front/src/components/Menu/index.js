@@ -8,7 +8,6 @@ import './styles.scss';
 
 const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const openMenu = () => {
     setMenuOpen(!menuOpen);
   };
