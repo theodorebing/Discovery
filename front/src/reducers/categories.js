@@ -1,10 +1,10 @@
 import {
   SET_CATEGORIES,
-} from 'src/actions/categories';
+} from '../actions/categories';
 
 import {
   LOGOUT,
-} from 'src/actions/auth';
+} from '../actions/auth';
 
 const initialState = {
   categories: [],

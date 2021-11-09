@@ -89,10 +89,20 @@
   }
 
   &__confirmationMessage {
-    // margin: auto;
-    // position: absolute; 
-    // top: 200px;
     margin: -2rem auto 1rem;
+  }
 
+  &__contact {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30vw;
+    height: 20vh;
+    &-text {
+      color: vars.$grey;
+      text-align: center;
+    }
   }
 }

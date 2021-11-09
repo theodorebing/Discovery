@@ -1,9 +1,9 @@
 import {
   connect,
 } from 'react-redux';
-import LoginForm from 'src/components/LoginForm';
-import { setIsLogged } from 'src/actions/auth';
-import { closeLinkForm } from 'src/actions/link';
+import LoginForm from '../../components/LoginForm';
+import { setIsLogged } from '../../actions/auth';
+import { closeLinkForm } from '../../actions/link';
 
 const mapStateToProps = (state) => ({
 

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import LinkForm from 'src/components/LinkForm';
+import LinkForm from '../../components/LinkForm';
 import {
   onChangeLink, openLinkForm, closeLinkForm,
-} from 'src/actions/link';
-import { setCategories, getCategories } from 'src/actions/categories';
+} from '../../actions/link';
+import { setCategories, getCategories } from '../../actions/categories';
 
 const mapStateToProps = (state) => ({
   linkFormOpened: state.link.linkFormOpened,

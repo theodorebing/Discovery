@@ -2,7 +2,7 @@ import {
   ON_CHANGE_LINK,
   OPEN_LINK_FORM,
   CLOSE_LINK_FORM,
-} from 'src/actions/link';
+} from '../actions/link';
 
 const initialState = {
   link: '',

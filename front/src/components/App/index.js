@@ -22,7 +22,7 @@ import Profile from '../Profile';
 const App = ({
   isLogged, setIsLogged, closeLinkForm, getCategories,
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
   useEffect(() => {
     setLoading(true);
@@ -89,6 +89,8 @@ const App = ({
 App.propTypes = {
   isLogged: PropTypes.bool.isRequired,
   setIsLogged: PropTypes.func.isRequired,
+  closeLinkForm: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {

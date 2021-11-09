@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import axios from 'src/api';
+import axios from '../../api';
 
 import Input from '../Input';
 
@@ -36,6 +37,13 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
       });
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    window.onSubmit = () => alert('reCaptcha submit');
+    document.body.appendChild(script);
+  });
+
   return (
     <div className="form form__index">
       <div className="message-div">
@@ -62,10 +70,21 @@ const LoginForm = ({ handleLogin, closeLinkForm }) => {
         <button type="submit" className="button">
           Sign in
         </button>
+        <div
+          className="g-recaptcha"
+          data-sitekey="6LedwyAdAAAAAArIOzuGqv1Rcdr_GlubumGCVYiY"
+          data-callback="onSubmit"
+          data-size="invisible"
+        />
       </form>
       <Link to="/signup" className="form-link link">Sign up</Link>
     </div>
   );
+};
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  closeLinkForm: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

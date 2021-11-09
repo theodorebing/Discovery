@@ -1,8 +1,8 @@
 import {
   GET_CATEGORIES,
   setCategories,
-} from 'src/actions/categories';
-import axios from 'src/api';
+} from '../actions/categories';
+import axios from '../api';
 
 export default (store) => (next) => (action) => {
   switch (action.type) {

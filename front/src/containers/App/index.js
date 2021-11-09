@@ -1,10 +1,10 @@
 import {
   connect,
 } from 'react-redux';
-import App from 'src/components/App';
-import { setIsLogged } from 'src/actions/auth';
-import { closeLinkForm } from 'src/actions/link';
-import { getCategories } from 'src/actions/categories';
+import App from '../../components/App';
+import { setIsLogged } from '../../actions/auth';
+import { closeLinkForm } from '../../actions/link';
+import { getCategories } from '../../actions/categories';
 
 const mapStateToProps = (state) => ({
   isLogged: state.auth.isLogged,

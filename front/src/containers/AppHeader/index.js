@@ -1,7 +1,7 @@
 import {
   connect,
 } from 'react-redux';
-import AppHeader from 'src/components/AppHeader';
+import AppHeader from '../../components/AppHeader';
 
 const mapStateToProps = (state) => ({
   isLogged: state.auth.isLogged,

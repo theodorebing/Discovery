@@ -44,7 +44,6 @@ const CreateNewListInput = ({ setListInputOpen, categoryId, setConfirmationMessa
         name="list"
       />
       <Button classname="linkForm__button newInput-close" onClick={closeInput} text="return" />
-      {/* <p onClick={closeInput} className="newInput-close">close</p> */}
     </form>
   );
 };

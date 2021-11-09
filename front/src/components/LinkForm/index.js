@@ -42,6 +42,9 @@ const LinkForm = ({
     }
     else {
       setErrorMessage('please use a valid link');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 5000);
       closeLinkForm();
     }
   };
@@ -75,6 +78,10 @@ const LinkForm = ({
       .then((result) => {
         if (result) {
           closeAndResetForm();
+          setConfirmationMessage('link has been created!');
+          setTimeout(() => {
+            setConfirmationMessage('');
+          }, 5000);
         }
       })
       .catch(() => {
@@ -104,6 +111,7 @@ const LinkForm = ({
   };
 
   useEffect(() => {
+    setErrorMessage('');
     getCategories();
     if (categoryId) {
       getListsFromSelectedCategory();
@@ -118,6 +126,7 @@ const LinkForm = ({
   const openCategoryInput = () => {
     setCategoryInputOpen(true);
     setCategoryId(null);
+    setListId(null);
     setConfirmationMessage('');
   };
 
@@ -138,8 +147,11 @@ const LinkForm = ({
           name="link"
           type="search"
         />
+        {!linkFormOpened && confirmationMessage && (
+          <p className="confirmationMessage linkForm__message">{confirmationMessage}</p>
+        )}
         {errorMessage && !linkFormOpened && (
-        <p className="errorMessage linkForm__message">{errorMessage}</p>
+        <p className="errorMessage">{errorMessage}</p>
         )}
       </form>
       {linkFormOpened && (
@@ -148,7 +160,7 @@ const LinkForm = ({
             <p className="errorMessage">{errorMessage}</p>
           )}
           {confirmationMessage && (
-            <p className="confirmationMessage">{confirmationMessage}</p>
+            <p className="confirmationMessage confirmationMessage-closed">{confirmationMessage}</p>
           )}
             {!categoryInputOpen ? (
               <div className="linkForm-part2-div">
@@ -197,12 +209,12 @@ const LinkForm = ({
               )}
             </>
             )}
-            {listId && (
+            {!categoryInputOpen && listId && (
               <div className="linkForm-part2-div">
                 <Button onClick={handleSubmitForm} classname="linkForm__button linkForm-part2-button" text="create" />
               </div>
             )}
-          <Button classname="linkForm__button" onClick={closeAndResetForm} text="cancel" />
+          <Button classname="linkForm__button linkForm__button-cancel" onClick={closeAndResetForm} text="cancel" />
         </div>
       )}
     </div>

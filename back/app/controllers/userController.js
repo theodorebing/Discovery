@@ -1,12 +1,78 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const emailValidator = require('email-validator');
+const nodemailer = require("nodemailer");
+require('dotenv').config();
+
+
+const sendSignUpEmail = async (clientEmail, clientName) => {
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.privateemail.com",
+        port: 465,//uses port 465 if secure is true.
+        secure: true,
+        auth: { user: process.env.mailUser, pass: process.env.mailPass },
+    });
+    let email = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: clientEmail, // list of recipients
+        subject: "Welcome to the link!", // Subject line
+        text: 'Hello '+clientName+' and welcome to the link! You are now registered and able to use the app.', // plain text body
+        html: '<b>Hello '+clientName+' and welcome to the link! You are now registered and able to use the app.</b>', // html body
+    });
+}
+
+const sendChangeEmail = async (previousClientEmail, clientName, clientEmail) => {
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.privateemail.com",
+        port: 465,//uses port 465 if secure is true.
+        secure: true,
+        auth: { user: process.env.mailUser, pass: process.env.mailPass },
+        // auth: { user: 'contact@theodorebing.com', pass: '6A,tJY/XYe4RYbw' },
+
+    });
+    let email = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: previousClientEmail, // list of recipients
+        subject: "Your email address on the link!", // Subject line
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
+    });
+    let email2 = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: clientEmail, // list of recipients
+        subject: "Your email address on the link!", // Subject line
+        text: 'Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your email address as been changed on the link app and is now '+clientEmail+'. Previous email address '+previousClientEmail+' is not used anymore. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
+    });
+}
+
+const sendChangePassword = async (clientEmail, clientName) => {
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.privateemail.com",
+        port: 465,//uses port 465 if secure is true.
+        secure: true,
+        auth: { user: process.env.mailUser, pass: process.env.mailPass },
+        // auth: { user: 'contact@theodorebing.com', pass: '6A,tJY/XYe4RYbw' },
+
+    });
+    let email = await transporter.sendMail({
+        from: '"the link app" <contact@theodorebing.com>', // sender address
+        to: clientEmail, // list of recipients
+        subject: "the link - password", // Subject line
+        text: 'Hello '+clientName+'! Your password has been changed. If you have any concerns regarding this change please contact me at contact@theodorebing.com.', // plain text body
+        html: '<b>Hello '+clientName+'! Your password has been changed. If you have any concerns regarding this change please contact me at contact@theodorebing.com.</b>', // html body
+    });
+}
 
 const userController = {
 
     subscribe : async (request, response, next) => {
 
         const theUserData = request.body;
+        const passwordRegEx = /^(?=.*[A-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W+)(?!.*[iIoO])\S{6,12}$/;
 
         // email validation 
         const isValidEmail = emailValidator.validate(theUserData.email);
@@ -18,10 +84,21 @@ const userController = {
             return;
         }
 
-        if (theUserData.password.length <5 ) {
+        if (theUserData.password.length <6 ) {
             response
                 .status(401)
-                .json({"error":"you must type a password with at list 5 charachters"});
+                .json({"error":"you must type a password with at least 6 charachters"});
+            return;
+        }
+
+
+        if (theUserData.password.match(passwordRegEx)) {
+            console.log('ok')
+        } else {
+            console.log('not ok')
+            response
+                .status(401)
+                .json({"error":`your password is not strong enough (at least 6 characters, and maximum 12, with 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character)`});
             return;
         }
 
@@ -61,6 +138,7 @@ const userController = {
 
             // save user in relationnal PG database
             await User.create(theUserData);
+            sendSignUpEmail(theUserData.email, theUserData.name);
             response.json(theUserData);
 
         } catch (error) {
@@ -178,6 +256,16 @@ const userController = {
         // if update password: bcrypt
         if (patchUser.password) {
 
+            const passwordRegEx = /^(?=.*[A-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W+)(?!.*[iIoO])\S{6,12}$/;
+            if (patchUser.password.match(passwordRegEx)) {
+                console.log('ok')
+            } else {
+                response
+                    .status(401)
+                    .json({"error":`your password is not strong enough (at least 6 characters, and maximum 12, with 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character)`});
+                return;
+            }
+
             // create a hashed password
             const saltRounds = 10;
             patchUser.password = await new Promise((resolve, reject) => {
@@ -196,6 +284,7 @@ const userController = {
                 where : {id : request.session.userid}
             });
             const sessionUserDatas = sessionUser[0].dataValues;
+            const previousEmail = sessionUserDatas.email;
             console.log('sessionUser[0].dataValues.id', sessionUser[0].dataValues.id)
             if (sessionUserDatas.id===undefined) {
                 console.log('id undefined')
@@ -212,7 +301,13 @@ const userController = {
                 // const newUser = new User(sessionUserDatas);
                 
                 await User.update(sessionUserDatas, {where : {id : request.session.userid}}); 
-                response.json(sessionUserDatas); 
+                response.json(sessionUserDatas);
+                if (patchUser.email) {
+                    sendChangeEmail(previousEmail, sessionUserDatas.name, patchUser.email)
+                }
+                if (patchUser.password) {
+                    sendChangePassword(sessionUserDatas.email, sessionUserDatas.name)
+                }
             };
         } catch (error) {
             console.log('catch error')

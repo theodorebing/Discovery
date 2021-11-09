@@ -84,7 +84,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 5px 5px 5px 0;
-    // padding-right: 5px;
     cursor: text;
 
     &__div {
@@ -152,25 +151,18 @@
       margin-top: 5px;
       cursor: pointer;
     }
-
-    // &--error {
-    //   position: relative;
-    //   top: -35px;
-    // }
   }
 
   &--scroll {
     display: grid;
     row-gap: 0.5rem;
-    // overflow-x: scroll;
     overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    max-height: 66.6vh;
-    // min-height: 90px;
+    max-height: calc(100vh-250px) ;
     border-radius: vars.$radius;
   }
 
@@ -183,3 +175,10 @@
   }
 }
 
+@media screen and (max-width: 900px) {
+  .list {
+    &--scroll {
+      max-height: calc(100vh-315px);
+    }
+  }
+}

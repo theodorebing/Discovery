@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api';
 import Page from '../../containers/Page';
@@ -37,6 +37,14 @@ const SignUp = () => {
         setErrorMessage(error.response.data.error);
       });
   };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    window.onSubmit = () => alert('reCaptcha submit');
+    document.body.appendChild(script);
+  });
+
   return (
     <Page>
       <div className="form form__index">
@@ -70,6 +78,12 @@ const SignUp = () => {
                 Sign up!
               </button>
             </form>
+            <div
+              className="g-recaptcha"
+              data-sitekey="6LedwyAdAAAAAArIOzuGqv1Rcdr_GlubumGCVYiY"
+              data-callback="onSubmit"
+              data-size="invisible"
+            />
             <Link to="/" className="form-link link">Return</Link>
           </>
         ) : (

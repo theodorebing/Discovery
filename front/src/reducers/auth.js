@@ -1,7 +1,7 @@
 import {
   SET_ISLOGGED,
   LOGOUT,
-} from 'src/actions/auth';
+} from '../actions/auth';
 
 const initialState = {
   isLogged: false,

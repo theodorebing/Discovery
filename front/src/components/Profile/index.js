@@ -31,8 +31,6 @@ const Profile = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [passwordConfirmationMessage, setPasswordConfirmationMessage] = useState('');
 
-  console.log('passwordErrorMessage', passwordErrorMessage);
-
   const getAccount = () => {
     axios.get('account')
       .then((response) => {
@@ -160,6 +158,7 @@ const Profile = () => {
               .catch((err) => {
                 if (err) {
                   console.log('err', err.response);
+                  setPasswordErrorMessage(err.response.data.error);
                 }
               });
           }
@@ -167,25 +166,8 @@ const Profile = () => {
         .catch((error) => {
           console.log('error', error);
           setPasswordErrorMessage('previous password is not correct');
-
-          // setErrorMessage(error.response.data.error);
         });
     }
-    // if (email !== user.email) {
-    //   axios.patch('account', qs.stringify({ email }),
-    //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-    //     .then((result) => {
-    //       if (result) {
-    //         setEmail(result.data.email);
-    //         setOpenEmailInput(false);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       if (err) {
-    //         console.log('err', err.response);
-    //       }
-    //     });
-    // }
   };
 
   const onChangeFirstPassword = (value) => {
@@ -263,10 +245,8 @@ const Profile = () => {
                     </form>
                   )}
                 </span>
-
                 <li className="profile__label">password</li>
                 <Button classname="profile__button" text="Change password" onClick={passwordForm} />
-
                 <li className="profile__label">date user was created</li>
                 <h3 className="profile__name">{now(user.created_at)}</h3>
                 <li className="profile__label">last update</li>
@@ -319,6 +299,13 @@ const Profile = () => {
         {errorMessage && (
           <p className="profile__errorMessage">{errorMessage}</p>
         )}
+        <div className="profile__contact">
+          <p className="profile__contact-text">
+            If you have any concerns regarding the app or your profile information,
+            <br />
+            please contact me at contact@theodorebing.com
+          </p>
+        </div>
       </div>
     </Page>
   );

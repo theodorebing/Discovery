@@ -7,9 +7,7 @@
   border: solid 2px none;
   border-radius: vars.$radius;
   box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
-  // padding: 0.5rem;
   margin-top: 10px;
-  // max-width: 532px;
 
   &__message {
     text-align: center;
@@ -25,7 +23,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      // margin-top: 0.5rem;
     }
 
     &-create {
@@ -38,6 +35,8 @@
 
     &-button {
       margin-bottom: 0.5rem;
+      color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(134, 255, 134, 0.808);
     }
 
   }
@@ -48,16 +47,36 @@
     font-family: vars.$main-font;
     padding: 3px;
     box-shadow: inset 1px 1px 5px rgb(107, 107, 107), inset -1px -1px 5px rgb(24, 24, 24);
+      &-cancel {
+        background-color: rgba(255, 0, 0, 0.507);
+      }
   }
 }
 
 .linkInput {
   width: 516px;
   border-radius: 5px 5px 5px 5px ;
-  // margin: 5px;
   &::-webkit-search-cancel-button {
     margin: 0 0 0 0.5rem;
     cursor: pointer;
   }
 }
 
+.confirmationMessage-closed {
+  margin: auto;
+}
+
+
+@media screen and (max-width: 900px) {
+
+  .linkForm {
+    margin : 5rem auto 0;
+    width : 80%;
+  }
+
+  .linkInput {
+    width: 98%;
+    margin: 3px auto;
+  }
+
+}
