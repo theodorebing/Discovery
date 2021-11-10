@@ -10,7 +10,7 @@ const sanitizer = require('./app/middlewares/body-sanitizer');
 const router = require('./app/router');
 const port = process.env.PORT || 3000;
 const corsOptions = {
-    origin: 'http://localhost:8080',
+    origin: ['http://localhost:8080', 'https://www.theodorebing.com', 'https://theodorebing.com', 'https://cocky-hodgkin-85eeba.netlify.app'],
 };
 app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));

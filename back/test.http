@@ -4,7 +4,7 @@
 @baseUrl= {{protocol}}://{{domainname}}:{{port}}
 
 ### Not available
-GET http://localhost:5050/404
+GET http://{{baseUrl}}:5050/404
 
 
 ############ CONNEXION - SUBSCRIPTION ##############
