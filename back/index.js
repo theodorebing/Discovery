@@ -8,7 +8,11 @@ const sanitizer = require('./app/middlewares/body-sanitizer');
 // const bodyParser = multer();
 // app.use(bodyParser.none());
 const router = require('./app/router');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
+if (port == null || port == "") {
+  port = 5050;
+}
+
 const corsOptions = {
     origin: ['http://localhost:8080', 'https://www.theodorebing.com', 'https://theodorebing.com', 'https://cocky-hodgkin-85eeba.netlify.app'],
 };
