@@ -1,5 +1,5 @@
 [[redirects]]
   from = "https://www.theodorebing.com/api/*"
-  to = "https://thetree-thelink.herokuapp.com/"
+  to = "https://thetree-thelink.herokuapp.com/api/:splat"
   status = 200
   force = true
