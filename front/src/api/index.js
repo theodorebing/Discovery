@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'thetree-thelink.herokuapp.com/',
+  baseURL: '/api/',
   timeout: 3000,
 });
