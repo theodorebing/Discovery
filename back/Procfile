@@ -1,1 +1,1 @@
-web: cd appdir && node back/index.js
+web: node index.js

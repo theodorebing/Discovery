@@ -1,6 +1,6 @@
-const paths = require('./paths');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
+const paths = require('./paths');
 const common = require('./webpack.common.js');
 
 const port = 8080;
@@ -53,11 +53,11 @@ module.exports = merge(common, {
       ignored: /node_modules/,
     },
     port,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5050',
-        pathRewrite: { '^/api': '' },
-      },
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:5050',
+    //     pathRewrite: { '^/api': '' },
+    //   },
+    // }
   },
 });
