@@ -1,5 +1,5 @@
-www.theodorebing.com/category/api/* thetree-thelink.herokuapp.com/:splat 200
+https://www.theodorebing.com/category/api/* https://thetree-thelink.herokuapp.com/:splat 200
 
-www.theodorebing.com/api/* thetree-thelink.herokuapp.com/:splat 200
+https://www.theodorebing.com/api/* https://thetree-thelink.herokuapp.com/:splat 200
 
 /* /assets.index.html 200
