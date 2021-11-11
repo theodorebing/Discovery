@@ -1,10 +1,4 @@
 [[redirects]]
-  from = "/*"
-  to = "assets/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "https://www.theodorebing.com/category/api/*"
   to = "https://thetree-thelink.herokuapp.com/:splat"
   status = 200
