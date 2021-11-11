@@ -6,6 +6,6 @@
 
 [[redirects]]
   from = "/"
-  to = "/assets/index/html"
+  to = "/assets/index.html"
   status = 200
   force = true
