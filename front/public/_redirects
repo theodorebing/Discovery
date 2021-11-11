@@ -2,4 +2,4 @@ https://www.theodorebing.com/category/api/* https://thetree-thelink.herokuapp.co
 
 https://www.theodorebing.com/api/* https://thetree-thelink.herokuapp.com/:splat 200
 
-/* src/assets/index.html 200
+/* /index.html 200
