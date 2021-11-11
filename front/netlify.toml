@@ -1,12 +1,11 @@
 [[redirects]]
-  from = "https://www.theodorebing.com/category/api/*"
+  from = "/api/*"
   to = "https://thetree-thelink.herokuapp.com/:splat"
   status = 200
   force = true
 
 [[redirects]]
-  from = "https://www.theodorebing.com/api/*"
-  to = "https://thetree-thelink.herokuapp.com/:splat"
+  from = "/"
+  to = "/assets/index/html"
   status = 200
   force = true
-
