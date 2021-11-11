@@ -85,29 +85,25 @@ const List = ({
   const handleSubmitLink = (evt) => {
     evt.preventDefault();
     setInputLoading(true);
-    setTimeout(() => {
-      if (validURL(url)) {
-        setErrorMessage('');
-        setTimeout(() => {
-          axios.post('links',
-            qs.stringify({ url, list_id: list.id }),
-            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
-            .then((result) => {
-              if (result) {
-                setInputOpen(false);
-                setUrl('');
-                getLists();
-              }
-            })
-            .catch(() => {
-              setErrorMessage('There is a problem with your link');
-            });
-        }, 1000);
-      }
-      else {
-        setErrorMessage('please use a valid link');
-      }
-    }, 3500);
+    if (validURL(url)) {
+      setErrorMessage('');
+      axios.post('links',
+        qs.stringify({ url, list_id: list.id }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' } })
+        .then((result) => {
+          if (result) {
+            setInputOpen(false);
+            setUrl('');
+            getLists();
+          }
+        })
+        .catch(() => {
+          setErrorMessage('There is a problem with your link');
+        });
+    }
+    else {
+      setErrorMessage('please use a valid link');
+    }
     setTimeout(() => {
       setInputLoading(false);
     }, 5000);
