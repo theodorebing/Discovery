@@ -10,4 +10,8 @@
   status = 200
   force = true
 
-
+[[redirects]]
+  from = "https://www.theodorebing.com/:road/:id"
+  to = "assets/index.html"
+  status = 200
+  force = true
