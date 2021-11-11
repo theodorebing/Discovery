@@ -10,8 +10,3 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "https://www.theodorebing.com/category/:splat"
-  to = "https://www.theodorebing.com/:splat"
-  status = 200
-  force = true
