@@ -3,9 +3,3 @@
   to = "https://thetree-thelink.herokuapp.com/:splat"
   status = 200
   force = true
-
-[[redirects]]
-  from = "/"
-  to = "/assets/index.html"
-  status = 200
-  force = true
