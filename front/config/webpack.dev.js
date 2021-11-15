@@ -53,11 +53,11 @@ module.exports = merge(common, {
       ignored: /node_modules/,
     },
     port,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:5050',
-    //     pathRewrite: { '^/api': '' },
-    //   },
-    // }
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5050',
+        pathRewrite: { '^/api': '' },
+      },
+    },
   },
 });

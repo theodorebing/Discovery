@@ -8,7 +8,7 @@ const sanitizer = require('./app/middlewares/body-sanitizer');
 // const bodyParser = multer();
 // app.use(bodyParser.none());
 const router = require('./app/router');
-const port = process.env.PORT;
+let port = process.env.PORT;
 if (port == null || port == "") {
   port = 5050;
 }
