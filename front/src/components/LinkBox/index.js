@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 import axios from '../../api';
 import './styles.scss';
+import favicon from '../../assets/favicon_io/android-chrome-192x192.png';
 
 const dayjs = require('dayjs');
 
@@ -43,6 +44,10 @@ const LinkBox = ({
     }, 2000);
   };
 
+  const addDefaultSrc = (event) => {
+    event.target.src = favicon;
+  };
+
   return (
     <Draggable draggableId={`link${link.id.toString()}`} index={index}>
       {(provided, snapshot) => (
@@ -55,7 +60,7 @@ const LinkBox = ({
         >
           <A isDragging={snapshot.isDragging} href={link.url} target="_blank" rel="noreferrer" className="link-box__a">
             <div className="link-box__div-image">
-              <img src={link.image} alt={link.title} className="link-box__image" />
+              <img onError={addDefaultSrc} src={link.image} alt={link.title} className="link-box__image" />
             </div>
             <div className="link-box__text">
               <p className="link-box__text-p link-box__text-p--title">
